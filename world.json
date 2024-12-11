@@ -5,18 +5,14 @@
     "intervals": {
       "year": 0.25,
       "day": 0.25,
-      "depreciation": 0.95
+      "distribution": 0.05
     }
   },
   "current": {
     "year": 0,
     "day": 0,
     "time": 0,
-    "circulating": 2500000000,
-    "monetary": {
-      "interest": 0,
-      "term": 0
-    }
+    "circulating": 2500000000
   },
   "servers": [
     {
