@@ -12,7 +12,7 @@
     "year": 0,
     "day": 0,
     "time": 0,
-    "circulating": 0,
+    "circulating": 2500000000,
     "monetary": {
       "interest": 0,
       "term": 0
@@ -22,41 +22,42 @@
     {
       "id": "dev",
       "description": "main dev server. funds for engineering",
-      "balance": 0,
+      "balance": 833333333.3333333,
       "status": "active",
+      "uptime": 1,
       "tag": [
         "system"
       ],
-      "registery": {
-        "dividend": 0,
-        "clients": []
-      }
+      "dividend": 0.1,
+      "clients": []
     },
     {
       "id": "board",
       "description": "reserved server for elected board members. funds for marketing and operation",
-      "balance": 0,
+      "balance": 833333333.3333333,
       "status": "active",
+      "uptime": 1,
       "tag": [
         "system"
       ],
-      "registery": {
-        "dividend": 0,
-        "clients": []
-      }
+      "dividend": 0.1,
+      "clients": [{
+          "id": "test",
+          "description": "main test client",
+          "balance": 0
+      }]
     },
     {
       "id": "reserve",
-      "description": "fund reserved for whole community and support balance between dev and board",
-      "balance": 0,
+      "description": "fund reserved for whole community and support balance between dev and board.",
+      "balance": 833333333.3333333,
       "status": "active",
+      "uptime": 1,
+      "dividend": 0.1,
       "tag": [
         "system"
       ],
-      "registery": {
-        "dividend": 0,
-        "clients": []
-      }
+      "clients": []
     }
   ]
 }
