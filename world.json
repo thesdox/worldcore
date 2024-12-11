@@ -5,7 +5,7 @@
     intervals: {
       year: 0.25,
       day: 0.25,
-      depreciation: 0.9
+      depreciation: 0.95
     }
   },
   current: {
@@ -14,17 +14,39 @@
     time: 0,
     circulating: 0,
     monetary: {
-      locked: 0,
       interest: 0,
       term: 0
     }
   },
   servers: [{
-      id: "firstsvr",
+      id: "dev",
+      description: "main dev server. funds for engineering",
       balance: 0,
-      dividend: 0,
       status: "active",
-      clients: []
-  }],
-  transactions: []
+      tag: ["system"]
+      registery: {
+        dividend: 0,
+        clients: []
+      }
+  }, {
+      id: "board",
+      description: "reserved server for elected board members. funds for marketing and operation",
+      balance: 0,
+      status: "active",
+      tag: ["system"]
+      registery: {
+        dividend: 0,
+        clients: []
+      }
+  }, {
+      id: "reserve",
+      description: "fund reserved for whole community and support balance between dev and board",
+      balance: 0,
+      status: "active",
+      tag: ["system"]
+      registery: {
+        dividend: 0,
+        clients: []
+      }
+  }]
 }
