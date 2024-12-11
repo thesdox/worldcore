@@ -1,52 +1,62 @@
 {
-  static: {
-    currency: CRD,
-    supply: 1000000000000,
-    intervals: {
-      year: 0.25,
-      day: 0.25,
-      depreciation: 0.95
+  "static": {
+    "currency": "CRD",
+    "supply": 1000000000000,
+    "intervals": {
+      "year": 0.25,
+      "day": 0.25,
+      "depreciation": 0.95
     }
   },
-  current: {
-    year: 0,
-    day: 0,
-    time: 0,
-    circulating: 0,
-    monetary: {
-      interest: 0,
-      term: 0
+  "current": {
+    "year": 0,
+    "day": 0,
+    "time": 0,
+    "circulating": 0,
+    "monetary": {
+      "interest": 0,
+      "term": 0
     }
   },
-  servers: [{
-      id: "dev",
-      description: "main dev server. funds for engineering",
-      balance: 0,
-      status: "active",
-      tag: ["system"]
-      registery: {
-        dividend: 0,
-        clients: []
+  "servers": [
+    {
+      "id": "dev",
+      "description": "main dev server. funds for engineering",
+      "balance": 0,
+      "status": "active",
+      "tag": [
+        "system"
+      ],
+      "registery": {
+        "dividend": 0,
+        "clients": []
       }
-  }, {
-      id: "board",
-      description: "reserved server for elected board members. funds for marketing and operation",
-      balance: 0,
-      status: "active",
-      tag: ["system"]
-      registery: {
-        dividend: 0,
-        clients: []
+    },
+    {
+      "id": "board",
+      "description": "reserved server for elected board members. funds for marketing and operation",
+      "balance": 0,
+      "status": "active",
+      "tag": [
+        "system"
+      ],
+      "registery": {
+        "dividend": 0,
+        "clients": []
       }
-  }, {
-      id: "reserve",
-      description: "fund reserved for whole community and support balance between dev and board",
-      balance: 0,
-      status: "active",
-      tag: ["system"]
-      registery: {
-        dividend: 0,
-        clients: []
+    },
+    {
+      "id": "reserve",
+      "description": "fund reserved for whole community and support balance between dev and board",
+      "balance": 0,
+      "status": "active",
+      "tag": [
+        "system"
+      ],
+      "registery": {
+        "dividend": 0,
+        "clients": []
       }
-  }]
+    }
+  ]
 }

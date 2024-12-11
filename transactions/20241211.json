@@ -1,11 +1,12 @@
 [
   {
-    time: 0,
-    channel: "activity"
-    amount: 0,
-    from: "world",
-    to: "firstsvr",
-    note: "first empty transaction",
-    tag: []
+    "time": 0,
+    "channel": "activity",
+    "amount": 0,
+    "from": "world",
+    "to": "firstsvr",
+    "via": null,
+    "note": "first empty transaction",
+    "tag": []
   }
 ]
