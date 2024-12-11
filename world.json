@@ -17,7 +17,7 @@
   "servers": [
     {
       "id": "dev",
-      "description": "main dev server. funds for engineering",
+      "description": "main dev server. funds for engineering. dev server",
       "balance": 833333333.3333333,
       "status": "active",
       "uptime": 1,
@@ -29,7 +29,7 @@
     },
     {
       "id": "board",
-      "description": "reserved server for elected board members. funds for marketing and operation",
+      "description": "reserved server for elected board members. funds for marketing and operation. server registration.",
       "balance": 833333333.3333333,
       "status": "active",
       "uptime": 1,
@@ -45,7 +45,7 @@
     },
     {
       "id": "reserve",
-      "description": "fund reserved for whole community and support balance between dev and board.",
+      "description": "fund reserved for whole community and support balance between dev and board. client application.",
       "balance": 833333333.3333333,
       "status": "active",
       "uptime": 1,
