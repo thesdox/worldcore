@@ -1,0 +1,15 @@
+{
+  "name": "worldcore",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "data interface for the world core",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "lowdb": "^7.0.1"
+  }
+}
