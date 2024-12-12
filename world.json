@@ -24,7 +24,7 @@
         "rateLo": 0.01,
         "rateHi": 0.30,
         "capLo": 1000,
-        "capHi": 1000000,
+        "capHi": 1000000
       }
     }
   },
@@ -61,8 +61,7 @@
             "staked": 1000000
           }
         }}
-      ]}
-    },
+    ]},
     "times": {
       "created": 0,
       "updated": 0,
