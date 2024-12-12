@@ -15,21 +15,53 @@ const meta = world.data.meta
 const current = world.data.current
 const accounts = world.data.accounts
 const activities = world.data.activities
+const assets = world.data.assets
 
 console.log(`starting worldcore service..`)
-console.log(`active accounts: ${current.accounts.length}/${accounts.length} transactions: ${activities.length}/${activities.length}`)
 
 setInterval(async () => {
     console.log(`current: T${current.time}`)
-
+    console.log(`active accounts: ${current.accounts.length}/${accounts.length} transactions: ${activities.length}/${activities.length}`)
     const startTime = new Date().getTime()
+
+    queueDividend()
+
     await processCurrentActivitiesAsync()
     await world.write()
     const elapsed = new Date().getTime() - startTime
     console.log(`Database updated in ${elapsed}ms`)
 
     current.time += 1;
-}, 5000)
+}, meta.interval.hour)
+
+function queueDividend() {
+    console.log(`processing ${current.bankstones.length} bankstones..`);
+    current.bankstones.forEach(id => {
+        const b = assets.find(a => a.id == id)
+        if (!b) {
+            console.error(`invalid bankstone id ${id}`);
+        }
+
+        const hrYield = b.properties.yield / meta.interval.year / meta.interval.day
+
+        const tx = {
+            type: "transaction",
+            id: `TX${current.txIdx++}`,
+            of: "credit",
+            from: b.id,
+            to: b.owner,
+            amount: hrYield * b.properties.staked,
+            note: `dividend yield for day ${Math.floor(current.time % (meta.interval.year / meta.interval.day))}`,
+            times: {
+                created: current.time
+            }
+        }
+
+        console.log(`${tx.id}: ${hrYield.toFixed(6) * 100}/${b.properties.yield * 100}% of staked ${b.properties.staked}/${b.properties.cap} credit.. yields ${tx.amount.toFixed(2)} hourly credit..`);
+        activities.push(tx)
+        current.activities.pending.push(tx.id);
+    });
+}
 
 async function processCurrentActivitiesAsync() {
     current.activities.pending.forEach((id) => {
@@ -84,17 +116,7 @@ function processPendingMint(mint) {
           "balance": 0
         },
         "inventory": {
-          "items": [
-            {
-              "id": "WTR0",
-              "type": "water",
-              "amount": 0
-            },
-            {
-              "id": "MNR0",
-              "type": "mineral",
-              "amount": 0
-            }]
+          "items": []
         },
         "times": {
           "created": current.time,
@@ -110,6 +132,9 @@ function processPendingTransaction(transaction) {
     const from = accounts.find(a => a.id == transaction.from)
     const to = accounts.find(a => a.id == transaction.to)
 
-    from.credits.balance -= transaction.amount
+    if (!transaction.from.startsWith("BNK")) {
+        from.credits.balance -= transaction.amount
+    }
+    
     to.credits.balance += transaction.amount
 }
