@@ -1,0 +1,322 @@
+{
+  "meta": {
+    "interval": {
+      "hour": 2000,
+      "day": 24,
+      "year": 365
+    },
+    "resources": {
+      "water": {
+        "total": 10000000000000000,
+        "batch": {
+          "base": 10,
+          "intervals": [
+            10,
+            50,
+            100,
+            200,
+            500,
+            1000,
+            2000,
+            5000,
+            10000
+          ]
+        },
+        "supply": {
+          "amount": 7
+        }
+      },
+      "mineral": {
+        "total": 10000000000000,
+        "batch": {
+          "base": 1,
+          "intervals": [
+            10,
+            50,
+            100,
+            200,
+            500,
+            1000,
+            2000,
+            5000,
+            10000
+          ]
+        }
+      }
+    },
+    "items": {
+      "bankstone": {
+        "rateLo": 0.01,
+        "rateHi": 0.3,
+        "capLo": 1000,
+        "capHi": 1000000
+      }
+    }
+  },
+  "current": {
+    "time": 361,
+    "assetIdx": 2,
+    "txIdx": 172,
+    "bankstones": [
+      "BNK0"
+    ],
+    "accounts": [
+      "world",
+      "dev"
+    ],
+    "activities": {
+      "pending": [],
+      "completed": [
+        "MNT0",
+        "MNT1",
+        "CN0",
+        "TX1",
+        "TX2",
+        "TX3",
+        "TX4",
+        "TX5",
+        "TX6",
+        "TX7",
+        "TX8",
+        "TX9",
+        "TX10",
+        "TX11",
+        "TX12",
+        "TX13",
+        "TX14",
+        "TX15",
+        "TX16",
+        "TX17",
+        "TX18",
+        "TX19",
+        "TX20",
+        "TX21",
+        "TX22",
+        "TX23",
+        "TX24",
+        "TX25",
+        "TX26",
+        "TX27",
+        "TX28",
+        "TX29",
+        "TX30",
+        "TX31",
+        "TX32",
+        "TX33",
+        "TX34",
+        "TX35",
+        "TX36",
+        "TX37",
+        "TX38",
+        "TX39",
+        "TX40",
+        "TX41",
+        "TX42",
+        "TX43",
+        "TX44",
+        "TX45",
+        "TX46",
+        "TX47",
+        "TX48",
+        "TX49",
+        "TX50",
+        "TX51",
+        "TX52",
+        "TX53",
+        "TX54",
+        "TX55",
+        "TX56",
+        "TX57",
+        "TX58",
+        "TX59",
+        "TX60",
+        "TX61",
+        "TX62",
+        "TX63",
+        "TX64",
+        "TX65",
+        "TX66",
+        "TX67",
+        "TX68",
+        "TX69",
+        "TX70",
+        "TX71",
+        "TX72",
+        "TX73",
+        "TX74",
+        "TX75",
+        "TX76",
+        "TX77",
+        "TX78",
+        "TX79",
+        "TX80",
+        "TX81",
+        "TX82",
+        "TX83",
+        "TX84",
+        "TX85",
+        "TX86",
+        "TX87",
+        "TX88",
+        "TX89",
+        "TX90",
+        "TX91",
+        "TX92",
+        "TX93",
+        "TX94",
+        "TX95",
+        "TX96",
+        "TX97",
+        "TX98",
+        "TX99",
+        "TX100",
+        "TX101",
+        "TX102",
+        "TX103",
+        "TX104",
+        "TX105",
+        "TX106",
+        "TX107",
+        "TX108",
+        "TX109",
+        "TX110",
+        "TX111",
+        "TX112",
+        "TX113",
+        "TX114",
+        "TX115",
+        "TX116",
+        "TX117",
+        "TX118",
+        "TX119",
+        "TX120",
+        "TX121",
+        "TX122",
+        "TX123",
+        "TX124",
+        "TX125",
+        "TX126",
+        "TX127",
+        "TX128",
+        "TX129",
+        "TX130",
+        "TX131",
+        "TX132",
+        "TX133",
+        "TX134",
+        "TX135",
+        "TX136",
+        "TX137",
+        "TX138",
+        "TX139",
+        "TX140",
+        "TX141",
+        "TX142",
+        "TX143",
+        "TX144",
+        "TX145",
+        "TX146",
+        "TX147",
+        "TX148",
+        "TX149",
+        "TX150",
+        "TX151",
+        "TX152",
+        "TX153",
+        "TX154",
+        "TX155",
+        "TX156",
+        "TX157",
+        "TX158",
+        "TX159",
+        "TX160",
+        "TX161",
+        "TX162",
+        "TX163",
+        "TX164",
+        "TX165",
+        "TX166",
+        "TX167",
+        "TX168",
+        "TX169",
+        "TX170",
+        "TX171"
+      ],
+      "rejected": []
+    },
+    "id": 11
+  },
+  "accounts": [
+    {
+      "id": "world",
+      "credits": {
+        "balance": 5821.797808219186
+      },
+      "inventory": {
+        "items": [
+          "WTR0",
+          "MNR0",
+          "BNK0"
+        ]
+      },
+      "times": {
+        "created": 0,
+        "updated": 0,
+        "lastActive": 0
+      }
+    },
+    {
+      "id": "dev",
+      "credits": {
+        "balance": 0.12
+      },
+      "inventory": {
+        "items": []
+      },
+      "times": {
+        "created": 36,
+        "updated": 36,
+        "lastActive": 84
+      }
+    },
+    {
+      "id": "dev0",
+      "credits": {
+        "balance": 0
+      },
+      "inventory": {
+        "items": []
+      },
+      "times": {
+        "created": 36,
+        "updated": 36,
+        "lastActive": 36
+      }
+    }
+  ],
+  "assets": [
+    {
+      "id": "WTR0",
+      "type": "water",
+      "amount": 0,
+      "owner": "world"
+    },
+    {
+      "id": "MNR0",
+      "type": "mineral",
+      "amount": 0,
+      "owner": "world"
+    },
+    {
+      "id": "BNK0",
+      "type": "bankstone",
+      "amount": 1,
+      "properties": {
+        "yield": 0.3,
+        "cap": 1000000,
+        "staked": 1000000
+      },
+      "owner": "world"
+    }
+  ]
+}

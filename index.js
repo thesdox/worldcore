@@ -2,19 +2,13 @@ import { JSONFilePreset } from 'lowdb/node'
 
 // Read or create world.json
 const defaultData = {}
-const world = await JSONFilePreset('world.json', defaultData)
+const history = await JSONFilePreset('./data/history.json', [])
+const activities = history.data
 
-// Update db.json
-//await db.update(({ posts }) => posts.push('hello world'))
-
-// Alternatively you can call db.write() explicitely later
-// to write to db.json
-//db.data.posts.push('hello world')
-
+const world = await JSONFilePreset('./data/world.json', defaultData)
 const meta = world.data.meta
 const current = world.data.current
 const accounts = world.data.accounts
-const activities = world.data.activities
 const assets = world.data.assets
 
 console.log(`starting worldcore service..`)
@@ -27,6 +21,7 @@ setInterval(async () => {
     queueDividend()
 
     await processCurrentActivitiesAsync()
+    await history.write()
     await world.write()
     const elapsed = new Date().getTime() - startTime
     console.log(`Database updated in ${elapsed}ms`)
