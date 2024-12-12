@@ -1,59 +1,86 @@
 {
-  "static": {
-    "currency": "CRD",
-    "supply": 1000000000000,
-    "intervals": {
-      "year": 0.25,
-      "day": 0.25,
-      "distribution": 0.05
+  "meta": {
+    "resources": {
+      "water": {
+        "total": 10000000000000000,
+        "batch": {
+          "base": 10,
+          "intervals": [10, 50, 100, 200, 500, 1000, 2000, 5000, 10000]
+        },
+        "supply": {
+          "amount": 7
+        }
+      },
+      "mineral": {
+        "total": 10000000000000,
+        "batch": {
+          "base": 1,
+          "intervals": [10, 50, 100, 200, 500, 1000, 2000, 5000, 10000]
+        }
+      }
+    },
+    "items": {
+      "bankstone": {
+        "rateLo": 0.01,
+        "rateHi": 0.30,
+        "capLo": 1000,
+        "capHi": 1000000,
+      }
     }
   },
-  "current": {
-    "year": 0,
-    "day": 0,
-    "time": 0,
-    "circulating": 2500000000
-  },
-  "servers": [
-    {
-      "id": "dev",
-      "description": "main dev server. funds for engineering. dev server",
-      "balance": 833333333.3333333,
-      "status": "active",
-      "uptime": 1,
-      "tag": [
-        "system"
-      ],
-      "dividend": 0.1,
-      "clients": []
-    },
-    {
-      "id": "board",
-      "description": "reserved server for elected board members. funds for marketing and operation. server registration.",
-      "balance": 833333333.3333333,
-      "status": "active",
-      "uptime": 1,
-      "tag": [
-        "system"
-      ],
-      "dividend": 0.1,
-      "clients": [{
-          "id": "test",
-          "description": "main test client",
-          "balance": 0
-      }]
-    },
-    {
-      "id": "reserve",
-      "description": "fund reserved for whole community and support balance between dev and board. client application.",
-      "balance": 833333333.3333333,
-      "status": "active",
-      "uptime": 1,
-      "dividend": 0.1,
-      "tag": [
-        "system"
-      ],
-      "clients": []
+  "time": {
+    "id": 0,
+    "transactions": {
+      "pending": [],
+      "completed": [],
+      "rejected": []
     }
-  ]
+  },
+  "accounts": [{
+    "id": "world",
+    "credits": {
+      "balance": 0
+    },
+    "inventory": {
+      "items": [{
+        "id": "WTR0",
+        "type": "water",
+        "amount": 0
+      }, {
+        "id": "MNR0",
+        "type": "mineral",
+        "amount": 0
+      }, {
+        "id": "BNK0",
+        "type": "bankstone",
+        "amount": 1,
+        "properties": {
+          "bank": {
+            "yield": 0.30,
+            "cap": 1000000,
+            "staked": 1000000
+          }
+        }}
+      ]}
+    },
+    "times": {
+      "created": 0,
+      "updated": 0,
+      "lastActive": 0
+    },
+    "activities": [],
+    "transactions": [{
+      "id": "TX1",
+      "of": "credit",
+      "from": "BNK0",
+      "to": "BNK0",
+      "amount": 1000000,
+      "note": "Seed stake for the genesis",
+      "times": {
+        "created": 0,
+        "completed": 0,
+        "failed": -1
+      }
+    }]
+  }]
 }
