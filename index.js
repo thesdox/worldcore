@@ -11,9 +11,11 @@ const accounts = accountDb.data
 const assetDb = await JSONFilePreset('./data/assets.json', [])
 const assets = assetDb.data
 
-const world = await JSONFilePreset('./data/world.json', defaultData)
-const meta = world.data.meta
-const current = world.data.current
+const currentDb = await JSONFilePreset('./data/current.json', [])
+const current = currentDb.data
+
+const worldDb = await JSONFilePreset('./data/world.json', defaultData)
+const world = worldDb.data
 
 console.log(`starting worldcore service..`)
 
@@ -25,15 +27,23 @@ setInterval(async () => {
     queueDividend()
 
     await processCurrentActivitiesAsync()
-    await activityDb.write()
-    await assetDb.write()
-    await accountDb.write()
-    await world.write()
+
+    if (current.activities.completed.length >= world.system.batch) {
+        await activityDb.write()
+        await assetDb.write()
+        await accountDb.write()
+        await worldDb.write()
+
+        current.activities.completed.length = 0
+    }
+
+    await currentDb.write()
+
     const elapsed = new Date().getTime() - startTime
-    console.log(`Database updated in ${elapsed}ms`)
+    console.log(`Sync completed in ${elapsed}ms`)
 
     current.time += 1;
-}, meta.interval.hour)
+}, world.interval.hour)
 
 function queueDividend() {
     console.log(`processing ${current.bankstones.length} bankstones..`);
@@ -43,7 +53,7 @@ function queueDividend() {
             console.error(`invalid bankstone id ${id}`);
         }
 
-        const hrYield = b.properties.yield / meta.interval.year / meta.interval.day
+        const hrYield = b.properties.yield / world.interval.year / world.interval.day
 
         const tx = {
             type: "transaction",
@@ -52,7 +62,7 @@ function queueDividend() {
             from: b.id,
             to: b.owner,
             amount: hrYield * b.properties.staked,
-            note: `dividend yield for day ${Math.floor(current.time % (meta.interval.year / meta.interval.day))}`,
+            note: `dividend yield for day ${Math.floor(current.time % (world.interval.year / world.interval.day))}`,
             times: {
                 created: current.time
             }

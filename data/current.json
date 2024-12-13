@@ -1,0 +1,35 @@
+{
+  "time": 954,
+  "assetIdx": 2,
+  "txIdx": 779,
+  "bankstones": [
+    "BNK0"
+  ],
+  "accounts": [
+    "world",
+    "dev"
+  ],
+  "activities": {
+    "pending": [],
+    "completed": [
+      "TX762",
+      "TX763",
+      "TX764",
+      "TX765",
+      "TX766",
+      "TX767",
+      "TX768",
+      "TX769",
+      "TX770",
+      "TX771",
+      "TX772",
+      "TX773",
+      "TX774",
+      "TX775",
+      "TX776",
+      "TX777",
+      "TX778"
+    ],
+    "rejected": []
+  }
+}
