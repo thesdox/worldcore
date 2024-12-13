@@ -2,34 +2,32 @@
   {
     "id": "world",
     "credits": {
-      "balance": 32306.112876712312
+      "balance": 0
     },
     "inventory": {
       "items": [
-        "WTR0",
-        "MNR0",
-        "BNK0",
-        "BNK2"
+        "BNK11",
+        "BNK12",
+        "BNK13",
+        "BNK14",
+        "BNK15",
+        "BNK16",
+        "BNK17",
+        "BNK18",
+        "BNK19",
+        "BNK20",
+        "BNK21",
+        "BNK22",
+        "BNK23",
+        "BNK24",
+        "BNK25",
+        "BNK26"
       ]
     },
     "times": {
       "created": 0,
       "updated": 0,
       "lastActive": 0
-    }
-  },
-  {
-    "id": "dev",
-    "credits": {
-      "balance": 0.12
-    },
-    "inventory": {
-      "items": []
-    },
-    "times": {
-      "created": 36,
-      "updated": 36,
-      "lastActive": 84
     }
   },
   {
@@ -41,9 +39,107 @@
       "items": []
     },
     "times": {
-      "created": 36,
-      "updated": 36,
-      "lastActive": 36
+      "created": 165,
+      "updated": 165,
+      "lastActive": 165
+    }
+  },
+  {
+    "id": "dev1",
+    "credits": {
+      "balance": 0
+    },
+    "inventory": {
+      "items": []
+    },
+    "times": {
+      "created": 171,
+      "updated": 171,
+      "lastActive": 171
+    }
+  },
+  {
+    "id": "dev3",
+    "credits": {
+      "balance": 0
+    },
+    "inventory": {
+      "items": []
+    },
+    "times": {
+      "created": 179,
+      "updated": 179,
+      "lastActive": 179
+    }
+  },
+  {
+    "id": "dev4",
+    "credits": {
+      "balance": 0
+    },
+    "inventory": {
+      "items": []
+    },
+    "times": {
+      "created": 181,
+      "updated": 181,
+      "lastActive": 181
+    }
+  },
+  {
+    "id": "dev2",
+    "credits": {
+      "balance": 0
+    },
+    "inventory": {
+      "items": []
+    },
+    "times": {
+      "created": 190,
+      "updated": 190,
+      "lastActive": 190
+    }
+  },
+  {
+    "id": "dev5",
+    "credits": {
+      "balance": 0
+    },
+    "inventory": {
+      "items": []
+    },
+    "times": {
+      "created": 196,
+      "updated": 196,
+      "lastActive": 196
+    }
+  },
+  {
+    "id": "dev6",
+    "credits": {
+      "balance": 0
+    },
+    "inventory": {
+      "items": []
+    },
+    "times": {
+      "created": 223,
+      "updated": 223,
+      "lastActive": 223
+    }
+  },
+  {
+    "id": "dev7",
+    "credits": {
+      "balance": 0
+    },
+    "inventory": {
+      "items": []
+    },
+    "times": {
+      "created": 262,
+      "updated": 262,
+      "lastActive": 262
     }
   }
 ]

@@ -1,4 +1,5 @@
 import { JSONFilePreset } from 'lowdb/node'
+import express from 'express'
 
 // Read or create world.json
 const defaultData = {}
@@ -18,6 +19,95 @@ const worldDb = await JSONFilePreset('./data/world.json', defaultData)
 const world = worldDb.data
 
 console.log(`starting worldcore service..`)
+
+const app = express()
+const port = 3000
+
+//app.use(express.json)
+app.use(express.urlencoded())
+
+app.get('/', (req, res) => {
+    res.send(`
+        <h1>welcome to this program</h1>
+        <h2>Links</h2>
+        <ul>
+            <li><a href="/accounts">accounts</a></li>
+            <li><a href="/activities">activities</a></li>
+            <li><a href="/assets">assets</a></li>
+            <li><a href="/current">current</a></li>
+        </ul>
+
+        <h2>Mint account</h2>
+        <form action="/mint" method="post">
+            <input name="username" placeholder="username" required />
+            <button name="type" value="account">Mint</button>
+        </form>
+
+        <h2>Mint items</h2>
+        <form action="/mint" method="post">
+            <h3>Bankstone</h3>
+            <input name="owner" placeholder="owner" required />
+            <button name="type" value="bankstone">Mint</button>
+        </form>
+        `)
+})
+
+app.post('/mint', (req, res) => {
+    console.log(`minting ${req.body.type}...`);
+
+    let type = undefined
+    let to = undefined
+    switch (req.body.type) {
+        case "account":
+            type = "account"
+            to = req.body.username
+            break
+        case "bankstone":
+            type = "bankstone"
+            to = req.body.owner
+            break
+        default:
+            break
+    }
+
+    const tx = {
+        "type": "mint",
+        "id": `MNT${current.assetIdx}`,
+        "of": type,
+        "from": "world",
+        "to": to,
+        "amount": 1,
+        "note": `Minting of ${type} for ${to}`,
+        "times": {
+            "created": current.time
+        }
+    }
+
+    activities.push(tx)
+    current.activities.pending.push(tx.id)
+
+    res.json(tx)
+})
+
+app.get('/accounts', (req, res) => {
+    res.send(accounts)
+})
+
+app.get('/activities', (req, res) => {
+    res.send(activities)
+})
+
+app.get('/assets', (req, res) => {
+    res.send(assets)
+})
+
+app.get('/current', (req, res) => {
+    res.send(current)
+})
+
+app.listen(port, () => {
+    console.log(`app listening on port ${port}`)
+})
 
 setInterval(async () => {
     console.log(`current: T${current.time}`)
@@ -157,11 +247,13 @@ function processPendingMint(mint) {
             })
 
             const owner = accounts.find(a => a.id == mint.to)
-            owner.inventory.push(id);
+            owner.inventory.items.push(id);
             break
         default:
             break
     }
+
+    current.assetIdx += 1
 }
 
 function getRandomNumber(min, max) {
@@ -183,3 +275,4 @@ function processPendingTransaction(transaction) {
     
     to.credits.balance += transaction.amount
 }
+
