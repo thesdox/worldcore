@@ -19,7 +19,7 @@
     "of": "account",
     "from": "world",
     "to": "dev",
-    "amount": 0,
+    "amount": 1,
     "note": "First minting of a dev account",
     "times": {
       "created": 25,
@@ -33,7 +33,7 @@
     "of": "account",
     "from": "world",
     "to": "dev0",
-    "amount": 0,
+    "amount": 1,
     "note": "Minting of dev0 account",
     "times": {
       "created": 25,
@@ -47,7 +47,7 @@
     "of": "connection",
     "from": "dev",
     "to": "world",
-    "amount": 0,
+    "amount": 1,
     "note": "Connection of dev account to the world",
     "times": {
       "created": 50,
@@ -9584,6 +9584,3672 @@
     "times": {
       "created": 937,
       "completed": 937
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX779",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 11",
+    "times": {
+      "created": 954,
+      "completed": 954
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX780",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 12",
+    "times": {
+      "created": 955,
+      "completed": 955
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX781",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 13",
+    "times": {
+      "created": 956,
+      "completed": 956
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX782",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 14",
+    "times": {
+      "created": 957,
+      "completed": 957
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX783",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 15",
+    "times": {
+      "created": 958,
+      "completed": 958
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX784",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 0",
+    "times": {
+      "created": 959,
+      "completed": 959
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX785",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 1",
+    "times": {
+      "created": 960,
+      "completed": 960
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX786",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 2",
+    "times": {
+      "created": 961,
+      "completed": 961
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX787",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 3",
+    "times": {
+      "created": 962,
+      "completed": 962
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX788",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 4",
+    "times": {
+      "created": 963,
+      "completed": 963
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX789",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 5",
+    "times": {
+      "created": 964,
+      "completed": 964
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX790",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 6",
+    "times": {
+      "created": 965,
+      "completed": 965
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX791",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 7",
+    "times": {
+      "created": 966,
+      "completed": 966
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX792",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 8",
+    "times": {
+      "created": 967,
+      "completed": 967
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX793",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 9",
+    "times": {
+      "created": 968,
+      "completed": 968
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX794",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 10",
+    "times": {
+      "created": 969,
+      "completed": 969
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX795",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 11",
+    "times": {
+      "created": 970,
+      "completed": 970
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX796",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 12",
+    "times": {
+      "created": 971,
+      "completed": 971
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX797",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 13",
+    "times": {
+      "created": 972,
+      "completed": 972
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX798",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 14",
+    "times": {
+      "created": 973,
+      "completed": 973
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX799",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 0",
+    "times": {
+      "created": 974,
+      "completed": 974
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX800",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 1",
+    "times": {
+      "created": 975,
+      "completed": 975
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX801",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 2",
+    "times": {
+      "created": 976,
+      "completed": 976
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX802",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 3",
+    "times": {
+      "created": 977,
+      "completed": 977
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX803",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 4",
+    "times": {
+      "created": 978,
+      "completed": 978
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX804",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 5",
+    "times": {
+      "created": 979,
+      "completed": 979
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX805",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 6",
+    "times": {
+      "created": 980,
+      "completed": 980
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX806",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 7",
+    "times": {
+      "created": 981,
+      "completed": 981
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX807",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 8",
+    "times": {
+      "created": 982,
+      "completed": 982
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX808",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 9",
+    "times": {
+      "created": 983,
+      "completed": 983
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX809",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 10",
+    "times": {
+      "created": 984,
+      "completed": 984
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX810",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 11",
+    "times": {
+      "created": 985,
+      "completed": 985
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX811",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 12",
+    "times": {
+      "created": 986,
+      "completed": 986
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX812",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 13",
+    "times": {
+      "created": 987,
+      "completed": 987
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX813",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 14",
+    "times": {
+      "created": 988,
+      "completed": 988
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX814",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 0",
+    "times": {
+      "created": 989,
+      "completed": 989
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX815",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 1",
+    "times": {
+      "created": 990,
+      "completed": 990
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX816",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 2",
+    "times": {
+      "created": 991,
+      "completed": 991
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX817",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 3",
+    "times": {
+      "created": 992,
+      "completed": 992
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX818",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 4",
+    "times": {
+      "created": 993,
+      "completed": 993
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX819",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 5",
+    "times": {
+      "created": 994,
+      "completed": 994
+    }
+  },
+  {
+    "type": "mint",
+    "id": "MNT2",
+    "of": "bankstone",
+    "from": "world",
+    "to": "world",
+    "amount": 1,
+    "note": "Test minting of a bankstone account",
+    "times": {
+      "created": 994,
+      "completed": 1046
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX820",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 5",
+    "times": {
+      "created": 994,
+      "completed": 994
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX821",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 6",
+    "times": {
+      "created": 995,
+      "completed": 995
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX822",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 7",
+    "times": {
+      "created": 996,
+      "completed": 996
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX823",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 8",
+    "times": {
+      "created": 997,
+      "completed": 997
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX824",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 9",
+    "times": {
+      "created": 998,
+      "completed": 998
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX825",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 10",
+    "times": {
+      "created": 999,
+      "completed": 999
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX826",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 11",
+    "times": {
+      "created": 1000,
+      "completed": 1000
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX827",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 12",
+    "times": {
+      "created": 1001,
+      "completed": 1001
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX828",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 13",
+    "times": {
+      "created": 1002,
+      "completed": 1002
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX829",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 14",
+    "times": {
+      "created": 1003,
+      "completed": 1003
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX830",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 0",
+    "times": {
+      "created": 1004,
+      "completed": 1004
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX831",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 1",
+    "times": {
+      "created": 1005,
+      "completed": 1005
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX832",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 2",
+    "times": {
+      "created": 1006,
+      "completed": 1006
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX833",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 3",
+    "times": {
+      "created": 1007,
+      "completed": 1007
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX834",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 4",
+    "times": {
+      "created": 1008,
+      "completed": 1008
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX835",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 5",
+    "times": {
+      "created": 1009,
+      "completed": 1009
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX836",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 6",
+    "times": {
+      "created": 1010,
+      "completed": 1010
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX837",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 7",
+    "times": {
+      "created": 1011,
+      "completed": 1011
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX838",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 8",
+    "times": {
+      "created": 1012,
+      "completed": 1012
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX839",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 9",
+    "times": {
+      "created": 1013,
+      "completed": 1013
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX841",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 10",
+    "times": {
+      "created": 1014,
+      "completed": 1014
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX842",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 11",
+    "times": {
+      "created": 1015,
+      "completed": 1015
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX843",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 12",
+    "times": {
+      "created": 1016,
+      "completed": 1016
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX844",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 13",
+    "times": {
+      "created": 1017,
+      "completed": 1017
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX845",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 14",
+    "times": {
+      "created": 1018,
+      "completed": 1018
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX846",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 0",
+    "times": {
+      "created": 1019,
+      "completed": 1019
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX847",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 1",
+    "times": {
+      "created": 1020,
+      "completed": 1020
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX848",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 2",
+    "times": {
+      "created": 1021,
+      "completed": 1021
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX849",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 3",
+    "times": {
+      "created": 1022,
+      "completed": 1022
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX850",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 4",
+    "times": {
+      "created": 1023,
+      "completed": 1023
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX851",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 5",
+    "times": {
+      "created": 1024,
+      "completed": 1024
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX852",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 6",
+    "times": {
+      "created": 1025,
+      "completed": 1025
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX853",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 7",
+    "times": {
+      "created": 1026,
+      "completed": 1026
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX854",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 8",
+    "times": {
+      "created": 1027,
+      "completed": 1027
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX855",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 9",
+    "times": {
+      "created": 1028,
+      "completed": 1028
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX856",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 10",
+    "times": {
+      "created": 1029,
+      "completed": 1029
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX857",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 11",
+    "times": {
+      "created": 1030,
+      "completed": 1030
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX858",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 12",
+    "times": {
+      "created": 1031,
+      "completed": 1031
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX865",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 2",
+    "times": {
+      "created": 1037,
+      "completed": 1037
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX866",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 3",
+    "times": {
+      "created": 1038,
+      "completed": 1038
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX867",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 4",
+    "times": {
+      "created": 1039,
+      "completed": 1039
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX875",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 11",
+    "times": {
+      "created": 1046,
+      "completed": 1046
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX876",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 12",
+    "times": {
+      "created": 1047,
+      "completed": 1047
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX877",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 13",
+    "times": {
+      "created": 1048,
+      "completed": 1048
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX878",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 14",
+    "times": {
+      "created": 1049,
+      "completed": 1049
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX879",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 0",
+    "times": {
+      "created": 1050,
+      "completed": 1050
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX880",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 1",
+    "times": {
+      "created": 1051,
+      "completed": 1051
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX881",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 2",
+    "times": {
+      "created": 1052,
+      "completed": 1052
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX882",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 3",
+    "times": {
+      "created": 1053,
+      "completed": 1053
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX883",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 4",
+    "times": {
+      "created": 1054,
+      "completed": 1054
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX884",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 5",
+    "times": {
+      "created": 1055,
+      "completed": 1055
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX885",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 6",
+    "times": {
+      "created": 1056,
+      "completed": 1056
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX886",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 7",
+    "times": {
+      "created": 1057,
+      "completed": 1057
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX896",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 0",
+    "times": {
+      "created": 1065,
+      "completed": 1065
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX900",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 3",
+    "times": {
+      "created": 1068,
+      "completed": 1068
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX901",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 3",
+    "times": {
+      "created": 1068,
+      "completed": 1068
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX902",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 4",
+    "times": {
+      "created": 1069,
+      "completed": 1069
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX903",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 4",
+    "times": {
+      "created": 1069,
+      "completed": 1069
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX904",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 5",
+    "times": {
+      "created": 1070,
+      "completed": 1070
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX905",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 5",
+    "times": {
+      "created": 1070,
+      "completed": 1070
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX906",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 6",
+    "times": {
+      "created": 1071,
+      "completed": 1071
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX907",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 6",
+    "times": {
+      "created": 1071,
+      "completed": 1071
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX908",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 6",
+    "times": {
+      "created": 1071,
+      "completed": 1071
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX909",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 6",
+    "times": {
+      "created": 1071,
+      "completed": 1071
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX910",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 6",
+    "times": {
+      "created": 1071,
+      "completed": 1071
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX911",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 6",
+    "times": {
+      "created": 1071,
+      "completed": 1071
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX912",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 6",
+    "times": {
+      "created": 1071,
+      "completed": 1071
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX913",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 6",
+    "times": {
+      "created": 1071,
+      "completed": 1071
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX914",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 6",
+    "times": {
+      "created": 1071,
+      "completed": 1071
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX915",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 6",
+    "times": {
+      "created": 1071,
+      "completed": 1071
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX916",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 11",
+    "times": {
+      "created": 1076,
+      "completed": 1076
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX917",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 11",
+    "times": {
+      "created": 1076,
+      "completed": 1076
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX918",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 12",
+    "times": {
+      "created": 1077,
+      "completed": 1077
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX919",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 12",
+    "times": {
+      "created": 1077,
+      "completed": 1077
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX920",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 13",
+    "times": {
+      "created": 1078,
+      "completed": 1078
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX921",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 13",
+    "times": {
+      "created": 1078,
+      "completed": 1078
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX922",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 14",
+    "times": {
+      "created": 1079,
+      "completed": 1079
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX923",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 14",
+    "times": {
+      "created": 1079,
+      "completed": 1079
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX924",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 0",
+    "times": {
+      "created": 1080,
+      "completed": 1080
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX925",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 0",
+    "times": {
+      "created": 1080,
+      "completed": 1080
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX926",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 1",
+    "times": {
+      "created": 1081,
+      "completed": 1081
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX927",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 1",
+    "times": {
+      "created": 1081,
+      "completed": 1081
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX928",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 2",
+    "times": {
+      "created": 1082,
+      "completed": 1082
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX929",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 2",
+    "times": {
+      "created": 1082,
+      "completed": 1082
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX930",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 3",
+    "times": {
+      "created": 1083,
+      "completed": 1083
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX931",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 3",
+    "times": {
+      "created": 1083,
+      "completed": 1083
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX932",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 4",
+    "times": {
+      "created": 1084,
+      "completed": 1084
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX933",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 4",
+    "times": {
+      "created": 1084,
+      "completed": 1084
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX934",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 5",
+    "times": {
+      "created": 1085,
+      "completed": 1085
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX935",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 5",
+    "times": {
+      "created": 1085,
+      "completed": 1085
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX936",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 6",
+    "times": {
+      "created": 1086,
+      "completed": 1086
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX937",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 6",
+    "times": {
+      "created": 1086,
+      "completed": 1086
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX938",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 7",
+    "times": {
+      "created": 1087,
+      "completed": 1087
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX939",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 7",
+    "times": {
+      "created": 1087,
+      "completed": 1087
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX940",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 8",
+    "times": {
+      "created": 1088,
+      "completed": 1088
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX941",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 8",
+    "times": {
+      "created": 1088,
+      "completed": 1088
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX942",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 9",
+    "times": {
+      "created": 1089,
+      "completed": 1089
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX943",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 9",
+    "times": {
+      "created": 1089,
+      "completed": 1089
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX944",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 10",
+    "times": {
+      "created": 1090,
+      "completed": 1090
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX945",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 10",
+    "times": {
+      "created": 1090,
+      "completed": 1090
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX946",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 11",
+    "times": {
+      "created": 1091,
+      "completed": 1091
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX947",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 11",
+    "times": {
+      "created": 1091,
+      "completed": 1091
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX948",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 12",
+    "times": {
+      "created": 1092,
+      "completed": 1092
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX949",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 12",
+    "times": {
+      "created": 1092,
+      "completed": 1092
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX950",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 13",
+    "times": {
+      "created": 1093,
+      "completed": 1093
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX951",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 13",
+    "times": {
+      "created": 1093,
+      "completed": 1093
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX952",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 14",
+    "times": {
+      "created": 1094,
+      "completed": 1094
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX953",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 14",
+    "times": {
+      "created": 1094,
+      "completed": 1094
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX954",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 15",
+    "times": {
+      "created": 1095,
+      "completed": 1095
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX955",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 15",
+    "times": {
+      "created": 1095,
+      "completed": 1095
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX956",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 0",
+    "times": {
+      "created": 1096,
+      "completed": 1096
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX957",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 0",
+    "times": {
+      "created": 1096,
+      "completed": 1096
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX958",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 1",
+    "times": {
+      "created": 1097,
+      "completed": 1097
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX959",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 1",
+    "times": {
+      "created": 1097,
+      "completed": 1097
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX960",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 2",
+    "times": {
+      "created": 1098,
+      "completed": 1098
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX961",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 2",
+    "times": {
+      "created": 1098,
+      "completed": 1098
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX962",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 3",
+    "times": {
+      "created": 1099,
+      "completed": 1099
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX963",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 3",
+    "times": {
+      "created": 1099,
+      "completed": 1099
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX964",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 4",
+    "times": {
+      "created": 1100,
+      "completed": 1100
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX965",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 4",
+    "times": {
+      "created": 1100,
+      "completed": 1100
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX966",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 5",
+    "times": {
+      "created": 1101,
+      "completed": 1101
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX967",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 5",
+    "times": {
+      "created": 1101,
+      "completed": 1101
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX968",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 6",
+    "times": {
+      "created": 1102,
+      "completed": 1102
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX969",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 6",
+    "times": {
+      "created": 1102,
+      "completed": 1102
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX970",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 7",
+    "times": {
+      "created": 1103,
+      "completed": 1103
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX971",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 7",
+    "times": {
+      "created": 1103,
+      "completed": 1103
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX972",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 8",
+    "times": {
+      "created": 1104,
+      "completed": 1104
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX973",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 8",
+    "times": {
+      "created": 1104,
+      "completed": 1104
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX974",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 9",
+    "times": {
+      "created": 1105,
+      "completed": 1105
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX975",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 9",
+    "times": {
+      "created": 1105,
+      "completed": 1105
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX976",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 10",
+    "times": {
+      "created": 1106,
+      "completed": 1106
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX977",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 10",
+    "times": {
+      "created": 1106,
+      "completed": 1106
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX978",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 11",
+    "times": {
+      "created": 1107,
+      "completed": 1107
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX979",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 11",
+    "times": {
+      "created": 1107,
+      "completed": 1107
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX980",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 12",
+    "times": {
+      "created": 1108,
+      "completed": 1108
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX981",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 12",
+    "times": {
+      "created": 1108,
+      "completed": 1108
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX982",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 13",
+    "times": {
+      "created": 1109,
+      "completed": 1109
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX983",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 13",
+    "times": {
+      "created": 1109,
+      "completed": 1109
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX984",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 14",
+    "times": {
+      "created": 1110,
+      "completed": 1110
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX985",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 14",
+    "times": {
+      "created": 1110,
+      "completed": 1110
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX986",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 0",
+    "times": {
+      "created": 1111,
+      "completed": 1111
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX987",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 0",
+    "times": {
+      "created": 1111,
+      "completed": 1111
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX988",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 1",
+    "times": {
+      "created": 1112,
+      "completed": 1112
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX989",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 1",
+    "times": {
+      "created": 1112,
+      "completed": 1112
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX990",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 2",
+    "times": {
+      "created": 1113,
+      "completed": 1113
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX991",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 2",
+    "times": {
+      "created": 1113,
+      "completed": 1113
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX992",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 3",
+    "times": {
+      "created": 1114,
+      "completed": 1114
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX993",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 3",
+    "times": {
+      "created": 1114,
+      "completed": 1114
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX994",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 4",
+    "times": {
+      "created": 1115,
+      "completed": 1115
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX995",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 4",
+    "times": {
+      "created": 1115,
+      "completed": 1115
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX996",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 5",
+    "times": {
+      "created": 1116,
+      "completed": 1116
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX997",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 5",
+    "times": {
+      "created": 1116,
+      "completed": 1116
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX998",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 6",
+    "times": {
+      "created": 1117,
+      "completed": 1117
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX999",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 6",
+    "times": {
+      "created": 1117,
+      "completed": 1117
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1000",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 7",
+    "times": {
+      "created": 1118,
+      "completed": 1118
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1001",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 7",
+    "times": {
+      "created": 1118,
+      "completed": 1118
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1002",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 8",
+    "times": {
+      "created": 1119,
+      "completed": 1119
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1003",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 8",
+    "times": {
+      "created": 1119,
+      "completed": 1119
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1004",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 9",
+    "times": {
+      "created": 1120,
+      "completed": 1120
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1005",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 9",
+    "times": {
+      "created": 1120,
+      "completed": 1120
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1006",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 10",
+    "times": {
+      "created": 1121,
+      "completed": 1121
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1007",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 10",
+    "times": {
+      "created": 1121,
+      "completed": 1121
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1008",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 11",
+    "times": {
+      "created": 1122,
+      "completed": 1122
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1009",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 11",
+    "times": {
+      "created": 1122,
+      "completed": 1122
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1010",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 12",
+    "times": {
+      "created": 1123,
+      "completed": 1123
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1011",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 12",
+    "times": {
+      "created": 1123,
+      "completed": 1123
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1012",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 13",
+    "times": {
+      "created": 1124,
+      "completed": 1124
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1013",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 13",
+    "times": {
+      "created": 1124,
+      "completed": 1124
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1014",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 14",
+    "times": {
+      "created": 1125,
+      "completed": 1125
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1015",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 14",
+    "times": {
+      "created": 1125,
+      "completed": 1125
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1016",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 0",
+    "times": {
+      "created": 1126,
+      "completed": 1126
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1017",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 0",
+    "times": {
+      "created": 1126,
+      "completed": 1126
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1018",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 1",
+    "times": {
+      "created": 1127,
+      "completed": 1127
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1019",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 1",
+    "times": {
+      "created": 1127,
+      "completed": 1127
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1020",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 2",
+    "times": {
+      "created": 1128,
+      "completed": 1128
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1021",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 2",
+    "times": {
+      "created": 1128,
+      "completed": 1128
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1022",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 3",
+    "times": {
+      "created": 1129,
+      "completed": 1129
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1023",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 3",
+    "times": {
+      "created": 1129,
+      "completed": 1129
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1024",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 4",
+    "times": {
+      "created": 1130,
+      "completed": 1130
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1025",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 4",
+    "times": {
+      "created": 1130,
+      "completed": 1130
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1026",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 5",
+    "times": {
+      "created": 1131,
+      "completed": 1131
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1027",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 5",
+    "times": {
+      "created": 1131,
+      "completed": 1131
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1028",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 6",
+    "times": {
+      "created": 1132,
+      "completed": 1132
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1029",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 6",
+    "times": {
+      "created": 1132,
+      "completed": 1132
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1030",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 7",
+    "times": {
+      "created": 1133,
+      "completed": 1133
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1031",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 7",
+    "times": {
+      "created": 1133,
+      "completed": 1133
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1032",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 8",
+    "times": {
+      "created": 1134,
+      "completed": 1134
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1033",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 8",
+    "times": {
+      "created": 1134,
+      "completed": 1134
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1034",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 9",
+    "times": {
+      "created": 1135,
+      "completed": 1135
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1035",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 9",
+    "times": {
+      "created": 1135,
+      "completed": 1135
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1036",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 10",
+    "times": {
+      "created": 1136,
+      "completed": 1136
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1037",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 10",
+    "times": {
+      "created": 1136,
+      "completed": 1136
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1038",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 11",
+    "times": {
+      "created": 1137,
+      "completed": 1137
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1039",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 11",
+    "times": {
+      "created": 1137,
+      "completed": 1137
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1040",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 12",
+    "times": {
+      "created": 1138,
+      "completed": 1138
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1041",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 12",
+    "times": {
+      "created": 1138,
+      "completed": 1138
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1042",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 13",
+    "times": {
+      "created": 1139,
+      "completed": 1139
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1043",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 13",
+    "times": {
+      "created": 1139,
+      "completed": 1139
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1044",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 14",
+    "times": {
+      "created": 1140,
+      "completed": 1140
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1045",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 14",
+    "times": {
+      "created": 1140,
+      "completed": 1140
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1046",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 0",
+    "times": {
+      "created": 1141,
+      "completed": 1141
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1047",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 0",
+    "times": {
+      "created": 1141,
+      "completed": 1141
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1048",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 1",
+    "times": {
+      "created": 1142,
+      "completed": 1142
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1049",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 1",
+    "times": {
+      "created": 1142,
+      "completed": 1142
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1050",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 2",
+    "times": {
+      "created": 1143,
+      "completed": 1143
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1051",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 2",
+    "times": {
+      "created": 1143,
+      "completed": 1143
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1052",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 3",
+    "times": {
+      "created": 1144,
+      "completed": 1144
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1053",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 3",
+    "times": {
+      "created": 1144,
+      "completed": 1144
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1054",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 4",
+    "times": {
+      "created": 1145,
+      "completed": 1145
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1055",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.051369863013698634,
+    "note": "dividend yield for day 4",
+    "times": {
+      "created": 1145,
+      "completed": 1145
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1064",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 8",
+    "times": {
+      "created": 1149,
+      "completed": 1149
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1065",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.5136986301369864,
+    "note": "dividend yield for day 8",
+    "times": {
+      "created": 1149,
+      "completed": 1149
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1066",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 8",
+    "times": {
+      "created": 1149,
+      "completed": 1149
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1067",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.5136986301369864,
+    "note": "dividend yield for day 8",
+    "times": {
+      "created": 1149,
+      "completed": 1149
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1068",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 8",
+    "times": {
+      "created": 1149,
+      "completed": 1149
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1069",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.5136986301369864,
+    "note": "dividend yield for day 8",
+    "times": {
+      "created": 1149,
+      "completed": 1149
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1070",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 8",
+    "times": {
+      "created": 1149,
+      "completed": 1149
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1071",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.5136986301369864,
+    "note": "dividend yield for day 8",
+    "times": {
+      "created": 1149,
+      "completed": 1149
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1072",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 8",
+    "times": {
+      "created": 1149,
+      "completed": 1149
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1073",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.5136986301369864,
+    "note": "dividend yield for day 8",
+    "times": {
+      "created": 1149,
+      "completed": 1149
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1074",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 13",
+    "times": {
+      "created": 1154,
+      "completed": 1154
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1075",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.5136986301369864,
+    "note": "dividend yield for day 13",
+    "times": {
+      "created": 1154,
+      "completed": 1154
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1076",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 14",
+    "times": {
+      "created": 1155,
+      "completed": 1155
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1077",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.5136986301369864,
+    "note": "dividend yield for day 14",
+    "times": {
+      "created": 1155,
+      "completed": 1155
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1078",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 0",
+    "times": {
+      "created": 1156,
+      "completed": 1156
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1079",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.5136986301369864,
+    "note": "dividend yield for day 0",
+    "times": {
+      "created": 1156,
+      "completed": 1156
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1080",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 1",
+    "times": {
+      "created": 1157,
+      "completed": 1157
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1081",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.5136986301369864,
+    "note": "dividend yield for day 1",
+    "times": {
+      "created": 1157,
+      "completed": 1157
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1082",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 2",
+    "times": {
+      "created": 1158,
+      "completed": 1158
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1083",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.5136986301369864,
+    "note": "dividend yield for day 2",
+    "times": {
+      "created": 1158,
+      "completed": 1158
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1084",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 3",
+    "times": {
+      "created": 1159,
+      "completed": 1159
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1085",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.5136986301369864,
+    "note": "dividend yield for day 3",
+    "times": {
+      "created": 1159,
+      "completed": 1159
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1086",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 4",
+    "times": {
+      "created": 1160,
+      "completed": 1160
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1087",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.5136986301369864,
+    "note": "dividend yield for day 4",
+    "times": {
+      "created": 1160,
+      "completed": 1160
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1088",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 5",
+    "times": {
+      "created": 1161,
+      "completed": 1161
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1089",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.5136986301369864,
+    "note": "dividend yield for day 5",
+    "times": {
+      "created": 1161,
+      "completed": 1161
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1090",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 6",
+    "times": {
+      "created": 1162,
+      "completed": 1162
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1091",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.5136986301369864,
+    "note": "dividend yield for day 6",
+    "times": {
+      "created": 1162,
+      "completed": 1162
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1092",
+    "of": "credit",
+    "from": "BNK0",
+    "to": "world",
+    "amount": 34.24657534246575,
+    "note": "dividend yield for day 7",
+    "times": {
+      "created": 1163,
+      "completed": 1163
+    }
+  },
+  {
+    "type": "transaction",
+    "id": "TX1093",
+    "of": "credit",
+    "from": "BNK2",
+    "to": "world",
+    "amount": 0.5136986301369864,
+    "note": "dividend yield for day 7",
+    "times": {
+      "created": 1163,
+      "completed": 1163
     }
   }
 ]

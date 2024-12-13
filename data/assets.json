@@ -21,5 +21,16 @@
       "staked": 1000000
     },
     "owner": "world"
+  },
+  {
+    "id": "BNK2",
+    "type": "bankstone",
+    "amount": 1,
+    "properties": {
+      "yield": 0.09,
+      "cap": 658158,
+      "staked": 50000
+    },
+    "owner": "world"
   }
 ]

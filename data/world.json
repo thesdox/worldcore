@@ -1,6 +1,6 @@
 {
   "system": {
-    "batch": 100
+    "batch": 10
   },
   "interval": {
     "hour": 2000,
@@ -17,8 +17,8 @@
   },
   "items": {
     "bankstone": {
-      "rateLo": 0.01,
-      "rateHi": 0.3,
+      "rateLo": 1,
+      "rateHi": 30,
       "capLo": 1000,
       "capHi": 1000000
     }

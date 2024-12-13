@@ -121,20 +121,54 @@ function processPendingSystemActivity(activity) {
 
 function processPendingMint(mint) {
     console.log(`#${mint.id}: minting an ${mint.of} from ${mint.from} to ${mint.to}...`)
-    accounts.push({
-        "id": mint.to,
-        "credits": {
-          "balance": 0
-        },
-        "inventory": {
-          "items": []
-        },
-        "times": {
-          "created": current.time,
-          "updated": current.time,
-          "lastActive": current.time
-        }
-    })
+    
+    switch (mint.of) {
+        case "account":
+            accounts.push({
+                "id": mint.to,
+                "credits": {
+                  "balance": 0
+                },
+                "inventory": {
+                  "items": []
+                },
+                "times": {
+                  "created": current.time,
+                  "updated": current.time,
+                  "lastActive": current.time
+                }
+            })
+            break
+        case "bankstone":
+            const yld = getRandomNumber(world.items.bankstone.rateLo, world.items.bankstone.rateHi)/100
+            const cap = getRandomNumber(world.items.bankstone.capLo, world.items.bankstone.capHi)
+
+            const id = `BNK${current.assetIdx}`
+            assets.push({
+                "id": id,
+                "type": "bankstone",
+                "amount": 1,
+                "properties": {
+                    "yield": yld,
+                    "cap": cap,
+                    "staked": 0
+                },
+                "owner": mint.to
+            })
+
+            const owner = accounts.find(a => a.id == mint.to)
+            owner.inventory.push(id);
+            break
+        default:
+            break
+    }
+}
+
+function getRandomNumber(min, max) {
+    const array = new Uint32Array(1);
+    crypto.getRandomValues(array);
+    const randomValue = array[0] / (0xffffffff + 1);
+    return Math.floor(randomValue * (max - min + 1)) + min;
 }
 
 function processPendingTransaction(transaction) {

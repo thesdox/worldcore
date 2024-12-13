@@ -2,13 +2,14 @@
   {
     "id": "world",
     "credits": {
-      "balance": 25856.04438356168
+      "balance": 32306.112876712312
     },
     "inventory": {
       "items": [
         "WTR0",
         "MNR0",
-        "BNK0"
+        "BNK0",
+        "BNK2"
       ]
     },
     "times": {
