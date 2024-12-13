@@ -24,18 +24,39 @@ const app = express()
 const port = 3000
 
 //app.use(express.json)
-app.use(express.urlencoded())
+app.use(express.urlencoded({ extended: true }))
 
 app.get('/', (req, res) => {
+    const username = req.query.user ? req.query.user : "world"
+    const account = accounts.find(a => a.id == username)
+
+    const items = assets.filter(a => a.owner == account.id)
+    let inventoryHtml = "<p>Empty<p>"
+    if (items.length > 0) {
+        inventoryHtml = "<ul>"
+        items.forEach(i => {
+            inventoryHtml += `<li>${i.type} ${i.amount}</li>`
+        })
+        inventoryHtml += "</ul>"
+    }
+
     res.send(`
-        <h1>welcome to this program</h1>
-        <h2>Links</h2>
+        <h1><a href="/">Worldcore</a></h1>
+        <h4><a href="/current">T${current.time}</a> - Water: ${current.resources.water.balance.toFixed(0)} - Mineral: ${current.resources.mineral.balance.toFixed(0)} - Credits: ${current.resources.credits.balance.toFixed(2)}</h4>
         <ul>
-            <li><a href="/accounts">accounts</a></li>
-            <li><a href="/activities">activities</a></li>
-            <li><a href="/assets">assets</a></li>
-            <li><a href="/current">current</a></li>
+            <li><a href="/accounts">accounts (${accounts.length})</a></li>
+            <li><a href="/activities">activities (${activities.length})</a></li>
+            <li><a href="/assets">assets (${assets.length})</a></li>
         </ul>
+
+        <h3>${username}'s balance: ${account.credits.balance.toFixed(2)} credit</h3>
+        <form action="/collect" method="post">
+            <input type="hidden" name="owner" value="${username}" />
+            <button name="resource" value="water">Collect Water (5-10)</button>
+            <button name="resource" value="mineral">Collect Mineral (1-3)</button>
+        </form>
+        <h3>Inventory (<a href="/assets?user=${username}">${account.inventory.items.length}</a>)</h3>
+        ${inventoryHtml}
 
         <h2>Mint account</h2>
         <form action="/mint" method="post">
@@ -70,7 +91,7 @@ app.post('/mint', (req, res) => {
             break
     }
 
-    const tx = {
+    const activity = {
         "type": "mint",
         "id": `MNT${current.assetIdx}`,
         "of": type,
@@ -83,10 +104,44 @@ app.post('/mint', (req, res) => {
         }
     }
 
-    activities.push(tx)
-    current.activities.pending.push(tx.id)
+    activities.push(activity)
+    current.activities.pending.push(activity.id)
 
-    res.json(tx)
+    res.json(activity)
+})
+
+app.post('/collect', (req, res) => {
+    console.log(`collecting ${req.body.resource}...`);
+
+    let amount = 0
+    switch (req.body.resource) {
+        case "water":
+            amount = getRandomNumber(5, 10)
+            break
+        case "mineral":
+            amount = getRandomNumber(1, 3)
+            break
+        default:
+            break
+    }
+
+    const activity = {
+        "type": "collect",
+        "id": `CLT${current.collectIdx}`,
+        "of": req.body.resource,
+        "from": "world",
+        "to": req.body.owner,
+        "amount": amount,
+        "note": `Collecting of ${req.body.resource} for ${req.body.owner}`,
+        "times": {
+            "created": current.time
+        }
+    }
+
+    activities.push(activity)
+    current.activities.pending.push(activity.id)
+
+    res.json(activity)
 })
 
 app.get('/accounts', (req, res) => {
@@ -98,7 +153,12 @@ app.get('/activities', (req, res) => {
 })
 
 app.get('/assets', (req, res) => {
-    res.send(assets)
+    let filteredAssets = assets
+    if (req.query.user) {
+        filteredAssets = assets.filter(a => a.owner == req.query.user)
+    }
+
+    res.send(filteredAssets)
 })
 
 app.get('/current', (req, res) => {
@@ -113,6 +173,21 @@ setInterval(async () => {
     console.log(`current: T${current.time}`)
     console.log(`active accounts: ${current.accounts.length}/${accounts.length} transactions: ${activities.length}/${activities.length}`)
     const startTime = new Date().getTime()
+
+    const waterRate = getRandomNumber(world.resources.water.rateLo, world.resources.water.rateHi)/100/world.interval.year/world.interval.day
+    const mineralRate = getRandomNumber(world.resources.mineral.rateLo, world.resources.mineral.rateHi)/100/world.interval.year/world.interval.day
+
+    const remainingWater = (world.resources.water.total - current.resources.water.supplied)
+    const water = remainingWater * waterRate
+
+    const remainingMineral = (world.resources.water.total - current.resources.water.supplied)
+    const mineral = remainingMineral * mineralRate
+
+    current.resources.water.balance += water
+    current.resources.water.supplied += water
+
+    current.resources.mineral.balance += mineral
+    current.resources.mineral.supplied += mineral
 
     queueDividend()
 
@@ -181,6 +256,9 @@ async function processCurrentActivitiesAsync() {
                 case "mint":
                     processPendingMint(activity)
                     break
+                case "collect":
+                    processPendingCollect(activity)
+                    break
                 default:
                     break
             }
@@ -190,6 +268,40 @@ async function processCurrentActivitiesAsync() {
             current.activities.pending = current.activities.pending.filter(id => id !== activity.id)
         }
     })
+}
+
+function processPendingCollect(collect) {
+    console.log(`#${collect.id}: collecting ${collect.of} from ${collect.from} to ${collect.to}...`)
+    
+    const resource = assets.find(a => a.type == collect.of && a.owner == collect.to)
+
+    if (resource) {
+        resource.amount += collect.amount
+    } else {
+        let id = collect.id
+        switch (collect.of) {
+            case "water":
+                id = `WTR${current.collectIdx}`
+                break
+            case "mineral":
+                id = `MNR${current.collectIdx}`
+                break
+            default:
+                break
+        }
+    
+        assets.push({
+            "id": id,
+            "type": collect.of,
+            "amount": collect.amount,
+            "owner": collect.to
+        })
+    
+        const owner = accounts.find(a => a.id == collect.to)
+        owner.inventory.items.push(id);
+    }
+
+    current.collectIdx += 1
 }
 
 function processPendingSystemActivity(activity) {

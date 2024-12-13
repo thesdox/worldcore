@@ -9,10 +9,14 @@
   },
   "resources": {
     "water": {
-      "total": 10000000000000000
+      "total": 1000000000,
+      "rateLo": 0,
+      "rateHi": 10
     },
     "mineral": {
-      "total": 10000000000000
+      "total": 1000000,
+      "rateLo": 0,
+      "rateHi": 4
     }
   },
   "items": {

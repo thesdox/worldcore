@@ -1,16 +1,29 @@
 {
-  "time": 399,
-  "assetIdx": 28,
+  "time": 0,
+  "assetIdx": 0,
+  "collectIdx": 0,
   "txIdx": 0,
+  "resources": {
+    "water": {
+      "balance": 0,
+      "supplied": 0
+    },
+    "mineral": {
+      "balance": 0,
+      "supplied": 0
+    },
+    "credits": {
+      "balance": 0,
+      "supplied": 0
+    }
+  },
   "bankstones": [],
   "accounts": [
     "world"
   ],
   "activities": {
     "pending": [],
-    "completed": [
-      "MNT27"
-    ],
+    "completed": [],
     "rejected": []
   }
 }
