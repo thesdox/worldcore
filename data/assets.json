@@ -1,2 +1,148 @@
 [
+  {
+    "id": "WTR0",
+    "type": "water",
+    "amount": 6,
+    "owner": "world"
+  },
+  {
+    "id": "MNR1",
+    "type": "mineral",
+    "amount": 3,
+    "owner": "world"
+  },
+  {
+    "id": "BNK0",
+    "type": "bankstone",
+    "amount": 1,
+    "properties": {
+      "yield": 0.14,
+      "cap": 61894,
+      "staked": 61855.43394482156
+    },
+    "owner": "world"
+  },
+  {
+    "id": "BNK1",
+    "type": "bankstone",
+    "amount": 1,
+    "properties": {
+      "yield": 0.27,
+      "cap": 35384,
+      "staked": 35341.491392005526
+    },
+    "owner": "world"
+  },
+  {
+    "id": "BNK2",
+    "type": "bankstone",
+    "amount": 1,
+    "properties": {
+      "yield": 0.04,
+      "cap": 42427,
+      "staked": 42419.44516231182
+    },
+    "owner": "world"
+  },
+  {
+    "id": "BNK3",
+    "type": "bankstone",
+    "amount": 1,
+    "properties": {
+      "yield": 0.16,
+      "cap": 57554,
+      "staked": 57513.01685433033
+    },
+    "owner": "world"
+  },
+  {
+    "id": "BNK4",
+    "type": "bankstone",
+    "amount": 1,
+    "properties": {
+      "yield": 0.09,
+      "cap": 74111,
+      "staked": 74081.31063496482
+    },
+    "owner": "world"
+  },
+  {
+    "id": "BNK5",
+    "type": "bankstone",
+    "amount": 1,
+    "properties": {
+      "yield": 0.27,
+      "cap": 83922,
+      "staked": 83821.18021139184
+    },
+    "owner": "world"
+  },
+  {
+    "id": "BNK6",
+    "type": "bankstone",
+    "amount": 1,
+    "properties": {
+      "yield": 0.04,
+      "cap": 86114,
+      "staked": 86098.66596052791
+    },
+    "owner": "world"
+  },
+  {
+    "id": "BNK7",
+    "type": "bankstone",
+    "amount": 1,
+    "properties": {
+      "yield": 0.26,
+      "cap": 89368,
+      "staked": 89267.261279307
+    },
+    "owner": "world"
+  },
+  {
+    "id": "WTR2",
+    "type": "water",
+    "amount": 7,
+    "owner": "dev"
+  },
+  {
+    "id": "MNR3",
+    "type": "mineral",
+    "amount": 2,
+    "owner": "dev"
+  },
+  {
+    "id": "BNK10",
+    "type": "bankstone",
+    "amount": 1,
+    "properties": {
+      "yield": 0.14,
+      "cap": 51102,
+      "staked": 51070.97462603494
+    },
+    "owner": "dev"
+  },
+  {
+    "id": "WTR4",
+    "type": "water",
+    "amount": 10,
+    "owner": "dev0"
+  },
+  {
+    "id": "MNR5",
+    "type": "mineral",
+    "amount": 1,
+    "owner": "dev0"
+  },
+  {
+    "id": "BNK11",
+    "type": "bankstone",
+    "amount": 1,
+    "properties": {
+      "yield": 0.18,
+      "cap": 22974,
+      "staked": 22956.539924430013
+    },
+    "owner": "dev0"
+  }
 ]

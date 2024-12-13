@@ -35,7 +35,7 @@ app.get('/', (req, res) => {
     if (items.length > 0) {
         inventoryHtml = "<ul>"
         items.forEach(i => {
-            inventoryHtml += `<li>${i.type} ${i.amount}</li>`
+            inventoryHtml += `<li>${i.type}${i.type=="bankstone" ? ` (APR ${(i.properties.yield*100).toFixed(0)}% ${Math.floor(i.properties.staked)}/${i.properties.cap} (${(i.properties.staked/i.properties.cap * 100).toFixed(0)}%))` : ` (${i.amount} units)`}</li>`
         })
         inventoryHtml += "</ul>"
     }
@@ -49,7 +49,13 @@ app.get('/', (req, res) => {
             <li><a href="/assets">assets (${assets.length})</a></li>
         </ul>
 
-        <h3>${username}'s balance: ${account.credits.balance.toFixed(2)} credit</h3>
+        <form action="/transaction" method="post">
+            <h3>${username}'s balance: ${account.credits.balance.toFixed(2)} credit</h3>
+            <input type="hidden" name="from" value="${username}" />
+            <input name="to" placeholder="receiver's username" required />
+            <input name="amount" type="number" max="1000" value="0" required />
+            <button name="of" value="credit">Send</button>
+        </form>
         <form action="/collect" method="post">
             <input type="hidden" name="owner" value="${username}" />
             <button name="resource" value="water">Collect Water (5-10)</button>
@@ -66,11 +72,41 @@ app.get('/', (req, res) => {
 
         <h2>Mint items</h2>
         <form action="/mint" method="post">
-            <h3>Bankstone</h3>
-            <input name="owner" placeholder="owner" required />
-            <button name="type" value="bankstone">Mint</button>
+            <!--<div>
+                <label for="water">Water</label>
+                <input type="range" name="water" min="10" max="1000" value="10" width="4" />
+                <br />
+                <label for="mineral">Mineral</label>
+                <input type="range" name="mineral" min="1" max="10" value="1" width="4" readonly />
+            </div>-->
+            <div>
+                <input type="hidden" name="owner" value="${username}" />
+                <button name="type" value="bankstone">Mint Bankstone</button>
+            </div>
         </form>
         `)
+})
+
+app.post('/transaction', (req, res) => {
+    console.log(`sending ${req.body.of}...`);
+
+    const tx = {
+        type: "transaction",
+        id: `TX${current.txIdx++}`,
+        of: "credit",
+        from: req.body.from,
+        to: req.body.to,
+        amount: Number(req.body.amount),
+        note: ``,
+        times: {
+            created: current.time
+        }
+    }
+
+    activities.push(tx)
+    current.activities.pending.push(tx.id)
+
+    res.json(tx)
 })
 
 app.post('/mint', (req, res) => {
@@ -86,6 +122,20 @@ app.post('/mint', (req, res) => {
         case "bankstone":
             type = "bankstone"
             to = req.body.owner
+            // water = req.body.water
+            // mineral = req.body.mineral
+            
+            // const waterConsumption = {
+            // }
+
+            // activities.push(waterConsumption)
+            // current.activities.pending.push(waterConsumption.id)
+
+            // const mineralConsumption = {
+            // }
+
+            // activities.push(mineralConsumption)
+            // current.activities.pending.push(mineralConsumption.id)
             break
         default:
             break
@@ -174,8 +224,8 @@ setInterval(async () => {
     console.log(`active accounts: ${current.accounts.length}/${accounts.length} transactions: ${activities.length}/${activities.length}`)
     const startTime = new Date().getTime()
 
-    const waterRate = getRandomNumber(world.resources.water.rateLo, world.resources.water.rateHi)/100/world.interval.year/world.interval.day
-    const mineralRate = getRandomNumber(world.resources.mineral.rateLo, world.resources.mineral.rateHi)/100/world.interval.year/world.interval.day
+    const waterRate = getRandomNumber(world.resources.water.rateLo, world.resources.water.rateHi)/100/world.interval.year/world.interval.day/world.interval.minute
+    const mineralRate = getRandomNumber(world.resources.mineral.rateLo, world.resources.mineral.rateHi)/100/world.interval.year/world.interval.day/world.interval.minute
 
     const remainingWater = (world.resources.water.total - current.resources.water.supplied)
     const water = remainingWater * waterRate
@@ -189,7 +239,9 @@ setInterval(async () => {
     current.resources.mineral.balance += mineral
     current.resources.mineral.supplied += mineral
 
-    queueDividend()
+    if (current.time % world.interval.hour == 0) {
+        queueDividend()
+    }
 
     await processCurrentActivitiesAsync()
 
@@ -208,7 +260,7 @@ setInterval(async () => {
     console.log(`Sync completed in ${elapsed}ms`)
 
     current.time += 1;
-}, world.interval.hour)
+}, world.interval.minute)
 
 function queueDividend() {
     console.log(`processing ${current.bankstones.length} bankstones..`);
@@ -218,7 +270,7 @@ function queueDividend() {
             console.error(`invalid bankstone id ${id}`);
         }
 
-        const hrYield = b.properties.yield / world.interval.year / world.interval.day
+        const hrYield = b.properties.yield/world.interval.year/world.interval.day
 
         const tx = {
             type: "transaction",
@@ -272,9 +324,11 @@ async function processCurrentActivitiesAsync() {
 
 function processPendingCollect(collect) {
     console.log(`#${collect.id}: collecting ${collect.of} from ${collect.from} to ${collect.to}...`)
+
+    current.resources[collect.of].balance -= collect.amount
+    current.resources[collect.of].supplied += collect.amount
     
     const resource = assets.find(a => a.type == collect.of && a.owner == collect.to)
-
     if (resource) {
         resource.amount += collect.amount
     } else {
@@ -353,13 +407,14 @@ function processPendingMint(mint) {
                 "properties": {
                     "yield": yld,
                     "cap": cap,
-                    "staked": 0
+                    "staked": cap
                 },
                 "owner": mint.to
             })
 
             const owner = accounts.find(a => a.id == mint.to)
-            owner.inventory.items.push(id);
+            owner.inventory.items.push(id)
+            current.bankstones.push(id)
             break
         default:
             break
@@ -381,7 +436,12 @@ function processPendingTransaction(transaction) {
     const from = accounts.find(a => a.id == transaction.from)
     const to = accounts.find(a => a.id == transaction.to)
 
-    if (!transaction.from.startsWith("BNK")) {
+    if (transaction.from.startsWith("BNK")) {
+        const bank = assets.find(a => a.id == transaction.from)
+        bank.properties.staked -= transaction.amount
+        current.resources.credits.balance +=transaction.amount
+        current.resources.credits.supply +=transaction.amount
+    } else {
         from.credits.balance -= transaction.amount
     }
     

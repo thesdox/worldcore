@@ -1,9 +1,10 @@
 {
   "system": {
-    "batch": 10
+    "batch": 100
   },
   "interval": {
-    "hour": 2000,
+    "minute": 2000,
+    "hour": 20,
     "day": 24,
     "year": 365
   },
@@ -23,8 +24,8 @@
     "bankstone": {
       "rateLo": 1,
       "rateHi": 30,
-      "capLo": 1000,
-      "capHi": 1000000
+      "capLo": 100,
+      "capHi": 100000
     }
   }
 }
