@@ -1,0 +1,25 @@
+[
+  {
+    "id": "WTR0",
+    "type": "water",
+    "amount": 0,
+    "owner": "world"
+  },
+  {
+    "id": "MNR0",
+    "type": "mineral",
+    "amount": 0,
+    "owner": "world"
+  },
+  {
+    "id": "BNK0",
+    "type": "bankstone",
+    "amount": 1,
+    "properties": {
+      "yield": 0.3,
+      "cap": 1000000,
+      "staked": 1000000
+    },
+    "owner": "world"
+  }
+]

@@ -54,9 +54,9 @@
     }
   },
   "current": {
-    "time": 361,
+    "time": 385,
     "assetIdx": 2,
-    "txIdx": 172,
+    "txIdx": 197,
     "bankstones": [
       "BNK0"
     ],
@@ -240,83 +240,35 @@
         "TX168",
         "TX169",
         "TX170",
-        "TX171"
+        "TX171",
+        "TX172",
+        "TX173",
+        "TX174",
+        "TX175",
+        "TX176",
+        "TX177",
+        "TX178",
+        "TX179",
+        "TX180",
+        "TX181",
+        "TX182",
+        "TX183",
+        "TX184",
+        "TX185",
+        "TX186",
+        "TX187",
+        "TX188",
+        "TX189",
+        "TX190",
+        "TX191",
+        "TX192",
+        "TX193",
+        "TX194",
+        "TX195",
+        "TX196"
       ],
       "rejected": []
     },
     "id": 11
-  },
-  "accounts": [
-    {
-      "id": "world",
-      "credits": {
-        "balance": 5821.797808219186
-      },
-      "inventory": {
-        "items": [
-          "WTR0",
-          "MNR0",
-          "BNK0"
-        ]
-      },
-      "times": {
-        "created": 0,
-        "updated": 0,
-        "lastActive": 0
-      }
-    },
-    {
-      "id": "dev",
-      "credits": {
-        "balance": 0.12
-      },
-      "inventory": {
-        "items": []
-      },
-      "times": {
-        "created": 36,
-        "updated": 36,
-        "lastActive": 84
-      }
-    },
-    {
-      "id": "dev0",
-      "credits": {
-        "balance": 0
-      },
-      "inventory": {
-        "items": []
-      },
-      "times": {
-        "created": 36,
-        "updated": 36,
-        "lastActive": 36
-      }
-    }
-  ],
-  "assets": [
-    {
-      "id": "WTR0",
-      "type": "water",
-      "amount": 0,
-      "owner": "world"
-    },
-    {
-      "id": "MNR0",
-      "type": "mineral",
-      "amount": 0,
-      "owner": "world"
-    },
-    {
-      "id": "BNK0",
-      "type": "bankstone",
-      "amount": 1,
-      "properties": {
-        "yield": 0.3,
-        "cap": 1000000,
-        "staked": 1000000
-      },
-      "owner": "world"
-    }
-  ]
+  }
 }
