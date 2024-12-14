@@ -216,6 +216,7 @@ app.post('/trade', (req, res) => {
         activities.push(itemTx)
         current.activities.pending.push(itemTx.id)
 
+        listing.times.sold = current.time
         req.query.return ? res.redirect(req.query.return) : res.json([creditTx, itemTx])
     }
 })

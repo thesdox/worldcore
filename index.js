@@ -27,12 +27,13 @@ app.get('/', (req, res) => {
                 <form action="/sell?return=/?user=${username}" method="post">
                     <div>
                         ${i.amount} unit of ${i.type} ${i.type=="bankstone" ? ` <small>APR ${(i.properties.yield*100).toFixed(0)}% ${Math.floor(i.properties.staked)}/${i.properties.cap} (${(i.properties.staked/i.properties.cap * 100).toFixed(0)}%)</small>` : ``}
+                        <small for="id">${i.id}</small>
+                        <input name="id" type="hidden" value="${i.id}" />
                     </div>
                     <div>
-                        <button name="id" value="${i.id}">Sell</button>
-                        ${i.type=="water" || i.type=="mineral" ? `<input name="amount" type="number" value="100" readonly /> units`: ``}
+                        <button name="owner" value="${username}">Sell</button>
+                        <input name="amount" type="hidden" value="${i.amount}" readonly />
                         for <input name="price" type="number" value="1.00" max="1000.00" step=".01" /> credit
-                        <input name="owner" type="hidden" value="${username}" />
                     </div>
                 </form>
             </li>`
@@ -49,14 +50,15 @@ app.get('/', (req, res) => {
             listingsHtml += `<li>
                 <form action="/trade?return=/?user=${username}" method="post">
                     <div>
-                        <input name="amount" type="number" value="${l.amount}" readonly />
+                        ${l.amount}
                         unit of ${i.type} ${i.type=="bankstone" ? ` <small>APR ${(i.properties.yield*100).toFixed(0)}% ${Math.floor(i.properties.staked)}/${i.properties.cap} (${(i.properties.staked/i.properties.cap * 100).toFixed(0)}%)</small>` : ``}
+                        <small for="id">${i.id}</small>
+                        <input name="id" type="hidden" value="${i.id}" />
                     </div>
                     <div>
-                        <button name="id" value="${i.id}">Buy</button>
+                        <button name="buyer" value="${username}">Buy</button>
                         for <input name="price" type="number" value="${Number(l.price).toFixed(2)}" readonly /> credit
                         from ${l.owner}
-                        <input name="buyer" type="hidden" value="${username}" />
                     </div>
                 </form>
             </li>`

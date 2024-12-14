@@ -233,10 +233,6 @@ function processPendingTransaction(transaction) {
             to.credits.balance += transaction.amount
             break
         default:
-            const listing = market.find(l => l.item == transaction.of)
-            const item = assets.find(a => a.id == transaction.of)
-            listing.times.sold = current.time
-
             if (item.amount - transaction.amount >= 0) {
                 // complete purchase = ownership transfer
                 item.owner = to.id
@@ -248,7 +244,7 @@ function processPendingTransaction(transaction) {
                     "type": "collect",
                     "id": `CLT${activities.length}`,
                     "of": item.type,
-                    "from": transaction.owner,
+                    "from": transaction.from,
                     "to": transaction.to,
                     "amount": transaction.amount,
                     "note": `Collecting of ${item.type} for ${transaction.to}`,
