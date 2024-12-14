@@ -3,21 +3,21 @@
     "batch": 100
   },
   "interval": {
-    "minute": 5000,
-    "hour": 10,
+    "minute": 3000,
+    "hour": 60,
     "day": 24,
     "year": 365
   },
   "resources": {
     "water": {
-      "total": 1000000000,
+      "total": 1000000000000,
       "rateLo": 0,
-      "rateHi": 10
+      "rateHi": 3
     },
     "mineral": {
       "total": 1000000,
       "rateLo": 0,
-      "rateHi": 4
+      "rateHi": 2
     }
   },
   "items": {
@@ -25,7 +25,7 @@
       "rateLo": 1,
       "rateHi": 30,
       "capLo": 100,
-      "capHi": 100000
+      "capHi": 10000
     }
   }
 }

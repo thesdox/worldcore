@@ -6,25 +6,11 @@ export async function onMinuteAsync() {
     // console.debug(`T${current.time}, active accounts: ${current.accounts.length}/${accounts.length} transactions: ${activities.length}/${activities.length}`)
     const startTime = new Date().getTime()
 
-    const waterRate = util.getRandomNumber(world.resources.water.rateLo, world.resources.water.rateHi)/100/world.interval.year/world.interval.day/world.interval.minute
-    const mineralRate = util.getRandomNumber(world.resources.mineral.rateLo, world.resources.mineral.rateHi)/100/world.interval.year/world.interval.day/world.interval.minute
-
-    const remainingWater = (world.resources.water.total - current.resources.water.supplied)
-    const water = remainingWater * waterRate
-
-    const remainingMineral = (world.resources.water.total - current.resources.water.supplied)
-    const mineral = remainingMineral * mineralRate
-
-    current.resources.water.balance += water
-    current.resources.water.supplied += water
-
-    current.resources.mineral.balance += mineral
-    current.resources.mineral.supplied += mineral
-
     if (current.time % world.interval.hour == 0) {
-        queueDividend()
+        onHourAsync()
     }
 
+    processResources()
     await processCurrentActivitiesAsync()
 
     if (current.activities.completed.length >= world.system.batch) {
@@ -46,13 +32,37 @@ export async function onMinuteAsync() {
     current.time += 1;
 }
 
-function queueDividend() {
-    const inactives = []
-    current.bankstones.forEach(id => {
+function processResources() {
+    const waterRate = util.getRandomNumber(world.resources.water.rateLo, world.resources.water.rateHi)/100/world.interval.year/world.interval.day/world.interval.minute
+    const mineralRate = util.getRandomNumber(world.resources.mineral.rateLo, world.resources.mineral.rateHi)/100/world.interval.year/world.interval.day/world.interval.minute
+
+    const remainingWater = (world.resources.water.total - current.resources.water.supplied)
+    const water = remainingWater * waterRate
+
+    const remainingMineral = (world.resources.water.total - current.resources.water.supplied)
+    const mineral = remainingMineral * mineralRate
+
+    current.resources.water.balance += water
+    current.resources.water.supplied += water
+
+    current.resources.mineral.balance += mineral
+    current.resources.mineral.supplied += mineral
+}
+
+async function onHourAsync() {
+    const effectItems = assets.filter(a => a.type == "bankstone" && a.amount > 0)
+    effectItems.forEach(i => {
+        if (current.effects.findIndex(e => e == i.id) < 0) current.effects.push(i.id)
+    })
+
+    console.debug(`T${current.time}: ${current.effects.length} effects active`)
+
+    const invalid = []
+    current.effects.forEach(id => {
         const b = assets.find(a => a.id == id && a.amount > 0)
         if (!b) {
             console.warn(`invalid bankstone id ${id}`);
-            inactives.push(id)
+            invalid.push(id)
             return;
         }
 
@@ -77,9 +87,9 @@ function queueDividend() {
     });
 
     // console.debug(`removing ${inactives.length} inactive bankstones...`)
-    inactives.forEach((i) => {
-        const idx = current.bankstones.findIndex(b => b == i)
-        current.bankstones.splice(current.bankstones[idx], 1)
+    invalid.forEach((i) => {
+        const idx = current.effects.findIndex(b => b == i)
+        current.effects.splice(current.effects[idx], 1)
     })
 }
 
@@ -197,9 +207,6 @@ function processPendingMint(mint) {
                 },
                 "owner": mint.to
             })
-
-            const owner = accounts.find(a => a.id == mint.to)
-            current.bankstones.push(id)
             break
         default:
             break

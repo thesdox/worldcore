@@ -1,13 +1,2 @@
 [
-  {
-    "id": "LST0",
-    "item": "BNK2",
-    "price": "1.00",
-    "owner": "world",
-    "amount": 1,
-    "times": {
-      "created": 127,
-      "lastUpdated": 127
-    }
-  }
 ]

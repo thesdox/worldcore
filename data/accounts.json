@@ -2,34 +2,12 @@
   {
     "id": "world",
     "credits": {
-      "balance": 34.89718728583987
+      "balance": 0
     },
     "times": {
       "created": 0,
       "updated": 0,
       "lastActive": 0
-    }
-  },
-  {
-    "id": "dev",
-    "credits": {
-      "balance": 73.21488894454313
-    },
-    "times": {
-      "created": 13,
-      "updated": 13,
-      "lastActive": 13
-    }
-  },
-  {
-    "id": "frodo",
-    "credits": {
-      "balance": 65.94054514300532
-    },
-    "times": {
-      "created": 22,
-      "updated": 22,
-      "lastActive": 22
     }
   }
 ]
