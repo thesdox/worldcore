@@ -30,7 +30,7 @@ app.get('/', (req, res) => {
                     </div>
                     <div>
                         <button name="id" value="${i.id}">Sell</button>
-                        ${i.type=="water" || i.type=="mineral" ? `<input name="amount" type="number" value="100" disabled readonly /> units`: ``}
+                        ${i.type=="water" || i.type=="mineral" ? `<input name="amount" type="number" value="100" readonly /> units`: ``}
                         for <input name="price" type="number" value="1.00" max="1000.00" step=".01" /> credit
                         <input name="owner" type="hidden" value="${username}" />
                     </div>
@@ -49,11 +49,12 @@ app.get('/', (req, res) => {
             listingsHtml += `<li>
                 <form action="/trade?return=/?user=${username}" method="post">
                     <div>
-                        ${l.amount} unit of ${i.type} ${i.type=="bankstone" ? ` <small>APR ${(i.properties.yield*100).toFixed(0)}% ${Math.floor(i.properties.staked)}/${i.properties.cap} (${(i.properties.staked/i.properties.cap * 100).toFixed(0)}%)</small>` : ` (${i.amount} units)`}
+                        <input name="amount" type="number" value="${l.amount}" readonly />
+                        unit of ${i.type} ${i.type=="bankstone" ? ` <small>APR ${(i.properties.yield*100).toFixed(0)}% ${Math.floor(i.properties.staked)}/${i.properties.cap} (${(i.properties.staked/i.properties.cap * 100).toFixed(0)}%)</small>` : ``}
                     </div>
                     <div>
                         <button name="id" value="${i.id}">Buy</button>
-                        for <input name="price" type="number" value="${Number(l.price).toFixed(2)}" disabled readonly /> credit
+                        for <input name="price" type="number" value="${Number(l.price).toFixed(2)}" readonly /> credit
                         from ${l.owner}
                         <input name="buyer" type="hidden" value="${username}" />
                     </div>

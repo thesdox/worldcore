@@ -1,9 +1,5 @@
 {
   "time": 0,
-  "assetIdx": 0,
-  "collectIdx": 0,
-  "txIdx": 0,
-  "listingIdx": 0,
   "resources": {
     "water": {
       "balance": 0,

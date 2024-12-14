@@ -49,7 +49,7 @@ app.post('/transaction', (req, res) => {
 
     const tx = {
         type: "transaction",
-        id: `TX${current.txIdx++}`,
+        id: `TX${activities.length}}`,
         of: "credit",
         from: req.body.from,
         to: req.body.to,
@@ -100,7 +100,7 @@ app.post('/mint', (req, res) => {
 
     const activity = {
         "type": "mint",
-        "id": `MNT${current.assetIdx}`,
+        "id": `MNT${activities.length}`,
         "of": type,
         "from": "world",
         "to": to,
@@ -134,7 +134,7 @@ app.post('/collect', (req, res) => {
 
     const activity = {
         "type": "collect",
-        "id": `CLT${current.collectIdx}`,
+        "id": `CLT${activities.length}`,
         "of": req.body.resource,
         "from": "world",
         "to": req.body.owner,
@@ -153,7 +153,7 @@ app.post('/collect', (req, res) => {
 
 app.post('/sell', (req, res) => {
     const listing = {
-        id: `LST${current.listingIdx++}`,
+        id: `LST${market.length}`,
         item: req.body.id,
         price: Number(req.body.price),
         owner: req.body.owner,
@@ -190,7 +190,7 @@ app.post('/trade', (req, res) => {
             of: "credit",
             from: req.body.buyer,
             to: item.owner,
-            amount: item.price,
+            amount: listing.amount,
             note: `Purchase of ${item.id} at ${listing.price} credit`,
             times: {
                 created: current.time

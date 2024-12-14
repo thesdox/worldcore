@@ -70,7 +70,7 @@ async function onHourAsync() {
 
         const tx = {
             type: "transaction",
-            id: `TX${current.txIdx++}`,
+            id: `TX${activities.length}`,
             of: "credit",
             from: b.id,
             to: b.owner,
@@ -195,7 +195,7 @@ function processPendingMint(mint) {
             const yld = util.getRandomNumber(world.items.bankstone.rateLo, world.items.bankstone.rateHi)/100
             const cap = util.getRandomNumber(world.items.bankstone.capLo, world.items.bankstone.capHi)
 
-            const id = `BNK${current.assetIdx}`
+            const id = `BNK${assets.length}`
             assets.push({
                 "id": id,
                 "type": "bankstone",
@@ -211,8 +211,6 @@ function processPendingMint(mint) {
         default:
             break
     }
-
-    current.assetIdx += 1
 }
 
 function processPendingTransaction(transaction) {
@@ -236,11 +234,32 @@ function processPendingTransaction(transaction) {
             break
         default:
             const listing = market.find(l => l.item == transaction.of)
+            const item = assets.find(a => a.id == transaction.of)
             listing.times.sold = current.time
 
-            const item = assets.find(a => a.id == transaction.of)
-            item.amount += transaction.amount
-            item.owner = to.id
+            if (item.amount - transaction.amount >= 0) {
+                // complete purchase = ownership transfer
+                item.owner = to.id
+                item.amount += transaction.amount
+            } else {
+                // partial purchase = collect
+                item.amount -= transaction.amount
+                const activity = {
+                    "type": "collect",
+                    "id": `CLT${activities.length}`,
+                    "of": item.type,
+                    "from": transaction.owner,
+                    "to": transaction.to,
+                    "amount": transaction.amount,
+                    "note": `Collecting of ${item.type} for ${transaction.to}`,
+                    "times": {
+                        "created": current.time
+                    }
+                }
+            
+                activities.push(activity)
+                current.activities.pending.push(activity.id)
+            }
             break
     }
 }
