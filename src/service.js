@@ -27,7 +27,7 @@ export async function onMinuteAsync() {
     await model.currentDb.write()
 
     const elapsed = new Date().getTime() - startTime
-    console.log(`T${current.time} sync completed in ${elapsed}ms`)
+    console.log(`T${current.time}: sync completed in ${elapsed}ms`)
 
     current.time += 1;
 }
@@ -55,7 +55,7 @@ async function onHourAsync() {
         if (current.effects.findIndex(e => e == i.id) < 0) current.effects.push(i.id)
     })
 
-    console.debug(`T${current.time}: ${current.effects.length} effects active`)
+    console.debug(`T${current.time}: processing ${current.effects.length} active effects...`)
 
     const invalid = []
     current.effects.forEach(id => {

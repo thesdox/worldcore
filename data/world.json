@@ -10,12 +10,12 @@
   },
   "resources": {
     "water": {
-      "total": 1000000000000,
+      "total": 1000000000,
       "rateLo": 0,
-      "rateHi": 3
+      "rateHi": 10
     },
     "mineral": {
-      "total": 1000000,
+      "total": 100000,
       "rateLo": 0,
       "rateHi": 2
     }
