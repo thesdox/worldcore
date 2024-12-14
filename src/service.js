@@ -130,7 +130,7 @@ function processPendingCollect(collect) {
     current.resources[collect.of].balance -= collect.amount
     current.resources[collect.of].supplied += collect.amount
     
-    const resource = assets.find(a => a.type == collect.of && a.owner == collect.to)
+    const resource = assets.find(a => a.type == collect.of && a.owner == collect.to && a.amount > 0)
     if (resource) {
         resource.amount += collect.amount
     } else {

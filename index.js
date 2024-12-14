@@ -20,9 +20,9 @@ app.get('/', (req, res) => {
             1 : -1})
         .sort((a, b) => { return a.amount < b.amount ? 1 : -1})
 
-    const userWaters = assets.filter((a) => a.type=="water")
-    const userMinerals = assets.filter((a) => a.type=="mineral")
-    const userBankstones = assets.filter((a) => a.type=="bankstone")
+    const userWaters = items.filter((a) => a.type=="water")
+    const userMinerals = items.filter((a) => a.type=="mineral")
+    const userBankstones = items.filter((a) => a.type=="bankstone")
 
     let inventoryHtml = "<p>Empty<p>"
     if (items.length > 0) {
@@ -31,7 +31,7 @@ app.get('/', (req, res) => {
             inventoryHtml += `<li>
                 <form action="/sell?return=/?user=${username}" method="post">
                     <div>
-                        ${i.amount} unit of ${i.type} ${i.type=="bankstone" ? ` <small>APR ${(i.properties.yield*100).toFixed(0)}% ${Math.floor(i.properties.staked)}/${i.properties.cap} (${(i.properties.staked/i.properties.cap * 100).toFixed(0)}%)</small>` : ``}
+                        ${i.amount} unit of ${i.owner}'s ${i.type} ${i.type=="bankstone" ? ` <small>APR ${(i.properties.yield*100).toFixed(0)}% ${Math.floor(i.properties.staked)}/${i.properties.cap} (${(i.properties.staked/i.properties.cap * 100).toFixed(0)}%)</small>` : ``}
                         <small for="id">${i.id}</small>
                         <input name="id" type="hidden" value="${i.id}" />
                     </div>
