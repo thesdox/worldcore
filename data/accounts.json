@@ -2,62 +2,15 @@
   {
     "id": "world",
     "credits": {
-      "balance": 360.19456033927014
+      "balance": 0
     },
     "inventory": {
-      "items": [
-        "WTR0",
-        "MNR1",
-        "BNK0",
-        "BNK1",
-        "BNK2",
-        "BNK3",
-        "BNK4",
-        "BNK5",
-        "BNK6",
-        "BNK7"
-      ]
+      "items": []
     },
     "times": {
       "created": 0,
       "updated": 0,
       "lastActive": 0
-    }
-  },
-  {
-    "id": "dev",
-    "credits": {
-      "balance": 40.0253739650581
-    },
-    "inventory": {
-      "items": [
-        "WTR2",
-        "MNR3",
-        "BNK10"
-      ]
-    },
-    "times": {
-      "created": 23,
-      "updated": 23,
-      "lastActive": 23
-    }
-  },
-  {
-    "id": "dev0",
-    "credits": {
-      "balance": 24.46007556999366
-    },
-    "inventory": {
-      "items": [
-        "WTR4",
-        "MNR5",
-        "BNK11"
-      ]
-    },
-    "times": {
-      "created": 25,
-      "updated": 25,
-      "lastActive": 25
     }
   }
 ]
