@@ -14,11 +14,16 @@ app.get('/', (req, res) => {
     const username = req.query.user ? req.query.user : "world"
     const account = accounts.find(a => a.id == username)
 
-    const items = assets.filter(a => a.owner == account.id && a.amount > 0).sort((a, b) => {
-        return a.properties && b.properties ?
+    const items = assets.filter(a => a.owner == account.id && a.amount > 0)
+        .sort((a, b) => { return a.properties && b.properties &&
             (a.properties.staked * a.properties.yield) > (b.properties.staked * b.properties.yield) ?
-            -1:1:1
-    })
+            1 : -1})
+        .sort((a, b) => { return a.amount < b.amount ? 1 : -1})
+
+    const userWaters = assets.filter((a) => a.type=="water")
+    const userMinerals = assets.filter((a) => a.type=="mineral")
+    const userBankstones = assets.filter((a) => a.type=="bankstone")
+
     let inventoryHtml = "<p>Empty<p>"
     if (items.length > 0) {
         inventoryHtml = "<ul>"
@@ -31,9 +36,9 @@ app.get('/', (req, res) => {
                         <input name="id" type="hidden" value="${i.id}" />
                     </div>
                     <div>
-                        <button name="owner" value="${username}">Sell</button>
-                        <input name="amount" type="hidden" value="${i.amount}" readonly />
-                        for <input name="price" type="number" value="1.00" max="1000.00" step=".01" /> credit
+                        <button name="owner" value="${username}" ${(i.type == "water" || i.type == "mineral") && i.amount < 100 ? "disabled" : ""}>Sell</button>
+                        <input name="amount" type="number" value="${i.amount}" required readonly /> units
+                        for <input name="price" type="number" value="${i.type == "bankstone" ? i.staked * i.yield * 2 : i.amount * 1}" max="1000.00" step=".01" /> credit
                     </div>
                 </form>
             </li>`
@@ -51,14 +56,13 @@ app.get('/', (req, res) => {
                 <form action="/trade?return=/?user=${username}" method="post">
                     <div>
                         ${l.amount}
-                        unit of ${i.type} ${i.type=="bankstone" ? ` <small>APR ${(i.properties.yield*100).toFixed(0)}% ${Math.floor(i.properties.staked)}/${i.properties.cap} (${(i.properties.staked/i.properties.cap * 100).toFixed(0)}%)</small>` : ``}
+                        unit of ${l.owner}'s ${i.type} ${i.type=="bankstone" ? ` <small>APR ${(i.properties.yield*100).toFixed(0)}% ${Math.floor(i.properties.staked)}/${i.properties.cap} (${(i.properties.staked/i.properties.cap * 100).toFixed(0)}%)</small>` : ``}
                         <small for="id">${l.id}</small>
                         <input name="id" type="hidden" value="${l.id}" />
                     </div>
                     <div>
                         <button name="buyer" value="${username}">Buy</button>
                         for <input name="price" type="number" value="${Number(l.price).toFixed(2)}" readonly /> credit
-                        from ${l.owner}
                     </div>
                 </form>
             </li>`
@@ -84,8 +88,13 @@ app.get('/', (req, res) => {
             <li><a href="/assets">assets (${assets.length} minted)</a></li>
         </ul>
 
+        <h3>${username}'s balance: ${account.credits.balance.toFixed(2)} credit</h3>
+        <h4>
+            Water: ${userWaters.length > 0 ? userWaters.reduce((sum, c) => {return sum + c.amount}, 0): 0} units
+            Mineral: ${userMinerals.length > 0 ? userMinerals.reduce((sum, c) => {return sum + c.amount}, 0): 0} units
+            Bankstones: ${userBankstones.length > 0 ? userBankstones.reduce((sum, c) => {return sum + c.amount}, 0): 0} units
+        </h4>
         <form action="/transaction?return=/?user=${username}" method="post">
-            <h3>${username}'s balance: ${account.credits.balance.toFixed(2)} credit</h3>
             <input type="hidden" name="from" value="${username}" />
             <input name="to" placeholder="receiver's username" required />
             <input name="amount" type="number" min=".01" max="1000.00" value=".01" step=".01" required />
@@ -97,11 +106,7 @@ app.get('/', (req, res) => {
             <button name="resource" value="mineral">Collect Mineral (1-3)</button>
         </form>
 
-        <h3>Inventory (<a href="/assets?user=${username}">${items.length}</a>)</h3>
-        <form action="/mint?return=/?user=${username}" method="post">
-            <input name="username" placeholder="username" required />
-            <button name="type" value="account">Mint Account</button>
-        </form>
+        <h3>Inventory (<a href="/assets?user=${username}">${items.filter(i => i.owner == username).length}</a>)</h3>
         <form action="/mint?return=/?user=${username}" method="post">
             <!--<div>
                 <label for="water">Water</label>
@@ -115,9 +120,13 @@ app.get('/', (req, res) => {
                 <button name="type" value="bankstone">Mint Bankstone</button>
             </div>
         </form>
+        <form action="/mint?return=/?user=${username}" method="post">
+            <input name="username" placeholder="username" required />
+            <button name="type" value="account">Mint Account</button>
+        </form>
         ${inventoryHtml}
 
-        <h3>Marketplace (<a href="/market">${market.length}</a>)</h3>
+        <h3>Marketplace (<a href="/market?expired=false&sold=false">${market.filter(l => !l.times.expired && !l.times.sold).length}</a>)</h3>
         ${listingsHtml}
         `)
 })
