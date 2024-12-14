@@ -1,13 +1,13 @@
 {
-  "time": 0,
+  "time": 29,
   "resources": {
     "water": {
-      "balance": 0,
-      "supplied": 0
+      "balance": -192.10807483888638,
+      "supplied": 297.89192516111365
     },
     "mineral": {
-      "balance": 0,
-      "supplied": 0
+      "balance": -118.48706376165646,
+      "supplied": 137.51293623834357
     },
     "credits": {
       "balance": 0,
@@ -20,7 +20,14 @@
   ],
   "activities": {
     "pending": [],
-    "completed": [],
+    "completed": [
+      "CLT96",
+      "CLT97",
+      "CLT98",
+      "CLT99",
+      "CLT100"
+    ],
     "rejected": []
-  }
+  },
+  "collectIdx": null
 }
