@@ -172,8 +172,8 @@ app.post('/sell', (req, res) => {
 })
 
 app.post('/trade', (req, res) => {
-    const item = assets.find(a => a.id == req.body.id)
-    const listing = market.find(l => l.item == item.id)
+    const listing = market.find(l => l.id == req.body.id)
+    const item = assets.find(a => a.id == listing.item)
 
     if (req.body.buyer == item.owner) {
         // delist and restore amount
@@ -186,20 +186,22 @@ app.post('/trade', (req, res) => {
 
         const creditTx = {
             type: "transaction",
-            id: `TX${current.txIdx++}`,
+            id: `TX${activities.length}`,
             of: "credit",
             from: req.body.buyer,
             to: item.owner,
-            amount: listing.amount,
+            amount: listing.price,
             note: `Purchase of ${item.id} at ${listing.price} credit`,
             times: {
                 created: current.time
             }
         }
+
+        activities.push(creditTx)
     
         const itemTx = {
             type: "transaction",
-            id: `TX${current.txIdx++}`,
+            id: `TX${activities.length}`,
             of: item.id,
             from: item.owner,
             to: req.body.buyer,
@@ -209,14 +211,13 @@ app.post('/trade', (req, res) => {
                 created: current.time
             }
         }
-    
-        activities.push(creditTx)
-        current.activities.pending.push(creditTx.id)
-    
-        activities.push(itemTx)
-        current.activities.pending.push(itemTx.id)
 
+        activities.push(itemTx)
+
+        current.activities.pending.push(creditTx.id)
+        current.activities.pending.push(itemTx.id)
         listing.times.sold = current.time
+
         req.query.return ? res.redirect(req.query.return) : res.json([creditTx, itemTx])
     }
 })

@@ -233,28 +233,13 @@ function processPendingTransaction(transaction) {
             to.credits.balance += transaction.amount
             break
         default:
-            if (item.amount - transaction.amount >= 0) {
-                // complete purchase = ownership transfer
-                item.owner = to.id
-                item.amount += transaction.amount
-            } else {
-                // partial purchase = collect
-                item.amount -= transaction.amount
-                const activity = {
-                    "type": "collect",
-                    "id": `CLT${activities.length}`,
-                    "of": item.type,
-                    "from": transaction.from,
-                    "to": transaction.to,
-                    "amount": transaction.amount,
-                    "note": `Collecting of ${item.type} for ${transaction.to}`,
-                    "times": {
-                        "created": current.time
-                    }
-                }
-            
-                activities.push(activity)
-                current.activities.pending.push(activity.id)
+            const item = assets.find(a => a.id == transaction.of)
+            item.owner = to.id
+            item.amount += transaction.amount
+
+            if (item.amount - transaction.amount < 0) {
+                console.error(`item amount cannot go below 0`)
+                return
             }
             break
     }

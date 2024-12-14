@@ -18,7 +18,7 @@ app.get('/', (req, res) => {
         return a.properties && b.properties ?
             (a.properties.staked * a.properties.yield) > (b.properties.staked * b.properties.yield) ?
             -1:1:1
-     })
+    })
     let inventoryHtml = "<p>Empty<p>"
     if (items.length > 0) {
         inventoryHtml = "<ul>"
@@ -52,8 +52,8 @@ app.get('/', (req, res) => {
                     <div>
                         ${l.amount}
                         unit of ${i.type} ${i.type=="bankstone" ? ` <small>APR ${(i.properties.yield*100).toFixed(0)}% ${Math.floor(i.properties.staked)}/${i.properties.cap} (${(i.properties.staked/i.properties.cap * 100).toFixed(0)}%)</small>` : ``}
-                        <small for="id">${i.id}</small>
-                        <input name="id" type="hidden" value="${i.id}" />
+                        <small for="id">${l.id}</small>
+                        <input name="id" type="hidden" value="${l.id}" />
                     </div>
                     <div>
                         <button name="buyer" value="${username}">Buy</button>
@@ -98,18 +98,10 @@ app.get('/', (req, res) => {
         </form>
 
         <h3>Inventory (<a href="/assets?user=${username}">${items.length}</a>)</h3>
-        ${inventoryHtml}
-
-        <h3>Marketplace (<a href="/market">${market.length}</a>)</h3>
-        ${listingsHtml}
-
-        <h2>Mint account</h2>
         <form action="/mint?return=/?user=${username}" method="post">
             <input name="username" placeholder="username" required />
-            <button name="type" value="account">Mint</button>
+            <button name="type" value="account">Mint Account</button>
         </form>
-
-        <h2>Mint items</h2>
         <form action="/mint?return=/?user=${username}" method="post">
             <!--<div>
                 <label for="water">Water</label>
@@ -123,5 +115,9 @@ app.get('/', (req, res) => {
                 <button name="type" value="bankstone">Mint Bankstone</button>
             </div>
         </form>
+        ${inventoryHtml}
+
+        <h3>Marketplace (<a href="/market">${market.length}</a>)</h3>
+        ${listingsHtml}
         `)
 })
