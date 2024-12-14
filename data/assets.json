@@ -1,14 +1,1 @@
-[
-  {
-    "id": "WTR0",
-    "type": "water",
-    "amount": 213,
-    "owner": "world"
-  },
-  {
-    "id": "MNR1",
-    "type": "mineral",
-    "amount": 128,
-    "owner": "world"
-  }
-]
+[]
