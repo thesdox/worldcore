@@ -2,7 +2,6 @@ import { JSONFilePreset } from 'lowdb/node'
 import express from 'express'
 
 // Read or create world.json
-const defaultData = {}
 const activityDb = await JSONFilePreset('./data/activities.json', [])
 const activities = activityDb.data
 
@@ -12,11 +11,14 @@ const accounts = accountDb.data
 const assetDb = await JSONFilePreset('./data/assets.json', [])
 const assets = assetDb.data
 
-const currentDb = await JSONFilePreset('./data/current.json', [])
+const currentDb = await JSONFilePreset('./data/current.json', {})
 const current = currentDb.data
 
-const worldDb = await JSONFilePreset('./data/world.json', defaultData)
+const worldDb = await JSONFilePreset('./data/world.json', {})
 const world = worldDb.data
+
+const marketDb = await JSONFilePreset('./data/market.json', [])
+const market = marketDb.data
 
 console.log(`starting worldcore service..`)
 
@@ -30,30 +32,73 @@ app.get('/', (req, res) => {
     const username = req.query.user ? req.query.user : "world"
     const account = accounts.find(a => a.id == username)
 
-    const items = assets.filter(a => a.owner == account.id)
+    const items = assets.filter(a => a.owner == account.id && a.amount > 0)
     let inventoryHtml = "<p>Empty<p>"
     if (items.length > 0) {
         inventoryHtml = "<ul>"
         items.forEach(i => {
-            inventoryHtml += `<li>${i.type}${i.type=="bankstone" ? ` (APR ${(i.properties.yield*100).toFixed(0)}% ${Math.floor(i.properties.staked)}/${i.properties.cap} (${(i.properties.staked/i.properties.cap * 100).toFixed(0)}%))` : ` (${i.amount} units)`}</li>`
+            inventoryHtml += `<li>
+                <form action="/sell" method="post">
+                    <div>
+                        ${i.amount} unit of ${i.type} ${i.type=="bankstone" ? ` <small>APR ${(i.properties.yield*100).toFixed(0)}% ${Math.floor(i.properties.staked)}/${i.properties.cap} (${(i.properties.staked/i.properties.cap * 100).toFixed(0)}%)</small>` : ``}
+                    </div>
+                    <div>
+                        <button name="id" value="${i.id}">Sell</button>
+                        ${i.type=="water" || i.type=="mineral" ? `<input name="amount" type="number" value="1" max="1000" /> units`: ``}
+                        for <input name="price" type="number" value="1.00" max="1000.00" /> credit
+                        <input name="owner" type="hidden" value="${username}" />
+                    </div>
+                </form>
+            </li>`
         })
         inventoryHtml += "</ul>"
     }
 
+    const listings = market.filter(a => !a.times.sold)
+    let listingsHtml = "<p>Empty<p>"
+    if (listings.length > 0) {
+        listingsHtml = "<ul>"
+        listings.forEach(l => {
+            const i = assets.find(a => a.id == l.item)
+            listingsHtml += `<li>
+                <form action="/buy" method="post">
+                    <div>
+                        ${i.amount} unit of ${i.type} ${i.type=="bankstone" ? ` <small>APR ${(i.properties.yield*100).toFixed(0)}% ${Math.floor(i.properties.staked)}/${i.properties.cap} (${(i.properties.staked/i.properties.cap * 100).toFixed(0)}%)</small>` : ` (${i.amount} units)`}
+                    </div>
+                    <div>
+                        <button name="id" value="${i.id}">Buy</button>
+                        for <input name="price" type="number" value="${l.price}" readonly /> credit
+                        <input name="owner" type="hidden" value="${username}" />
+                    </div>
+                </form>
+            </li>`
+        })
+        listingsHtml += "</ul>"
+    }
+
     res.send(`
         <h1><a href="/">Worldcore</a></h1>
-        <h4><a href="/current">T${current.time}</a> - Water: ${current.resources.water.balance.toFixed(0)} - Mineral: ${current.resources.mineral.balance.toFixed(0)} - Credits: ${current.resources.credits.balance.toFixed(2)}</h4>
+        <h4>
+            <a href="/current">
+                Year ${Math.floor(current.time/(world.interval.hour * world.interval.day * world.interval.year))}
+                Day ${Math.floor(current.time/(world.interval.hour * world.interval.day))}
+                ${Math.floor(current.time%(world.interval.hour * world.interval.day)/(world.interval.hour))}:${current.time % (world.interval.hour)}
+            </a>
+            Water: ${current.resources.water.balance.toFixed(0)}
+             - Mineral: ${current.resources.mineral.balance.toFixed(0)}
+             - Credits: ${current.resources.credits.balance.toFixed(2)}
+        </h4>
         <ul>
             <li><a href="/accounts">accounts (${accounts.length})</a></li>
             <li><a href="/activities">activities (${activities.length})</a></li>
-            <li><a href="/assets">assets (${assets.length})</a></li>
+            <li><a href="/assets">assets (${assets.length} minted)</a></li>
         </ul>
 
         <form action="/transaction" method="post">
             <h3>${username}'s balance: ${account.credits.balance.toFixed(2)} credit</h3>
             <input type="hidden" name="from" value="${username}" />
             <input name="to" placeholder="receiver's username" required />
-            <input name="amount" type="number" max="1000" value="0" required />
+            <input name="amount" type="number" min="1.00" max="1000.00" value="0.01" required />
             <button name="of" value="credit">Send</button>
         </form>
         <form action="/collect" method="post">
@@ -61,8 +106,12 @@ app.get('/', (req, res) => {
             <button name="resource" value="water">Collect Water (5-10)</button>
             <button name="resource" value="mineral">Collect Mineral (1-3)</button>
         </form>
+
         <h3>Inventory (<a href="/assets?user=${username}">${account.inventory.items.length}</a>)</h3>
         ${inventoryHtml}
+
+        <h3>Marketplace (<a href="/market">${market.length}</a>)</h3>
+        ${listingsHtml}
 
         <h2>Mint account</h2>
         <form action="/mint" method="post">
@@ -194,12 +243,72 @@ app.post('/collect', (req, res) => {
     res.json(activity)
 })
 
+app.post('/sell', (req, res) => {
+    const listing = {
+        id: `LST${current.listingIdx++}`,
+        item: req.body.id,
+        price: req.body.price,
+        owner: req.body.owner,
+        amount: req.body.amount ? req.body.amount : 1,
+        times: {
+            created: current.time,
+            lastUpdated: current.time
+        }
+    }
+
+    const item = assets.find(a => a.id == listing.item)
+    item.amount -= listing.amount
+    market.push(listing)
+
+    res.json(listing)
+})
+
+app.post('/buy', (req, res) => {
+    const item = assets.find(a => a.id == req.body.id)
+    const listing = market.find(l => l.id == item.id)
+    console.log(`buying ${item.id} at ${listing.price}...`);
+
+    const creditTx = {
+        type: "transaction",
+        id: `TX${current.txIdx++}`,
+        of: "credit",
+        from: req.body.owner,
+        to: item.owner,
+        amount: Number(req.body.amount),
+        note: `Purchase of ${item.id} at ${item.price} credit`,
+        times: {
+            created: current.time
+        }
+    }
+
+    const itemTx = {
+        type: "transaction",
+        id: `TX${current.txIdx++}`,
+        of: item.type,
+        from: item.owner,
+        to: req.body.owner,
+        amount: Number(req.body.amount ? req.body.amount : 1),
+        note: `Sale of ${item.id} at ${item.price} credit`,
+        times: {
+            created: current.time
+        }
+    }
+
+    activities.push(creditTx)
+    current.activities.pending.push(creditTx.id)
+
+    activities.push(itemTx)
+    current.activities.pending.push(item.id)
+
+    res.json([creditTx, itemTx])
+})
+
 app.get('/accounts', (req, res) => {
-    res.send(accounts)
+    res.json(accounts)
 })
 
 app.get('/activities', (req, res) => {
-    res.send(activities)
+    res.json(activities)
 })
 
 app.get('/assets', (req, res) => {
@@ -208,11 +317,15 @@ app.get('/assets', (req, res) => {
         filteredAssets = assets.filter(a => a.owner == req.query.user)
     }
 
-    res.send(filteredAssets)
+    res.json(filteredAssets)
 })
 
 app.get('/current', (req, res) => {
-    res.send(current)
+    res.json(current)
+})
+
+app.get('/market', (req, res) => {
+    res.json(market)
 })
 
 app.listen(port, () => {
@@ -250,6 +363,7 @@ setInterval(async () => {
         await assetDb.write()
         await accountDb.write()
         await worldDb.write()
+        await marketDb.write()
 
         current.activities.completed.length = 0
     }
@@ -440,7 +554,7 @@ function processPendingTransaction(transaction) {
         const bank = assets.find(a => a.id == transaction.from)
         bank.properties.staked -= transaction.amount
         current.resources.credits.balance +=transaction.amount
-        current.resources.credits.supply +=transaction.amount
+        current.resources.credits.supplied +=transaction.amount
     } else {
         from.credits.balance -= transaction.amount
     }
