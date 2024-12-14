@@ -1,6 +1,6 @@
 import * as util from './utility.js'
 import * as model from './model.js'
-import { accounts, activities, assets, world, current } from './model.js'
+import { accounts, activities, assets, world, market, current } from './model.js'
 
 export async function onMinuteAsync() {
     // console.debug(`T${current.time}, active accounts: ${current.accounts.length}/${accounts.length} transactions: ${activities.length}/${activities.length}`)
@@ -142,9 +142,6 @@ function processPendingCollect(collect) {
             "amount": collect.amount,
             "owner": collect.to
         })
-    
-        const owner = accounts.find(a => a.id == collect.to)
-        owner.inventory.items.push(id);
     }
 
     current.collectIdx += 1
@@ -177,9 +174,6 @@ function processPendingMint(mint) {
                 "credits": {
                   "balance": 0
                 },
-                "inventory": {
-                  "items": []
-                },
                 "times": {
                   "created": current.time,
                   "updated": current.time,
@@ -205,7 +199,6 @@ function processPendingMint(mint) {
             })
 
             const owner = accounts.find(a => a.id == mint.to)
-            owner.inventory.items.push(id)
             current.bankstones.push(id)
             break
         default:
@@ -221,14 +214,26 @@ function processPendingTransaction(transaction) {
     const from = accounts.find(a => a.id == transaction.from)
     const to = accounts.find(a => a.id == transaction.to)
 
-    if (transaction.from.startsWith("BNK")) {
-        const bank = assets.find(a => a.id == transaction.from)
-        bank.properties.staked -= transaction.amount
-        current.resources.credits.balance +=transaction.amount
-        current.resources.credits.supplied +=transaction.amount
-    } else {
-        from.credits.balance -= transaction.amount
+    switch(transaction.of) {
+        case "credit":
+            if (transaction.from.startsWith("BNK")) {
+                const bank = assets.find(a => a.id == transaction.from)
+                bank.properties.staked -= transaction.amount
+                current.resources.credits.balance +=transaction.amount
+                current.resources.credits.supplied +=transaction.amount
+            } else {
+                from.credits.balance -= transaction.amount
+            }
+
+            to.credits.balance += transaction.amount
+            break
+        default:
+            const listing = market.find(l => l.item == transaction.of)
+            listing.times.sold = current.time
+
+            const item = assets.find(a => a.id == transaction.of)
+            item.amount += transaction.amount
+            item.owner = to.id
+            break
     }
-    
-    to.credits.balance += transaction.amount
 }

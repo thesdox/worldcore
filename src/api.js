@@ -153,7 +153,7 @@ app.post('/buy', (req, res) => {
     const itemTx = {
         type: "transaction",
         id: `TX${current.txIdx++}`,
-        of: item.type,
+        of: item.id,
         from: item.owner,
         to: req.body.buyer,
         amount: listing.amount,
@@ -167,7 +167,7 @@ app.post('/buy', (req, res) => {
     current.activities.pending.push(creditTx.id)
 
     activities.push(itemTx)
-    current.activities.pending.push(item.id)
+    current.activities.pending.push(itemTx.id)
 
     res.json([creditTx, itemTx])
 })

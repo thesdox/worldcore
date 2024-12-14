@@ -50,6 +50,7 @@ app.get('/', (req, res) => {
                     <div>
                         <button name="id" value="${i.id}">Buy</button>
                         for <input name="price" type="number" value="${l.price}" readonly /> credit
+                        from ${l.owner}
                         <input name="buyer" type="hidden" value="${username}" />
                     </div>
                 </form>
@@ -89,7 +90,7 @@ app.get('/', (req, res) => {
             <button name="resource" value="mineral">Collect Mineral (1-3)</button>
         </form>
 
-        <h3>Inventory (<a href="/assets?user=${username}">${account.inventory.items.length}</a>)</h3>
+        <h3>Inventory (<a href="/assets?user=${username}">${items.length}</a>)</h3>
         ${inventoryHtml}
 
         <h3>Marketplace (<a href="/market">${market.length}</a>)</h3>

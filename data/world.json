@@ -3,7 +3,7 @@
     "batch": 100
   },
   "interval": {
-    "minute": 1000,
+    "minute": 5000,
     "hour": 10,
     "day": 24,
     "year": 365
