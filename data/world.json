@@ -1,6 +1,6 @@
 {
   "system": {
-    "batch": 100
+    "batch": 10
   },
   "interval": {
     "minute": 3000,

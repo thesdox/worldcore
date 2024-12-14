@@ -180,7 +180,7 @@ function processPendingMint(mint) {
     switch (mint.of) {
         case "account":
             accounts.push({
-                "id": mint.to,
+                "id": mint.to.toLowerCase(),
                 "credits": {
                   "balance": 0
                 },

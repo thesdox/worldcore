@@ -5,6 +5,45 @@ import { accounts, activities, assets, market, current } from './model.js'
 export const app = express()
 app.use(express.urlencoded({ extended: true }))
 
+app.get('/accounts', (req, res) => {
+    res.json(accounts)
+})
+
+app.get('/activities', (req, res) => {
+    let filteredActivities = activities
+    if (req.query.type) {
+        filteredActivities = activities.filter(a => a.type == req.query.type)
+    }
+
+    if (req.query.user) {
+        filteredActivities = activities.filter(a => a.from == req.query.user || a.to == req.query.user)
+    }
+
+    res.json(filteredActivities)
+})
+
+app.get('/assets', (req, res) => {
+    let filteredAssets = assets
+    if (req.query.user) {
+        filteredAssets = assets.filter(a => a.owner == req.query.user)
+    }
+
+    res.json(filteredAssets)
+})
+
+app.get('/current', (req, res) => {
+    res.json(current)
+})
+
+app.get('/market', (req, res) => {
+    let filteredListing = market
+    if (req.query.user) {
+        filteredListing = market.filter(a => a.owner == req.query.user)
+    }
+
+    res.json(filteredListing)
+})
+
 app.post('/transaction', (req, res) => {
     console.log(`sending ${req.body.of}...`);
 
@@ -24,7 +63,7 @@ app.post('/transaction', (req, res) => {
     activities.push(tx)
     current.activities.pending.push(tx.id)
 
-    res.json(tx)
+    req.query.return ? res.redirect(req.query.return) : res.json(tx)
 })
 
 app.post('/mint', (req, res) => {
@@ -75,7 +114,7 @@ app.post('/mint', (req, res) => {
     activities.push(activity)
     current.activities.pending.push(activity.id)
 
-    res.json(activity)
+    req.query.return ? res.redirect(req.query.return) : res.json(activity)
 })
 
 app.post('/collect', (req, res) => {
@@ -109,16 +148,16 @@ app.post('/collect', (req, res) => {
     activities.push(activity)
     current.activities.pending.push(activity.id)
 
-    res.json(activity)
+    req.query.return ? res.redirect(req.query.return) : res.json(activity)
 })
 
 app.post('/sell', (req, res) => {
     const listing = {
         id: `LST${current.listingIdx++}`,
         item: req.body.id,
-        price: req.body.price,
+        price: Number(req.body.price),
         owner: req.body.owner,
-        amount: req.body.amount ? req.body.amount : 1,
+        amount: Number(req.body.amount),
         times: {
             created: current.time,
             lastUpdated: current.time
@@ -129,70 +168,54 @@ app.post('/sell', (req, res) => {
     item.amount -= listing.amount
     market.push(listing)
 
-    res.json(listing)
+    req.query.return ? res.redirect(req.query.return) : res.json(listing)
 })
 
-app.post('/buy', (req, res) => {
+app.post('/trade', (req, res) => {
     const item = assets.find(a => a.id == req.body.id)
     const listing = market.find(l => l.item == item.id)
-    console.log(`buying ${item.id} at ${listing.price}...`);
 
-    const creditTx = {
-        type: "transaction",
-        id: `TX${current.txIdx++}`,
-        of: "credit",
-        from: req.body.buyer,
-        to: item.owner,
-        amount: listing.amount,
-        note: `Purchase of ${item.id} at ${listing.price} credit`,
-        times: {
-            created: current.time
+    if (req.body.buyer == item.owner) {
+        // delist and restore amount
+        item.amount += listing.amount
+        listing.times.expired = current.time
+
+        req.query.return ? res.redirect(req.query.return) : res.json([item, listing])
+    } else {
+        console.log(`buying ${item.id} at ${listing.price}...`);
+
+        const creditTx = {
+            type: "transaction",
+            id: `TX${current.txIdx++}`,
+            of: "credit",
+            from: req.body.buyer,
+            to: item.owner,
+            amount: item.price,
+            note: `Purchase of ${item.id} at ${listing.price} credit`,
+            times: {
+                created: current.time
+            }
         }
-    }
-
-    const itemTx = {
-        type: "transaction",
-        id: `TX${current.txIdx++}`,
-        of: item.id,
-        from: item.owner,
-        to: req.body.buyer,
-        amount: listing.amount,
-        note: `Sale of ${item.id} at ${listing.price} credit`,
-        times: {
-            created: current.time
+    
+        const itemTx = {
+            type: "transaction",
+            id: `TX${current.txIdx++}`,
+            of: item.id,
+            from: item.owner,
+            to: req.body.buyer,
+            amount: listing.amount,
+            note: `Sale of ${item.id} at ${listing.price} credit`,
+            times: {
+                created: current.time
+            }
         }
+    
+        activities.push(creditTx)
+        current.activities.pending.push(creditTx.id)
+    
+        activities.push(itemTx)
+        current.activities.pending.push(itemTx.id)
+
+        req.query.return ? res.redirect(req.query.return) : res.json([creditTx, itemTx])
     }
-
-    activities.push(creditTx)
-    current.activities.pending.push(creditTx.id)
-
-    activities.push(itemTx)
-    current.activities.pending.push(itemTx.id)
-
-    res.json([creditTx, itemTx])
-})
-
-app.get('/accounts', (req, res) => {
-    res.json(accounts)
-})
-
-app.get('/activities', (req, res) => {
-    res.json(activities)
-})
-
-app.get('/assets', (req, res) => {
-    let filteredAssets = assets
-    if (req.query.user) {
-        filteredAssets = assets.filter(a => a.owner == req.query.user)
-    }
-
-    res.json(filteredAssets)
-})
-
-app.get('/current', (req, res) => {
-    res.json(current)
-})
-
-app.get('/market', (req, res) => {
-    res.json(market)
 })
