@@ -137,10 +137,10 @@ function processPendingCollect(collect) {
         let id = collect.id
         switch (collect.of) {
             case "water":
-                id = `WTR${current.collectIdx}`
+                id = `WTR${assets.length}`
                 break
             case "mineral":
-                id = `MNR${current.collectIdx}`
+                id = `MNR${assets.length}`
                 break
             default:
                 break
