@@ -112,6 +112,7 @@ async function processCurrentActivitiesAsync() {
                     break
                 case "collect":
                     processPendingCollect(activity)
+                    break
                 case "consume":
                     processPendingConsume(activity)
                     break
@@ -146,7 +147,7 @@ function processPendingConsume(consume) {
 }
 
 function processPendingCollect(collect) {
-    console.log(`${collect.id}: collecting ${collect.of} from ${collect.from} to ${collect.to}...`)
+    console.log(`${collect.id}: collecting ${collect.amount} ${collect.of} from ${collect.from} to ${collect.to}...`)
 
     current.resources[collect.of].balance -= collect.amount
     current.resources[collect.of].supplied += collect.amount
@@ -166,7 +167,7 @@ function processPendingCollect(collect) {
             default:
                 break
         }
-    
+        
         assets.push({
             "id": id,
             "type": collect.of,
