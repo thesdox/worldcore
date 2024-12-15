@@ -156,9 +156,9 @@ app.get('/', (req, res) => {
                 </button>
                 <small for="type">
                     consumes
-                    ${Math.ceil(current.resources.water.supplied*Math.log(accounts.length)/current.resources.mineral.supplied)}
+                    ${Math.ceil(current.resources.water.supplied*Math.log(accounts.length*accounts.length)/current.resources.mineral.supplied)}
                     water +
-                    ${1} mineral +
+                    ${10} mineral +
                     ${100.00.toFixed(2)} credit</small>
             </div>
         </form>

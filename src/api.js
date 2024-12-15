@@ -116,7 +116,7 @@ app.post('/mint', (req, res) => {
             }
         
             activities.push(creditConsumption)
-            const waterCost = Math.ceil(current.resources.water.supplied*Math.log(accounts.length)/current.resources.mineral.supplied)
+            const waterCost = Math.ceil(current.resources.water.supplied*Math.log(accounts.length*accounts.length)/current.resources.mineral.supplied)
             const waterConsumption = {
                 "type": "consume",
                 "id": `CNS${activities.length}`,
@@ -138,7 +138,7 @@ app.post('/mint', (req, res) => {
                 "of": "mineral",
                 "from": to,
                 "to": "world",
-                "amount": 1,
+                "amount": 10,
                 "note": `Consuming minting ${id} cost of ${1} resource`,
                 "times": {
                     "created": current.time
