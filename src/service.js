@@ -134,6 +134,7 @@ function processPendingConsume(consume) {
         case "credits":
             const account = accounts.find(a => a.id == consume.from)
             account.credits.balance -= consume.amount
+            current.resources.credits.balance -= consume.amount
             break
         default:
             const resource = assets.find(a => a.type == consume.of && a.owner == consume.from && a.amount > 0)
