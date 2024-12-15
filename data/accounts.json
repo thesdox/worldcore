@@ -2,12 +2,45 @@
   {
     "id": "world",
     "credits": {
-      "balance": 0
+      "balance": -0.0027837879208618688
     },
     "times": {
       "created": 0,
       "updated": 0,
       "lastActive": 0
+    }
+  },
+  {
+    "id": "gandalf",
+    "credits": {
+      "balance": 0
+    },
+    "times": {
+      "created": 4,
+      "updated": 4,
+      "lastActive": 4
+    }
+  },
+  {
+    "id": "saruman",
+    "credits": {
+      "balance": 0
+    },
+    "times": {
+      "created": 6,
+      "updated": 6,
+      "lastActive": 6
+    }
+  },
+  {
+    "id": "sauron",
+    "credits": {
+      "balance": 2457.928086791052
+    },
+    "times": {
+      "created": 395,
+      "updated": 395,
+      "lastActive": 395
     }
   }
 ]

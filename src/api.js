@@ -1,6 +1,6 @@
 import * as util from './utility.js'
 import express from 'express'
-import { accounts, activities, assets, market, current } from './model.js'
+import { accounts, activities, assets, market, current, world } from './model.js'
 
 export const app = express()
 app.use(express.urlencoded({ extended: true }))
@@ -45,11 +45,12 @@ app.get('/market', (req, res) => {
 })
 
 app.post('/transaction', (req, res) => {
-    console.log(`sending ${req.body.of}...`);
+    const id = `TX${activities.length}}`
+    console.log(`${id}: sending ${req.body.of}...`);
 
-    const tx = {
+    const activity = {
         type: "transaction",
-        id: `TX${activities.length}}`,
+        id: id,
         of: "credit",
         from: req.body.from,
         to: req.body.to,
@@ -60,14 +61,15 @@ app.post('/transaction', (req, res) => {
         }
     }
 
-    activities.push(tx)
-    current.activities.pending.push(tx.id)
+    activities.push(activity)
+    current.activities.pending.push(activity.id)
 
-    req.query.return ? res.redirect(req.query.return) : res.json(tx)
+    setTimeout(req.query.return ? res.redirect(req.query.return) : res.json(activity), world.interval.minute)
 })
 
 app.post('/mint', (req, res) => {
-    console.log(`minting ${req.body.type}...`);
+    const id = `MNT${activities.length}`
+    console.log(`${id}: minting ${req.body.type}...`);
 
     let type = undefined
     let to = undefined
@@ -100,7 +102,7 @@ app.post('/mint', (req, res) => {
 
     const activity = {
         "type": "mint",
-        "id": `MNT${activities.length}`,
+        "id": id,
         "of": type,
         "from": "world",
         "to": to,
@@ -114,11 +116,12 @@ app.post('/mint', (req, res) => {
     activities.push(activity)
     current.activities.pending.push(activity.id)
 
-    req.query.return ? res.redirect(req.query.return) : res.json(activity)
+    setTimeout(req.query.return ? res.redirect(req.query.return) : res.json(activity), world.interval.minute)
 })
 
 app.post('/collect', (req, res) => {
-    console.log(`collecting ${req.body.resource}...`);
+    const id = `CLT${activities.length}`
+    console.log(`${id}: collecting ${req.body.resource}...`);
 
     let amount = 0
     switch (req.body.resource) {
@@ -134,7 +137,7 @@ app.post('/collect', (req, res) => {
 
     const activity = {
         "type": "collect",
-        "id": `CLT${activities.length}`,
+        "id": id,
         "of": req.body.resource,
         "from": "world",
         "to": req.body.owner,
@@ -148,12 +151,15 @@ app.post('/collect', (req, res) => {
     activities.push(activity)
     current.activities.pending.push(activity.id)
 
-    req.query.return ? res.redirect(req.query.return) : res.json(activity)
+    setTimeout(req.query.return ? res.redirect(req.query.return) : res.json(activity), world.interval.minute)
 })
 
-app.post('/sell', (req, res) => {
+app.post('/list', (req, res) => {
+    const id = `LST${market.length}`
+    console.log(`${id}: listing ${req.body.id} for sale...`)
+
     const listing = {
-        id: `LST${market.length}`,
+        id: id,
         item: req.body.id,
         price: Number(req.body.price),
         owner: req.body.owner,
@@ -182,7 +188,7 @@ app.post('/trade', (req, res) => {
 
         req.query.return ? res.redirect(req.query.return) : res.json([item, listing])
     } else {
-        console.log(`buying ${item.id} at ${listing.price}...`);
+        console.log(`TX${activities.length}: buying ${item.id} at ${listing.price}...`);
 
         const creditTx = {
             type: "transaction",
@@ -218,6 +224,6 @@ app.post('/trade', (req, res) => {
         current.activities.pending.push(itemTx.id)
         listing.times.sold = current.time
 
-        req.query.return ? res.redirect(req.query.return) : res.json([creditTx, itemTx])
+        setTimeout(req.query.return ? res.redirect(req.query.return) : res.json([creditTx, itemTx]), world.interval.minute)
     }
 })

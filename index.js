@@ -27,18 +27,24 @@ app.get('/', (req, res) => {
     let inventoryHtml = "<p>Empty<p>"
     if (items.length > 0) {
         inventoryHtml = "<ul>"
-        items.forEach(i => {
+        items.slice(0, 20).forEach(i => {
             inventoryHtml += `<li>
-                <form action="/sell?return=/?user=${username}" method="post">
+                <form action="/list?return=/?user=${username}" method="post">
                     <div>
                         ${i.amount} unit of ${i.owner}'s ${i.type} ${i.type=="bankstone" ? ` <small>APR ${(i.properties.yield*100).toFixed(0)}% ${Math.floor(i.properties.staked)}/${i.properties.cap} (${(i.properties.staked/i.properties.cap * 100).toFixed(0)}%)</small>` : ``}
                         <small for="id">${i.id}</small>
                         <input name="id" type="hidden" value="${i.id}" />
                     </div>
                     <div>
-                        <button name="owner" value="${username}" ${(i.type == "water" || i.type == "mineral") && i.amount < 100 ? "disabled" : ""}>Sell</button>
-                        <input name="amount" type="number" value="${i.amount}" required readonly /> units
-                        for <input name="price" type="number" value="${i.type == "bankstone" ? i.staked * i.yield * 2 : i.amount * 1}" max="1000.00" step=".01" /> credit
+                        <button name="owner" value="${username}"
+                            ${(i.type == "water" || i.type == "mineral") && i.amount < 100 ? "disabled" : ""}>
+                            Sell
+                        </button>
+                        <input name="amount" type="hidden" value="${i.amount}" />
+                        for <input name="price" type="number" value="${i.type == "bankstone" ?
+                            (i.properties.staked * i.properties.yield * .33).toFixed(2) :
+                            (i.amount * .033).toFixed(2)}" max="1000.00" step=".01" />
+                        credit
                     </div>
                 </form>
             </li>`
@@ -50,7 +56,7 @@ app.get('/', (req, res) => {
     let listingsHtml = "<p>Empty<p>"
     if (listings.length > 0) {
         listingsHtml = "<ul>"
-        listings.forEach(l => {
+        listings.slice(0, 20).forEach(l => {
             const i = assets.find(a => a.id == l.item)
             listingsHtml += `<li>
                 <form action="/trade?return=/?user=${username}" method="post">
@@ -102,8 +108,8 @@ app.get('/', (req, res) => {
         </form>
         <form action="/collect?return=/?user=${username}" method="post">
             <input type="hidden" name="owner" value="${username}" />
-            <button name="resource" value="water">Collect Water (5-10)</button>
-            <button name="resource" value="mineral">Collect Mineral (1-3)</button>
+            <button name="resource" value="water" ${current.resources.water.balance <= 0 ? "disabled": ""}>Collect Water (5-10)</button>
+            <button name="resource" value="mineral" ${current.resources.mineral.balance <= 0 ? "disabled": ""}>Collect Mineral (1-3)</button>
         </form>
 
         <h3>Inventory (<a href="/assets?user=${username}">${items.filter(i => i.owner == username).length}</a>)</h3>
@@ -117,7 +123,19 @@ app.get('/', (req, res) => {
             </div>-->
             <div>
                 <input type="hidden" name="owner" value="${username}" />
-                <button name="type" value="bankstone">Mint Bankstone</button>
+                
+                <button name="type" value="bankstone"
+                    ${userMinerals < 1 ||
+                    userWaters < Math.ceil(current.resources.water.supplied/current.resources.mineral.supplied) ||
+                    account.credits.balance < 100 ? "disabled": ""}>
+                    Mint Bankstone
+                </button>
+                <label for="type">
+                    consumes
+                    ${Math.ceil(current.resources.water.supplied/current.resources.mineral.supplied)}
+                    water +
+                    ${1} mineral +
+                    ${100.00} credit</abel>
             </div>
         </form>
         <form action="/mint?return=/?user=${username}" method="post">
