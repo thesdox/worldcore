@@ -64,7 +64,9 @@ app.post('/transaction', (req, res) => {
     activities.push(activity)
     current.activities.pending.push(activity.id)
 
-    setTimeout(req.query.return ? res.redirect(req.query.return) : res.json(activity), world.interval.minute)
+    setTimeout(() => req.query.return ?
+        res.redirect(req.query.return) : res.json(activity),
+        world.interval.minute)
 })
 
 app.post('/mint', (req, res) => {
@@ -81,20 +83,6 @@ app.post('/mint', (req, res) => {
         case "bankstone":
             type = "bankstone"
             to = req.body.owner
-            // water = req.body.water
-            // mineral = req.body.mineral
-            
-            // const waterConsumption = {
-            // }
-
-            // activities.push(waterConsumption)
-            // current.activities.pending.push(waterConsumption.id)
-
-            // const mineralConsumption = {
-            // }
-
-            // activities.push(mineralConsumption)
-            // current.activities.pending.push(mineralConsumption.id)
             break
         default:
             break
@@ -116,7 +104,9 @@ app.post('/mint', (req, res) => {
     activities.push(activity)
     current.activities.pending.push(activity.id)
 
-    setTimeout(req.query.return ? res.redirect(req.query.return) : res.json(activity), world.interval.minute)
+    setTimeout(() => req.query.return ?
+        res.redirect(req.query.return) : res.json(activity),
+        world.interval.minute)
 })
 
 app.post('/collect', (req, res) => {
@@ -151,7 +141,9 @@ app.post('/collect', (req, res) => {
     activities.push(activity)
     current.activities.pending.push(activity.id)
 
-    setTimeout(req.query.return ? res.redirect(req.query.return) : res.json(activity), world.interval.minute)
+    setTimeout(() => req.query.return ?
+        res.redirect(req.query.return) : res.json(activity),
+        world.interval.minute)
 })
 
 app.post('/list', (req, res) => {
@@ -224,6 +216,8 @@ app.post('/trade', (req, res) => {
         current.activities.pending.push(itemTx.id)
         listing.times.sold = current.time
 
-        setTimeout(req.query.return ? res.redirect(req.query.return) : res.json([creditTx, itemTx]), world.interval.minute)
+        setTimeout(() => req.query.return ?
+            res.redirect(req.query.return) : res.json([creditTx, itemTx]),
+            world.interval.minute)
     }
 })
