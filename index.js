@@ -28,7 +28,7 @@ app.get('/', (req, res) => {
     const userMineralTotal = userMinerals.reduce((sum, c) => {return sum + c.amount}, 0)
 
     const userBankstones = items.filter((a) => a.type=="bankstone")
-    const bankstoneTotal = assets.filter(a => a.type == "bankstone").reduce((sum, c) => sum+=1, 0)
+    const activeEffectsTotal = current.effects.length
 
     let inventoryHtml = "<p>Empty<p>"
     if (items.length > 0) {
@@ -123,10 +123,10 @@ app.get('/', (req, res) => {
             <button name="resource" value="mineral" ${current.resources.mineral.balance <= 0 ? "disabled": ""}>Collect mineral (1-3)</button>
         </form>
         <div>
-            <small style="color:${"#00A0FF"}"><strong>water</strong></small> ${userWaterTotal}<small style="color:${"#BBB"}">/${current.resources.water.supplied.toFixed(0)}(${(userWaterTotal/current.resources.water.supplied).toFixed(2)}%)</small>
+            <small style="color:${"#00A0FF"}"><strong>water</strong></small> ${userWaterTotal}<small style="color:${"#BBB"}">/${current.resources.water.supplied.toFixed(0)}(${(userWaterTotal/current.resources.water.supplied*100).toFixed(2)}%)</small>
 
-            <small style="color:${"#FF03EA"}"><strong>mineral</strong></small> ${userMineralTotal}<small style="color:${"#BBB"}">/${current.resources.mineral.supplied.toFixed(0)}(${(userMineralTotal/current.resources.mineral.supplied).toFixed(2)}%)</small>
-            <small style="color:${"gray"}"><strong>bankstones</strong></small> ${userBankstones.length}<small style="color:${"#BBB"}">/${bankstoneTotal}(${(userBankstones.length/bankstoneTotal).toFixed(2)}%)</small>
+            <small style="color:${"#FF03EA"}"><strong>mineral</strong></small> ${userMineralTotal}<small style="color:${"#BBB"}">/${current.resources.mineral.supplied.toFixed(0)}(${(userMineralTotal/current.resources.mineral.supplied*100).toFixed(2)}%)</small>
+            <small style="color:${"gray"}"><strong>bankstones</strong></small> ${userBankstones.length}<small style="color:${"#BBB"}">/${activeEffectsTotal}(${(userBankstones.length/activeEffectsTotal*100).toFixed(2)}%)</small>
         </div>
         <form action="/transaction?return=/?user=${username}" method="post" style="text-align:right">
             <small style="color:gray"><strong>${username}</strong>'s balance</small>
