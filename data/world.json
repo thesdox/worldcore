@@ -15,9 +15,9 @@
       "rateHi": 10
     },
     "mineral": {
-      "total": 100000,
+      "total": 1000000,
       "rateLo": 0,
-      "rateHi": 2
+      "rateHi": 4
     }
   },
   "items": {
