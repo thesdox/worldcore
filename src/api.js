@@ -73,39 +73,91 @@ app.post('/mint', (req, res) => {
     const id = `MNT${activities.length}`
     console.log(`${id}: minting ${req.body.type}...`);
 
-    let type = undefined
-    let to = undefined
-    switch (req.body.type) {
-        case "account":
-            type = "account"
-            to = req.body.username
-            break
-        case "bankstone":
-            type = "bankstone"
-            to = req.body.owner
-            break
-        default:
-            break
+    const to = req.body.type == "account" ? req.body.username : req.body.owner
+    const account = accounts.find(a => a.id == to)
+    const userWaters = assets.filter(a => a.owner == to && a.type == "water")
+    const userMinerals = assets.filter(a => a.owner == to && a.type == "mineral")
+
+    if (account.credits.balance < 100 ||
+        userWaters.reduce((sum, c) => sum + c.amount, 0) < 6  ||
+        userMinerals.reduce((sum, c) => sum + c.amount, 0) < 1) {
+        
     }
 
     const activity = {
         "type": "mint",
         "id": id,
-        "of": type,
+        "of": req.body.type,
         "from": "world",
         "to": to,
         "amount": 1,
-        "note": `Minting of ${type} for ${to}`,
+        "note": `Minting of ${req.body.type} for ${to}`,
         "times": {
             "created": current.time
         }
     }
 
     activities.push(activity)
+
+    const consumptions = []
+    switch (req.body.type) {
+        case "bankstone":
+            const creditConsumption = {
+                "type": "consume",
+                "id": `CNS${activities.length}`,
+                "of": "credits",
+                "from": to,
+                "to": "world",
+                "amount": 100,
+                "note": `Consuming minting ${id} cost of ${100.00} credit`,
+                "times": {
+                    "created": current.time
+                }
+            }
+        
+            activities.push(creditConsumption)
+            const waterCost = Math.ceil(current.resources.water.supplied*Math.log(accounts.length)/current.resources.mineral.supplied)
+            const waterConsumption = {
+                "type": "consume",
+                "id": `CNS${activities.length}`,
+                "of": 'water',
+                "from": to,
+                "to": "world",
+                "amount": waterCost,
+                "note": `Consuming minting ${id} cost of ${waterCost} water`,
+                "times": {
+                    "created": current.time
+                }
+            }
+            
+            activities.push(waterConsumption)
+        
+            const mineralConsumption = {
+                "type": "consume",
+                "id": `CNS${activities.length}`,
+                "of": "mineral",
+                "from": to,
+                "to": "world",
+                "amount": 1,
+                "note": `Consuming minting ${id} cost of ${1} resource`,
+                "times": {
+                    "created": current.time
+                }
+            }
+        
+            activities.push(mineralConsumption)
+
+            consumptions.push(... [creditConsumption, mineralConsumption, waterConsumption])
+            current.activities.pending.push(... [creditConsumption.id, mineralConsumption.id, waterConsumption.id])
+            break
+        default:
+            break
+    }
+
     current.activities.pending.push(activity.id)
 
     setTimeout(() => req.query.return ?
-        res.redirect(req.query.return) : res.json(activity),
+        res.redirect(req.query.return) : res.json([activity,... consumptions]),
         world.interval.minute)
 })
 

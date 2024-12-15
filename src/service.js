@@ -112,6 +112,8 @@ async function processCurrentActivitiesAsync() {
                     break
                 case "collect":
                     processPendingCollect(activity)
+                case "consume":
+                    processPendingConsume(activity)
                     break
                 default:
                     break
@@ -122,6 +124,24 @@ async function processCurrentActivitiesAsync() {
             current.activities.pending = current.activities.pending.filter(id => id !== activity.id)
         }
     })
+}
+
+function processPendingConsume(consume) {
+    console.debug(`${consume.id}: consuming ${consume.of} from ${consume.from} to ${consume.to}...`)
+    current.resources[consume.of].supplied += consume.amount
+    
+    switch (consume.of) {
+        case "credits":
+            const account = accounts.find(a => a.id == consume.from)
+            account.credits.balance -= consume.amount
+            break
+        default:
+            const resource = assets.find(a => a.type == consume.of && a.owner == consume.from && a.amount > 0)
+            if (resource) {
+                resource.amount -= consume.amount
+            }
+            break
+    }
 }
 
 function processPendingCollect(collect) {
@@ -153,8 +173,6 @@ function processPendingCollect(collect) {
             "owner": collect.to
         })
     }
-
-    current.collectIdx += 1
 }
 
 function processPendingSystemActivity(activity) {

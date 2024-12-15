@@ -2,13 +2,13 @@
   {
     "id": "WTR0",
     "type": "water",
-    "amount": 5808,
+    "amount": 5784,
     "owner": "sauron"
   },
   {
     "id": "MNR1",
     "type": "mineral",
-    "amount": 891,
+    "amount": 888,
     "owner": "sauron"
   },
   {
@@ -20906,6 +20906,39 @@
       "yield": 0.17,
       "cap": 4970,
       "staked": 4960.845623992663
+    },
+    "owner": "sauron"
+  },
+  {
+    "id": "BNK1905",
+    "type": "bankstone",
+    "amount": 1,
+    "properties": {
+      "yield": 0.24,
+      "cap": 909,
+      "staked": 909
+    },
+    "owner": "sauron"
+  },
+  {
+    "id": "BNK1906",
+    "type": "bankstone",
+    "amount": 1,
+    "properties": {
+      "yield": 0.26,
+      "cap": 2185,
+      "staked": 2185
+    },
+    "owner": "sauron"
+  },
+  {
+    "id": "BNK1907",
+    "type": "bankstone",
+    "amount": 1,
+    "properties": {
+      "yield": 0.12,
+      "cap": 8292,
+      "staked": 8292
     },
     "owner": "sauron"
   }
