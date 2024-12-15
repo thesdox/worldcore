@@ -132,8 +132,8 @@ app.get('/', (req, res) => {
             <small style="color:gray"><strong>${username}</strong>'s balance</small>
             <h1 style="margin-top:0;margin-bottom:0">${account.credits.balance.toFixed(2)} <small>credit</small></h1>
             <small>
-                holding ${(account.credits.balance/current.resources.credits.supplied*100).toFixed(2)}% of
-                ${current.resources.credits.supplied.toFixed(2)} credits circulating..
+                holding ${(account.credits.balance/current.resources.credits.balance*100).toFixed(2)}% of
+                ${current.resources.credits.balance.toFixed(2)} credits circulating..
             </small>
             <div style="margin-top:1em">
                 <input type="hidden" name="from" value="${username}" />
