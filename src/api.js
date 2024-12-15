@@ -78,12 +78,6 @@ app.post('/mint', (req, res) => {
     const userWaters = assets.filter(a => a.owner == to && a.type == "water")
     const userMinerals = assets.filter(a => a.owner == to && a.type == "mineral")
 
-    if (account.credits.balance < 100 ||
-        userWaters.reduce((sum, c) => sum + c.amount, 0) < 6  ||
-        userMinerals.reduce((sum, c) => sum + c.amount, 0) < 1) {
-        
-    }
-
     const activity = {
         "type": "mint",
         "id": id,
@@ -102,6 +96,12 @@ app.post('/mint', (req, res) => {
     const consumptions = []
     switch (req.body.type) {
         case "bankstone":
+            if (account.credits.balance < 100 ||
+                userWaters.reduce((sum, c) => sum + c.amount, 0) < 6  ||
+                userMinerals.reduce((sum, c) => sum + c.amount, 0) < 1) {
+                console.error(`not enough balance to consume`)
+            }
+
             const creditConsumption = {
                 "type": "consume",
                 "id": `CNS${activities.length}`,

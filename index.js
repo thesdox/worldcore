@@ -22,7 +22,10 @@ app.get('/', (req, res) => {
         .sort((a, b) => { return a.amount < b.amount ? 1 : -1})
 
     const userWaters = items.filter((a) => a.type=="water")
+    const userWaterTotal = userWaters.reduce((sum, c) => {return sum + c.amount}, 0)
+
     const userMinerals = items.filter((a) => a.type=="mineral")
+    const userMineralTotal = userMinerals.reduce((sum, c) => {return sum + c.amount}, 0)
 
     const userBankstones = items.filter((a) => a.type=="bankstone")
     const bankstoneTotal = assets.filter(a => a.type == "bankstone").reduce((sum, c) => sum+=1, 0)
@@ -55,10 +58,12 @@ app.get('/', (req, res) => {
         inventoryHtml += "</ul>"
     }
 
-    const marketSoldStats = util.getCountMeanMedianMode(market.filter(l => l.times.sold).map(l => l.price))
+    const marketSoldStats = util.getStats(market.filter(l => l.times.sold).map(l => l.price))
+
     const listings = market.filter(l => !l.times.sold && !l.times.expired)
         .sort((a, b) => { return a.price < b.price ? 1 : -1})
         .sort((a, b) => { return a.amount < b.amount ? 1 : -1})
+    const activeListingStats = util.getStats(listings.map(l => l.price))
 
     let listingsHtml = "<p>Empty<p>"
     if (listings.length > 0) {
@@ -118,10 +123,10 @@ app.get('/', (req, res) => {
             <button name="resource" value="mineral" ${current.resources.mineral.balance <= 0 ? "disabled": ""}>Collect mineral (1-3)</button>
         </form>
         <div>
-            <small style="color:${"#00A0FF"}"><strong>water</strong></small> ${userWaters.length > 0 ? userWaters.reduce((sum, c) => {return sum + c.amount}, 0): 0}<small style="color:${"#BBB"}">/${current.resources.water.supplied.toFixed(0)}(${(userWaters.length/current.resources.water.supplied).toFixed(2)}%)</small>
+            <small style="color:${"#00A0FF"}"><strong>water</strong></small> ${userWaterTotal}<small style="color:${"#BBB"}">/${current.resources.water.supplied.toFixed(0)}(${(userWaterTotal/current.resources.water.supplied).toFixed(2)}%)</small>
 
-            <small style="color:${"#FF03EA"}"><strong>mineral</strong></small> ${userMinerals.length > 0 ? userMinerals.reduce((sum, c) => {return sum + c.amount}, 0): 0}<small style="color:${"#BBB"}">/${current.resources.mineral.supplied.toFixed(0)}(${(userMinerals.length/current.resources.mineral.supplied).toFixed(2)}%)</small>
-            <small style="color:${"gray"}"><strong>bankstones</strong></small> ${userBankstones.length > 0 ? userBankstones.reduce((sum, c) => {return sum + c.amount}, 0): 0}<small style="color:${"#BBB"}">/${bankstoneTotal}(${(userBankstones.length/bankstoneTotal).toFixed(2)}%)</small>
+            <small style="color:${"#FF03EA"}"><strong>mineral</strong></small> ${userMineralTotal}<small style="color:${"#BBB"}">/${current.resources.mineral.supplied.toFixed(0)}(${(userMineralTotal/current.resources.mineral.supplied).toFixed(2)}%)</small>
+            <small style="color:${"gray"}"><strong>bankstones</strong></small> ${userBankstones.length}<small style="color:${"#BBB"}">/${bankstoneTotal}(${(userBankstones.length/bankstoneTotal).toFixed(2)}%)</small>
         </div>
         <form action="/transaction?return=/?user=${username}" method="post" style="text-align:right">
             <small style="color:gray"><strong>${username}</strong>'s balance</small>
@@ -140,13 +145,6 @@ app.get('/', (req, res) => {
 
         <h3>Inventory (<a href="/assets?user=${username}">${items.filter(i => i.owner == username).length}</a>)</h3>
         <form action="/mint?return=/?user=${username}" method="post">
-            <!--<div>
-                <label for="water">Water</label>
-                <input type="range" name="water" min="10" max="1000" value="10" width="4" />
-                <br />
-                <label for="mineral">Mineral</label>
-                <input type="range" name="mineral" min="1" max="10" value="1" width="4" readonly />
-            </div>-->
             <div>
                 <input type="hidden" name="owner" value="${username}" />
                 
@@ -170,12 +168,18 @@ app.get('/', (req, res) => {
         </form>
         ${inventoryHtml}
 
-        <h3>Marketplace (<a href="/market?expired=false&sold=false">${market.filter(l => !l.times.expired && !l.times.sold).length}</a>)</h3>
+        <h3 style="margin-bottom:0">Marketplace (<a href="/market?expired=false&sold=false">${market.filter(l => !l.times.expired && !l.times.sold).length}</a>)</h3>
         <div>
-            <small>total ${marketSoldStats.count} sold at
+            <small>total ${activeListingStats.count} (${activeListingStats.sum.toFixed(0)} credit) selling at
+            avg. ${activeListingStats.mean.toFixed(2)}
+            mdn. ${activeListingStats.median.toFixed(2)}
+            </small>
+        </div>
+        <div>
+            <small>total ${marketSoldStats.count} (${marketSoldStats.sum.toFixed(2)} credit) sold at
             avg. ${marketSoldStats.mean.toFixed(2)}
             mdn. ${marketSoldStats.median.toFixed(2)}
-            credit
+            </small>
         </div>
         ${listingsHtml}
         `)

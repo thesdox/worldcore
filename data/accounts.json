@@ -35,12 +35,23 @@
   {
     "id": "sauron",
     "credits": {
-      "balance": 6238.661495778373
+      "balance": 6360.4111706099575
     },
     "times": {
       "created": 395,
       "updated": 395,
       "lastActive": 395
+    }
+  },
+  {
+    "id": "frodo",
+    "credits": {
+      "balance": 0
+    },
+    "times": {
+      "created": 7267,
+      "updated": 7267,
+      "lastActive": 7267
     }
   }
 ]
