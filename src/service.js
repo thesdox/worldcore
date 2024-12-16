@@ -20,6 +20,7 @@ export async function onMinuteAsync() {
         await model.accountDb.write()
         await model.worldDb.write()
         await model.marketDb.write()
+        await model.authDb.write()
 
         current.activities.completed.length = 0
     }

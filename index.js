@@ -12,7 +12,69 @@ app.listen(port, () => {
 setInterval(onMinuteAsync, world.interval.minute)
 
 app.get('/', (req, res) => {
-    const username = req.query.user ? req.query.user : "world"
+    if (!req.session.username && !req.query.user) {
+        const balanceLeaders = accounts.sort((a, b) => {return a.balance > b.balance ? 1 : -1})
+        let balanceLeaderHtml = "<p>Empty<p>"
+        if (balanceLeaders.length > 0) {
+            balanceLeaderHtml = "<ul>"
+            balanceLeaders.slice(0, 100).forEach((a, idx) => {
+                balanceLeaderHtml += `<oi><div>
+                    <strong>${idx+1}.</strong>
+                    <strong><a href="/?user=${a.id}">${a.id}</a></strong>
+                    <small>(balance: ${a.credits.balance.toFixed(2)})</small>
+                </div></oi>`
+            })
+            balanceLeaderHtml += "</ul>"
+        }
+
+        res.send(`<html><body>
+            <h1 style="margin-bottom:1px">Bankstone</h1>
+            <small>Web3 Currency & Digital Asset Trading</small>
+
+            <h2>Simplified Web3 Economy in active development.</h2>
+            <h3>Collect resources from the new world. Craft and trade items! Receive Web3 credits before token launch!</h3>
+            <div style="text-align:right"><small>
+                Looking for an open project to participate?
+                <a href="https://github.com" target="_blank">Learn more</a>
+            </small></div>
+            
+            <form action="/auth" method="post">
+                <h3 style="margin-bottom:1px">Current resident</h3>
+                <div><small>
+                    <input name="save" type="checkbox" />
+                    <label for="save">Keep the access for next 7 days</label>
+                </small></div>
+                <div>
+                    <input name="username" placeholder="username" required />
+                    <input name="password" type="password" placeholder="password" required />
+                    <button>Enter</button>
+                </div>
+            </form>
+
+            <form action="/mint?return=/" method="post">
+                <h3 style="margin-bottom:1px">New resident</h3>
+                <small>Invitation code is required at this time. Please check out <a href="https://github.com" target="_blank">project site</a> for more details.</small>
+                <div>
+                    <input name="invitecode" placeholder="invitation code" required />
+                    <input name="username" placeholder="username" required />
+                </div>
+                <div>
+                    <input name="password" type="password" placeholder="password" required />
+                    <input name="confirm" type="password" placeholder="confirm" required />
+                    <button name="type" value="account">Mint Account</button>
+                </div>
+            </form>
+
+            <h2>Leaderboard</h2>
+            <div>
+                <h4>Balance</h4>
+                ${balanceLeaderHtml}
+            </div>
+        </body></html>`)
+        return
+    }
+
+    const username = req.query.user? req.query.user : req.session.username
     const account = accounts.find(a => a.id == username)
 
     const items = assets.filter(a => a.owner == account.id && a.amount > 0)
@@ -115,6 +177,7 @@ app.get('/', (req, res) => {
                 <a href="/activities">all activities (${activities.length})</a>
             </li>
             <li><a href="/assets">assets (${assets.length} minted)</a></li>
+            <li><a href="/exit">exit</a></li>
         </ul>
 
         <form action="/collect?return=/?user=${username}" method="post">
@@ -161,10 +224,6 @@ app.get('/', (req, res) => {
                     ${10} mineral +
                     ${100.00.toFixed(2)} credit</small>
             </div>
-        </form>
-        <form action="/mint?return=/?user=${username}" method="post">
-            <input name="username" placeholder="username" required />
-            <button name="type" value="account">Mint Account</button>
         </form>
         ${inventoryHtml}
 

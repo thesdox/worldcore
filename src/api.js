@@ -1,9 +1,39 @@
 import * as util from './utility.js'
 import express from 'express'
-import { accounts, activities, assets, market, current, world } from './model.js'
+import session from 'express-session'
+import { accounts, activities, assets, market, current, world, auth } from './model.js'
+import * as bcrypt from 'bcrypt'
 
 export const app = express()
+
+app.use(session({
+    secret: 'secret',
+    resave: true,
+    saveUninitialized: true
+}))
+
 app.use(express.urlencoded({ extended: true }))
+
+app.post('/auth', function(req, res) {
+	let username = req.body.username;
+	let password = req.body.password;
+
+	if (username && password &&
+        auth.findIndex(a => a.username == username && a.password == password) > 0) {
+        req.session.username = username;
+        res.redirect('/');
+	} else {
+        console.warn(`unauthroized entry attempt: ${username}:${password}`)
+        res.send(401)
+    }
+});
+
+app.get('/exit', function(req, res) {
+    req.session.destroy((err) => {
+        if (err) console.warn(err)
+        res.redirect('/')
+    })
+})
 
 app.get('/accounts', (req, res) => {
     res.json(accounts)
@@ -95,6 +125,21 @@ app.post('/mint', (req, res) => {
 
     const consumptions = []
     switch (req.body.type) {
+        case "account":
+            bcrypt.hash(req.body.password, 2, (err, hash) => {
+                if (err) {
+                    throw err
+                }
+                
+                auth.push({
+                    username: to,
+                    password: hash
+                })
+    
+                console.log(`${id}: granting access to ${to}...`);
+                req.session.username = to
+            })
+            break
         case "bankstone":
             if (account.credits.balance < 100 ||
                 userWaters.reduce((sum, c) => sum + c.amount, 0) < 6  ||
