@@ -12,113 +12,83 @@ app.listen(port, () => {
 
 setInterval(onMinuteAsync, world.interval.minute)
 
-app.get('/', (req, res) => {
+app.get('/leaderboard', (req, res) => {
     const session = req.session
-    
     const username = req.query.user? req.query.user : req.session.username
     const account = accounts.find(a => a.id == username)
 
-    const marketSoldStats = util.getStats(market.filter(l => l.times.sold).map(l => l.price))
+    const headerHtml = getHeaderHtml(session, req.session.username)
+    const leaderboardHtml = getLeaderboardHtml()
+    res.send(`
+        ${headerHtml}
+        <h1>Leaderboard</h1>
+        ${leaderboardHtml}
+    `)
+})
 
-    let listings = market.filter(l => !l.times.sold && !l.times.expired)
-        .sort((a, b) => { return a.price < b.price ? 1 : -1})
-        .sort((a, b) => { return a.amount < b.amount ? 1 : -1})
-    const activeListingStats = util.getStats(listings.map(l => l.price))
+app.get('/transactions', (req, res) => {
+    const session = req.session
+    const username = req.query.user? req.query.user : req.session.username
+    const account = accounts.find(a => a.id == username)
+    
+    const headerHtml = getHeaderHtml(session, username)
+    const transactionsHtml = getTransactionsHtml()
+    res.send(`
+        ${headerHtml}
+        <h1>Transactions</h1>
+        ${transactionsHtml}
+    `)
+})
 
-    const marketStatsHtml = `
-        <div>
-            <small>total ${activeListingStats.count} (${activeListingStats.sum.toFixed(0)} credit) selling at
-            avg. ${activeListingStats.mean.toFixed(2)}
-            mdn. ${activeListingStats.median.toFixed(2)}
-            </small>
-        </div>
-        <div>
-            <small>total ${marketSoldStats.count} (${marketSoldStats.sum.toFixed(2)} credit) sold at
-            avg. ${marketSoldStats.mean.toFixed(2)}
-            mdn. ${marketSoldStats.median.toFixed(2)}
-            </small>
-        </div>
-    `
+app.get('/marketplace', (req, res) => {
+    const session = req.session
+    const username = req.query.user? req.query.user : req.session.username
+    const account = accounts.find(a => a.id == username)
 
-    const headerHtml = `
-        <div style="background:#EFEFEF;margin:0;padding:.5em">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="1em"><circle fill="#00A0FF" stroke="#00A0FF" stroke-width="30" r="15" cx="40" cy="65"><animate attributeName="cy" calcMode="spline" dur="1" values="65;135;65;" keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="-.4"></animate></circle><circle fill="#00C0FF" stroke="#00C0FF" stroke-width="30" r="15" cx="100" cy="65"><animate attributeName="cy" calcMode="spline" dur="1" values="65;135;65;" keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="-.2"></animate></circle><circle fill="#00C0FF" stroke="#00C0FF" stroke-width="30" r="15" cx="160" cy="65"><animate attributeName="cy" calcMode="spline" dur="1" values="65;135;65;" keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="0"></animate></circle></svg>
-            <small style="color:${"#00A0FF"}"><strong>water</strong></small>
-            <span style="color:${"#000"}">${current.resources.water.balance.toFixed(0)}</span>
+    const headerHtml = getHeaderHtml(session, username)
 
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="1em"><path fill="#FF03EA" stroke="#FF03EA" stroke-width="30" transform-origin="center" d="m148 84.7 13.8-8-10-17.3-13.8 8a50 50 0 0 0-27.4-15.9v-16h-20v16A50 50 0 0 0 63 67.4l-13.8-8-10 17.3 13.8 8a50 50 0 0 0 0 31.7l-13.8 8 10 17.3 13.8-8a50 50 0 0 0 27.5 15.9v16h20v-16a50 50 0 0 0 27.4-15.9l13.8 8 10-17.3-13.8-8a50 50 0 0 0 0-31.7Zm-47.5 50.8a35 35 0 1 1 0-70 35 35 0 0 1 0 70Z"><animateTransform type="rotate" attributeName="transform" calcMode="spline" dur="3.5" values="0;120" keyTimes="0;1" keySplines="0 0 1 1" repeatCount="indefinite"></animateTransform></path></svg>
-            <small style="color:${"#FF03EA"}"><strong>mineral</strong></small>
-            <span style="color:${"#000"}">${current.resources.mineral.balance.toFixed(0)}</span></span>
+    const listings = market.filter(l => !l.times.sold && !l.times.expired)
+    .sort((a, b) => { return a.price / a.amount < b.price / b.amount ? 1 : -1 })
+    .sort((a, b) => { return a.amount < b.amount ? 1 : -1 })
 
-            <small style="margin-left:1em">
-                <svg width="1em" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="FF0000" stroke="FF0000" d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,20a9,9,0,1,1,9-9A9,9,0,0,1,12,21Z"/><rect x="11" y="6" rx="1" width="2" height="7"><animateTransform attributeName="transform" type="rotate" dur="15s" values="0 12 12;360 12 12" repeatCount="indefinite"/></rect><rect x="11" y="11" rx="1" width="2" height="9"><animateTransform attributeName="transform" type="rotate" dur="1s" values="0 12 12;360 12 12" repeatCount="indefinite"/></rect></svg><small style="color:gray">x${60000/world.interval.minute}</small>
-                Year ${Math.floor(current.time/(world.interval.hour * world.interval.day * world.interval.year))}
-                Day ${Math.floor(current.time/(world.interval.hour * world.interval.day))}
-                <a href="/current">${Math.floor(current.time%(world.interval.hour * world.interval.day)/(world.interval.hour))}:${current.time % (world.interval.hour) < 10 ? '0':''}${current.time % (world.interval.hour)}</a>
-                <small>(${(current.time % (world.interval.hour)/world.interval.hour*100).toFixed(0)}% to yield)</small>
-            </small>
+    const marketStatsHtml = getMarketStatsHtml(listings)
+    const marketplaceHtml = getMarketplaceHtml(listings, marketStatsHtml, username, session, account)
+    res.send(`
+        ${headerHtml}
+        <h1>Marketplace</h1>
+        ${marketplaceHtml}
+    `)
+})
 
-            <small><strong>${session.username? `${session.username}</strong> (<a href="/exit">exit</a>)` : ``}</small>
-        </div>
+app.get('/blog', (req, res) => {
+    const session = req.session
+    const username = req.query.user? req.query.user : req.session.username
+    const account = accounts.find(a => a.id == username)
 
-        ${!session.username ? `
-            <h1 style="margin-top:.3em;margin-bottom:0px;"><small><a href="/">Bankstone</a></small></h1>
-            <small>Web3 Currency & Digital Asset Platform</small>` : ``}
+    const headerHtml = getHeaderHtml(session, username)
+    const blogHtml = getBlogHtml()
+    res.send(`
+        ${headerHtml}
+        <h1>Blog</h1>
+        ${blogHtml}
+    `)
+})
 
-        <!--
-        <ul style="padding:0;text-align:right"><small>
-            <li><a href="/accounts">all accounts (${accounts.length})</a></li>
-            <li>
-                <a href="/activities?type=transaction">transactions (${activities.filter(a => a.type == "transaction").length})</a>
-                <a href="/activities?type=mint">minted (${activities.filter(a => a.type == "mint").length})</a>
-                <a href="/activities?type=collect">collects (${activities.filter(a => a.type == "collect").length})</a>
-                <a href="/activities">all activities (${activities.length})</a>
-            </li>
-            <li><a href="/assets">assets (${assets.length} minted)</a></li>
-            <li><a href="/auths">auths (${auth.length})</a></li>
-        </small></ul>
-        -->
+app.get('/', (req, res) => {
+    const session = req.session
+    const username = req.query.user? req.query.user : req.session.username
+    const account = accounts.find(a => a.id == username)
 
-        ${session.username && session.username == username ? `
-            <form action="/collect?return=/?user=${username}" method="post">
-                <input type="hidden" name="owner" value="${username}" />
-                <button name="resource" value="water" ${current.resources.water.balance <= 0 ? "disabled": ""}>Collect water (5-10)</button>
-                <button name="resource" value="mineral" ${current.resources.mineral.balance <= 0 ? "disabled": ""}>Collect mineral (1-3)</button>
-            </form>`: ``
-        }
-    `
+    const listings = market.filter(l => !l.times.sold && !l.times.expired)
+    .sort((a, b) => { return a.price / a.amount < b.price / b.amount ? 1 : -1 })
+    .sort((a, b) => { return a.amount < b.amount ? 1 : -1 })
+
+    const marketStatsHtml = getMarketStatsHtml(listings)
+    const headerHtml = getHeaderHtml(session, username)
 
     if (!req.session.username && !req.query.user) {
-        const balanceLeaders = accounts.sort((a, b) => {return a.credits.balance > b.credits.balance ? -1 : 1})
-        let balanceLeaderHtml = "<p>Empty<p>"
-        if (balanceLeaders.length > 0) {
-            balanceLeaderHtml = "<ul>"
-            balanceLeaders.slice(0, 100).forEach((a, idx) => {
-                balanceLeaderHtml += `<oi><div>
-                    <strong>${idx+1}.</strong>
-                    <strong><a href="/?user=${a.id}">${a.id}</a></strong>
-                    <small>(balance: ${a.credits.balance.toFixed(2)})</small>
-                </div></oi>`
-            })
-            balanceLeaderHtml += "</ul>"
-        }
-
-        let blogHtml = blog.sort((a, b) => {return a.times.created > b.times.created ? -1 : 1})
-
-        if (blog.length > 0) {
-            blogHtml = "<ul>"
-            blog.slice(0, 100).forEach((p, idx) => {
-                blogHtml += `<oi><div>
-                    <h3 style="margin-bottom:.1em">${p.title}</h3>
-                    <small>${p.tags? `Tags: <span style="color:gray">${p.tags.join(", ")}</span> ` : ''}posted on ${`
-                        Year ${Math.floor(p.times.created/(world.interval.hour * world.interval.day * world.interval.year))}
-                        Day ${Math.floor(p.times.created/(world.interval.hour * world.interval.day))}
-                        ${Math.floor(p.times.created%(world.interval.hour * world.interval.day)/(world.interval.hour))}:${current.time % (world.interval.hour) < 10 ? '0':''}${current.time % (world.interval.hour)}</a>`} by ${p.author}</small>
-                    <p>${p.content}</p>
-                </div></oi>`
-            })
-            balanceLeaderHtml += "</ul>"
-        } else { `<p>Empty</p>` }
+        const leaderboardHtml = getLeaderboardHtml()
+        const blogHtml = getBlogHtml()
 
         res.send(`<html><body>
             ${headerHtml}
@@ -158,18 +128,13 @@ app.get('/', (req, res) => {
             <h2>Leaderboard</h2>
             <div>
                 <h4>Balance</h4>
-                ${balanceLeaderHtml}
+                ${leaderboardHtml}
             </div>
 
             <h2>Blog</h2>
             <div>
                 ${blogHtml}
             </div>
-
-            <div><small>
-                Interested in joining this open project?
-                <a href="https://github.com" target="_blank">learn more</a>
-            </small></div>
         </body></html>`)
         return
     }
@@ -195,7 +160,7 @@ app.get('/', (req, res) => {
                 <input type="hidden" name="from" value="${username}" />
                 <input name="to" placeholder="receiver's username" required />
                 <input name="amount" type="number" min=".01" max="1000.00" value=".01" step=".01" required />
-                <button name="of" value="credit">Send</button>
+                <button name="of" value="credit" ${(session.username && account.credits.balance < .01) ? `disabled` :``}>Send</button>
             </div>
         </form>
         <form action="/post" method="post" style="text-align:right">
@@ -206,7 +171,7 @@ app.get('/', (req, res) => {
                 <input name="tags" placeholder="general, question, issue, ..." />
             </div>
             <textarea style="margin-bottom:.3em" name="content" rows="4" cols="60" placeholder="Each credit consumption on the post will be fully rewarded to content creator."></textarea>
-            <div><button>Post (-10.00 credit)</button></div>
+            <div><button ${(session.username && account.credits.balance < 10) ? `disabled` :``}>Post (-10.00 credit)</button></div>
         </form>
     `
 
@@ -236,7 +201,7 @@ app.get('/', (req, res) => {
             inventoryHtml += `<li>
                 <form action="/list?return=/?user=${username}" method="post">
                     <div>
-                        ${i.amount} unit of ${i.owner}'s ${i.type} ${i.type=="bankstone" ? ` <small>APR ${(i.properties.yield*100).toFixed(0)}% ${Math.floor(i.properties.staked)}/${i.properties.cap} (${(i.properties.staked/i.properties.cap * 100).toFixed(0)}%)</small>` : ``}
+                        ${i.amount} unit(s) of ${i.owner}'s ${i.type} ${i.type=="bankstone" ? ` <small>APR ${(i.properties.yield*100).toFixed(0)}% ${Math.floor(i.properties.staked)}/${i.properties.cap} (${(i.properties.staked/i.properties.cap * 100).toFixed(0)}%)</small>` : ``}
                         <small for="id">${i.id}</small>
                         <input name="id" type="hidden" value="${i.id}" />
                     </div>
@@ -249,7 +214,7 @@ app.get('/', (req, res) => {
                         for <input name="price" type="number" value="${i.type == "bankstone" ?
                             (i.properties.staked * i.properties.yield * .33).toFixed(2) :
                             (i.amount * (i.type == 'water' ? .03 : .09)).toFixed(2)}" max="1000.00" step=".01" />
-                        credit
+                        <small>credit</small>
                     </div>
                 </form>
             </li>`
@@ -259,30 +224,7 @@ app.get('/', (req, res) => {
 
 
     if (session.username != username) listings = listings.filter(l => l.owner == username)
-    let marketplaceHtml = `<h3 style="margin-bottom:0">Marketplace (<a href="/market?expired=false&sold=false">${listings.length}</a>)</h3>`
-    if (listings.length > 0) {
-        marketplaceHtml += `${marketStatsHtml}
-        <ul>`
-        listings.slice(0, 20).forEach(l => {
-            const i = assets.find(a => a.id == l.item)
-            marketplaceHtml += `<li>
-                <form action="/trade?return=/?user=${username}" method="post">
-                    <div>
-                        ${l.amount}
-                        unit of ${l.owner}'s ${i.type} ${i.type=="bankstone" ? ` <small>APR ${(i.properties.yield*100).toFixed(0)}% ${Math.floor(i.properties.staked)}/${i.properties.cap} (${(i.properties.staked/i.properties.cap * 100).toFixed(0)}%)</small>` : ``}
-                        <small for="id">${l.id}</small>
-                        <input name="id" type="hidden" value="${l.id}" />
-                    </div>
-                    <div>
-                        <button name="buyer" value="${username}" ${!session.username && account.credits.balance < l.price ? `disabled` :``}>
-                            ${session.username && l.owner == username ? 'Delist' : 'Buy'}</button>
-                        for <input name="price" type="number" value="${l.price.toFixed(2)}" readonly /> credit
-                    </div>
-                </form>
-            </li>`
-        })
-        marketplaceHtml += "</ul>"
-    } else marketplaceHtml += `<p style="text-align:center">Nothing listed for sale at this time<p>`
+    const marketplaceHtml = getMarketplaceHtml(listings, marketStatsHtml, username, session, account)
 
     res.send(`<html><body>
         ${headerHtml}
@@ -291,7 +233,7 @@ app.get('/', (req, res) => {
         <div style="text-align:center">${session.username && session.username == username ? `
             <form action="/edit?return=/" method="post">
                 <textarea name="bio" rows="3" cols="50" placeholder="Write description of this account.">${account.bio? account.bio:''}</textarea>
-                <div style="margin-top:.3em"><button>Update Bio (-100.00 credit)</button></div>
+                <div style="margin-top:.3em"><button ${(session.username && account.credits.balance < 100) ? `disabled` :``}>Update Bio (-100.00 credit)</button></div>
             </form>
         `: `<p style="text-align:center">${account.bio? account.bio : `No description`}</p>`}
         </div>
@@ -319,3 +261,185 @@ app.get('/', (req, res) => {
         ${marketplaceHtml}
         </body></html>`)
 })
+
+function getMarketStatsHtml(listings) {
+    const marketSoldStats = util.getStats(market.filter(l => l.times.sold).map(l => l.price))
+    const activeListingStats = util.getStats(listings.map(l => l.price))
+
+    const marketStatsHtml = `
+        <div>
+            <small>total ${activeListingStats.count} (${activeListingStats.sum.toFixed(0)} credit) selling at
+            avg. ${activeListingStats.mean.toFixed(2)}
+            mdn. ${activeListingStats.median.toFixed(2)}
+            </small>
+        </div>
+        <div>
+            <small>total ${marketSoldStats.count} (${marketSoldStats.sum.toFixed(2)} credit) sold at
+            avg. ${marketSoldStats.mean.toFixed(2)}
+            mdn. ${marketSoldStats.median.toFixed(2)}
+            </small>
+        </div>
+    `
+    return marketStatsHtml
+}
+
+function getMarketplaceHtml(listings, marketStatsHtml, username, session, account) {
+    let marketplaceHtml = `<h3 style="margin-bottom:0">Marketplace (<a href="/market?expired=false&sold=false">${listings.length}</a>)</h3>`
+    if (listings.length > 0) {
+        marketplaceHtml += `${marketStatsHtml}
+        <ul>`
+        listings.slice(0, 20).forEach(l => {
+            const i = assets.find(a => a.id == l.item)
+            marketplaceHtml += `<li>
+                <form action="/trade?return=/?user=${username}" method="post">
+                    <div>
+                        ${l.amount}
+                        unit of ${l.owner}'s ${i.type} ${i.type == "bankstone" ? ` <small>APR ${(i.properties.yield * 100).toFixed(0)}% ${Math.floor(i.properties.staked)}/${i.properties.cap} (${(i.properties.staked / i.properties.cap * 100).toFixed(0)}%)</small>` : ``}
+                        <small for="id">${l.id}</small>
+                        <input name="id" type="hidden" value="${l.id}" />
+                    </div>
+                    <div>
+                        <button name="buyer" value="${username}" ${!session.username || (session.username && account.credits.balance < l.price) ? `disabled` : ``}>
+                            ${session.username && l.owner == username ? 'Delist' : 'Buy'}</button>
+                        for <input name="price" type="number" value="${l.price.toFixed(2)}" readonly />
+                        <small>credit (${(l.price / l.amount).toFixed(2)}/unit)</small>
+                    </div>
+                </form>
+            </li>`
+        })
+        marketplaceHtml += "</ul>"
+    } else marketplaceHtml += `<p style="text-align:center">Nothing listed for sale at this time<p>`
+    return marketplaceHtml
+}
+
+function getLeaderboardHtml() {
+    const balanceLeaders = accounts.sort((a, b) => { return a.credits.balance > b.credits.balance ? -1 : 1 })
+    let balanceLeaderHtml = "<p>Empty<p>"
+    if (balanceLeaders.length > 0) {
+        balanceLeaderHtml = "<ul>"
+        balanceLeaders.slice(0, 100).forEach((a, idx) => {
+            balanceLeaderHtml += `<oi><div>
+                    <strong>${idx + 1}.</strong>
+                    <strong><a href="/?user=${a.id}">${a.id}</a></strong>
+                    <small>(balance: ${a.credits.balance.toFixed(2)})</small>
+                </div></oi>`
+        })
+        balanceLeaderHtml += "</ul>"
+    }
+    return balanceLeaderHtml
+}
+
+function getTransactionsHtml() {
+    const transactions = activities
+        .filter(a => a.type == "transaction")
+        .sort((a, b) => { return a.times.completed > b.times.completed ? -1 : 1 })
+    
+    let transactionsHtml = `<p style="text-align:center">Empty<p>`
+    if (transactions.length > 0) {
+        transactionsHtml = `<ul style="font-weight:normal">`
+        transactions.slice(0, 1000).forEach((t, idx) => {
+            transactionsHtml += `<oi><div>
+                    <small>${t.id}: Transaction of</small>
+                    <strong>${t.amount.toFixed(2)}</strong>
+                    <strong>${t.of}</strong>
+                    <small>from</small>
+                    <strong>${t.from}</strong>
+                    <small>to</small>
+                    <strong>${t.to}</strong>
+                    <small>on</small>
+                    <small>${getTimeHtml(t.times.completed)}</small>
+                    <small>note:</small>
+                    <small>${t.note}</small>
+                </div></oi>`
+        })
+        transactionsHtml += "</ul>"
+    }
+    return transactionsHtml
+}
+
+function getBlogHtml() {
+    let blogHtml = blog.sort((a, b) => { return a.times.created > b.times.created ? -1 : 1 })
+    if (blog.length > 0) {
+        blogHtml = "<ul>"
+        blog.slice(0, 100).forEach((p, idx) => {
+            blogHtml += `<oi><div>
+                    <h3 style="margin-bottom:.1em">${p.title}</h3>
+                    <small>${p.tags ? `Tags: <span style="color:gray">${p.tags.join(", ")}</span> ` : ''}posted on ${getTimeHtml(p.times.created)} by ${p.author}</small>
+                    <p>${p.content}</p>
+                </div></oi>`
+        })
+        blogHtml += "</ul>"
+    } else { `<p>Empty</p>`} 
+    return blogHtml
+}
+
+function getTimeHtml(time) {
+    return `
+        Year ${Math.floor(time / (world.interval.hour * world.interval.day * world.interval.year))}
+        Day ${Math.floor(time / (world.interval.hour * world.interval.day))}
+        ${Math.floor(time % (world.interval.hour * world.interval.day) / (world.interval.hour))}:${current.time % (world.interval.hour) < 10 ? '0' : ''}${current.time % (world.interval.hour)}</a>
+    `
+}
+
+function getHeaderHtml(session, username) {
+    return `
+        <div style="background-color:black;color:white;padding:.5em;"><small>
+            📢 Interested in joining this open project?
+            <a href="https://github.com" target="_blank">learn more</a>
+        </small></div>
+        
+        <div style="display:flex;justify-content:space-between">
+            <div style="">
+                <h1 style="font-size:1.5em;margin-top:.3em;margin-bottom:0px;"><small><a href="/">Bankstone</a></small></h1>
+                <small>Web3 Currency & Digital Asset Platform</small>
+            </div>
+            <div style="padding:.3em;text-align:right;margin-top:auto"><small>
+                <a href="/blog">Blog</a>
+                <a href="/leaderboard">Leaderboard</a>
+                <a href="/transactions">Transactions</a>
+                <a href="/marketplace">Marketplace</a>
+            </small></div>
+        </div>
+        <div style="background:#EFEFEF;margin:0;padding:.5em">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="1em"><circle fill="#00A0FF" stroke="#00A0FF" stroke-width="30" r="15" cx="40" cy="65"><animate attributeName="cy" calcMode="spline" dur="1" values="65;135;65;" keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="-.4"></animate></circle><circle fill="#00C0FF" stroke="#00C0FF" stroke-width="30" r="15" cx="100" cy="65"><animate attributeName="cy" calcMode="spline" dur="1" values="65;135;65;" keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="-.2"></animate></circle><circle fill="#00C0FF" stroke="#00C0FF" stroke-width="30" r="15" cx="160" cy="65"><animate attributeName="cy" calcMode="spline" dur="1" values="65;135;65;" keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="0"></animate></circle></svg>
+            <small style="color:${"#00A0FF"}"><strong>water</strong></small>
+            <span style="color:${"#000"}">${current.resources.water.balance.toFixed(0)}</span>
+
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="1em"><path fill="#FF03EA" stroke="#FF03EA" stroke-width="30" transform-origin="center" d="m148 84.7 13.8-8-10-17.3-13.8 8a50 50 0 0 0-27.4-15.9v-16h-20v16A50 50 0 0 0 63 67.4l-13.8-8-10 17.3 13.8 8a50 50 0 0 0 0 31.7l-13.8 8 10 17.3 13.8-8a50 50 0 0 0 27.5 15.9v16h20v-16a50 50 0 0 0 27.4-15.9l13.8 8 10-17.3-13.8-8a50 50 0 0 0 0-31.7Zm-47.5 50.8a35 35 0 1 1 0-70 35 35 0 0 1 0 70Z"><animateTransform type="rotate" attributeName="transform" calcMode="spline" dur="3.5" values="0;120" keyTimes="0;1" keySplines="0 0 1 1" repeatCount="indefinite"></animateTransform></path></svg>
+            <small style="color:${"#FF03EA"}"><strong>mineral</strong></small>
+            <span style="color:${"#000"}">${current.resources.mineral.balance.toFixed(0)}</span></span>
+
+            <small style="margin-left:1em">
+                <svg width="1em" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="FF0000" stroke="FF0000" d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,20a9,9,0,1,1,9-9A9,9,0,0,1,12,21Z"/><rect x="11" y="6" rx="1" width="2" height="7"><animateTransform attributeName="transform" type="rotate" dur="15s" values="0 12 12;360 12 12" repeatCount="indefinite"/></rect><rect x="11" y="11" rx="1" width="2" height="9"><animateTransform attributeName="transform" type="rotate" dur="1s" values="0 12 12;360 12 12" repeatCount="indefinite"/></rect></svg><small style="color:gray">x${60000 / world.interval.minute}</small>
+                Year ${Math.floor(current.time / (world.interval.hour * world.interval.day * world.interval.year))}
+                Day ${Math.floor(current.time / (world.interval.hour * world.interval.day))}
+                <a href="/current">${Math.floor(current.time % (world.interval.hour * world.interval.day) / (world.interval.hour))}:${current.time % (world.interval.hour) < 10 ? '0' : ''}${current.time % (world.interval.hour)}</a>
+                <small>(${(current.time % (world.interval.hour) / world.interval.hour * 100).toFixed(0)}% to yield)</small>
+            </small>
+
+            <small><strong>${session.username ? `${session.username}</strong> (<a href="/exit">exit</a>)` : ``}</small>
+        </div>
+
+        <!--
+        <ul style="padding:0;text-align:right"><small>
+            <li><a href="/accounts">all accounts (${accounts.length})</a></li>
+            <li>
+                <a href="/activities?type=transaction">transactions (${activities.filter(a => a.type == "transaction").length})</a>
+                <a href="/activities?type=mint">minted (${activities.filter(a => a.type == "mint").length})</a>
+                <a href="/activities?type=collect">collects (${activities.filter(a => a.type == "collect").length})</a>
+                <a href="/activities">all activities (${activities.length})</a>
+            </li>
+            <li><a href="/assets">assets (${assets.length} minted)</a></li>
+            <li><a href="/auths">auths (${auth.length})</a></li>
+        </small></ul>
+        -->
+
+        ${session.username && session.username == username ? `
+            <form action="/collect?return=/?user=${username}" method="post">
+                <input type="hidden" name="owner" value="${username}" />
+                <button name="resource" value="water" ${current.resources.water.balance <= 0 ? "disabled" : ""}>Collect water (5-10)</button>
+                <button name="resource" value="mineral" ${current.resources.mineral.balance <= 0 ? "disabled" : ""}>Collect mineral (1-3)</button>
+            </form>
+            ` : ``}
+    `
+}

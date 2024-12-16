@@ -1,5 +1,31 @@
 [
   {
+    "id": "legolas",
+    "credits": {
+      "balance": 3103.39
+    },
+    "times": {
+      "created": 1580,
+      "updated": 1580,
+      "lastActive": 1580,
+      "edited": 7708
+    },
+    "bio": "I sell cheap to help others"
+  },
+  {
+    "id": "gandalf",
+    "credits": {
+      "balance": 2525.3666306760947
+    },
+    "times": {
+      "created": 243,
+      "updated": 243,
+      "lastActive": 243,
+      "edited": 5397
+    },
+    "bio": "I am good and I will save"
+  },
+  {
     "id": "saruman",
     "credits": {
       "balance": 2017.1100000000001
@@ -22,17 +48,15 @@
     }
   },
   {
-    "id": "gandalf",
+    "id": "gollum",
     "credits": {
-      "balance": 1964.980242220647
+      "balance": 500
     },
     "times": {
-      "created": 243,
-      "updated": 243,
-      "lastActive": 243,
-      "edited": 5397
-    },
-    "bio": "I am good and I will save"
+      "created": 1800,
+      "updated": 1800,
+      "lastActive": 1800
+    }
   },
   {
     "id": "aragorn",
@@ -54,17 +78,6 @@
       "created": 1569,
       "updated": 1569,
       "lastActive": 1569
-    }
-  },
-  {
-    "id": "legolas",
-    "credits": {
-      "balance": 0
-    },
-    "times": {
-      "created": 1580,
-      "updated": 1580,
-      "lastActive": 1580
     }
   },
   {
@@ -244,17 +257,6 @@
     }
   },
   {
-    "id": "gollum",
-    "credits": {
-      "balance": 0
-    },
-    "times": {
-      "created": 1800,
-      "updated": 1800,
-      "lastActive": 1800
-    }
-  },
-  {
     "id": "shelob",
     "credits": {
       "balance": 0
@@ -279,7 +281,7 @@
   {
     "id": "sauron",
     "credits": {
-      "balance": -5446.156686636605
+      "balance": -32973.70628817055
     },
     "times": {
       "created": 21,
@@ -292,7 +294,7 @@
   {
     "id": "worldbank",
     "credits": {
-      "balance": -30683.344282293765
+      "balance": -52221.03595386111
     },
     "times": {
       "created": 0,
