@@ -1,5 +1,18 @@
 [
   {
+    "id": "gandalf",
+    "credits": {
+      "balance": 3996.503384914406
+    },
+    "times": {
+      "created": 243,
+      "updated": 243,
+      "lastActive": 243,
+      "edited": 5397
+    },
+    "bio": "I am good and I will save"
+  },
+  {
     "id": "legolas",
     "credits": {
       "balance": 3103.39
@@ -11,19 +24,6 @@
       "edited": 7708
     },
     "bio": "I sell cheap to help others"
-  },
-  {
-    "id": "gandalf",
-    "credits": {
-      "balance": 2613.7804222540994
-    },
-    "times": {
-      "created": 243,
-      "updated": 243,
-      "lastActive": 243,
-      "edited": 5397
-    },
-    "bio": "I am good and I will save"
   },
   {
     "id": "saruman",
@@ -281,7 +281,7 @@
   {
     "id": "sauron",
     "credits": {
-      "balance": -32496.98056840822
+      "balance": -25041.28954503693
     },
     "times": {
       "created": 21,
@@ -294,7 +294,7 @@
   {
     "id": "worldbank",
     "credits": {
-      "balance": -52148.695475673
+      "balance": -51017.145736506674
     },
     "times": {
       "created": 0,

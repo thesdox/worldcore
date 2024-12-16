@@ -124,7 +124,7 @@ function buyFloorListing(type) {
     const txPrefix = type == 'water'? 'WTR': type == 'mineral'? 'MNR': 'BNK'
 
     const floorListings = market.filter(l => !l.times.sold && !l.times.expired && l.item.startsWith(txPrefix))
-    .sort((a, b) => { return a.price/a.amount < b.price/amount ? -1 : 1})
+    .sort((a, b) => { return a.price/a.amount < b.price/b.amount ? -1 : 1})
 
     if (!floorListings || floorListings.length == 0) {
         //console.debug(`TX${activities.length}: listing not found, skipping`)

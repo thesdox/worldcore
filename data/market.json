@@ -694,5 +694,38 @@
       "lastUpdated": 7746,
       "sold": 7800
     }
+  },
+  {
+    "id": "LST58",
+    "item": "WTR834",
+    "price": 1000,
+    "owner": "sauron",
+    "amount": 252,
+    "times": {
+      "created": 14539,
+      "lastUpdated": 14539
+    }
+  },
+  {
+    "id": "LST59",
+    "item": "WTR865",
+    "price": 3.15,
+    "owner": "sauron",
+    "amount": 105,
+    "times": {
+      "created": 14556,
+      "lastUpdated": 14556
+    }
+  },
+  {
+    "id": "LST60",
+    "item": "WTR867",
+    "price": 1000,
+    "owner": "sauron",
+    "amount": 119,
+    "times": {
+      "created": 14573,
+      "lastUpdated": 14573
+    }
   }
 ]
