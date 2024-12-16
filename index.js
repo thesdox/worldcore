@@ -79,7 +79,7 @@ app.get('/', (req, res) => {
     const username = req.query.user? req.query.user : req.session.username
     const account = accounts.find(a => a.id == username)
 
-    const listings = market.filter(l => !l.times.sold && !l.times.expired)
+    let listings = market.filter(l => !l.times.sold && !l.times.expired)
     .sort((a, b) => { return a.price / a.amount < b.price / b.amount ? 1 : -1 })
     .sort((a, b) => { return a.amount < b.amount ? 1 : -1 })
 
@@ -222,6 +222,10 @@ app.get('/', (req, res) => {
         inventoryHtml += "</ul>"
     } else inventoryHtml += "<p>Empty. Collect resources or buy items from Marketplace<p>"
 
+
+    listings = market.filter(l => !l.times.sold && !l.times.expired)
+    .sort((a, b) => { return a.price / a.amount < b.price / b.amount ? 1 : -1 })
+    .sort((a, b) => { return a.amount < b.amount ? 1 : -1 })
 
     if (session.username != username) listings = listings.filter(l => l.owner == username)
     const marketplaceHtml = getMarketplaceHtml(listings, marketStatsHtml, username, session, account)
