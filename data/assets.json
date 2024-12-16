@@ -1,14 +1,1 @@
-[
-  {
-    "id": "WTR0",
-    "type": "water",
-    "amount": 0,
-    "owner": "saruman"
-  },
-  {
-    "id": "WTR1",
-    "type": "water",
-    "amount": 41,
-    "owner": "saruman"
-  }
-]
+[]

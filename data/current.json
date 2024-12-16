@@ -1,13 +1,13 @@
 {
-  "time": 596,
+  "time": 0,
   "resources": {
     "water": {
-      "balance": 1478.9526375530145,
-      "supplied": 2100.952637553015
+      "balance": 0,
+      "supplied": 0
     },
     "mineral": {
-      "balance": 662.6706027676832,
-      "supplied": 662.6706027676832
+      "balance": 0,
+      "supplied": 0
     },
     "credits": {
       "balance": 0,
@@ -16,21 +16,11 @@
   },
   "effects": [],
   "accounts": [
-    "world"
+    "worldbank"
   ],
   "activities": {
     "pending": [],
-    "completed": [
-      "CLT23",
-      "CLT24",
-      "CLT25",
-      "CLT26",
-      "CLT27",
-      "CLT28",
-      "CLT29",
-      "CLT30",
-      "CLT31"
-    ],
+    "completed": [],
     "rejected": []
   }
 }

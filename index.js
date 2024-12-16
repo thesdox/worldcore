@@ -18,6 +18,28 @@ app.get('/', (req, res) => {
     const username = req.query.user? req.query.user : req.session.username
     const account = accounts.find(a => a.id == username)
 
+    const marketSoldStats = util.getStats(market.filter(l => l.times.sold).map(l => l.price))
+
+    let listings = market.filter(l => !l.times.sold && !l.times.expired)
+        .sort((a, b) => { return a.price < b.price ? 1 : -1})
+        .sort((a, b) => { return a.amount < b.amount ? 1 : -1})
+    const activeListingStats = util.getStats(listings.map(l => l.price))
+
+    const marketStatsHtml = `
+        <div>
+            <small>total ${activeListingStats.count} (${activeListingStats.sum.toFixed(0)} credit) selling at
+            avg. ${activeListingStats.mean.toFixed(2)}
+            mdn. ${activeListingStats.median.toFixed(2)}
+            </small>
+        </div>
+        <div>
+            <small>total ${marketSoldStats.count} (${marketSoldStats.sum.toFixed(2)} credit) sold at
+            avg. ${marketSoldStats.mean.toFixed(2)}
+            mdn. ${marketSoldStats.median.toFixed(2)}
+            </small>
+        </div>
+    `
+
     const headerHtml = `
         <div style="background:#EFEFEF;margin:0;padding:.5em">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="1em"><circle fill="#00A0FF" stroke="#00A0FF" stroke-width="30" r="15" cx="40" cy="65"><animate attributeName="cy" calcMode="spline" dur="1" values="65;135;65;" keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="-.4"></animate></circle><circle fill="#00C0FF" stroke="#00C0FF" stroke-width="30" r="15" cx="100" cy="65"><animate attributeName="cy" calcMode="spline" dur="1" values="65;135;65;" keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="-.2"></animate></circle><circle fill="#00C0FF" stroke="#00C0FF" stroke-width="30" r="15" cx="160" cy="65"><animate attributeName="cy" calcMode="spline" dur="1" values="65;135;65;" keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="0"></animate></circle></svg>
@@ -36,11 +58,14 @@ app.get('/', (req, res) => {
                 <small>(${(current.time % (world.interval.hour)/world.interval.hour*100).toFixed(0)}% to yield)</small>
             </small>
 
-            <small>${session.username? session.username : ``}</small>
+            <small><strong>${session.username? `${session.username}</strong> (<a href="/exit">exit</a>)` : ``}</small>
         </div>
 
-        <h1 style="margin-bottom:1px">Bankstone</h1>
-        <small>Web3 Currency & Digital Asset Trading</small>
+        ${!session.username ? `
+            <h1 style="margin-top:.3em;margin-bottom:0px;"><small><a href="/">Bankstone</a></small></h1>
+            <small>Web3 Currency & Digital Asset Platform</small>` : ``}
+
+        <!--
         <ul style="padding:0;text-align:right"><small>
             <li><a href="/accounts">all accounts (${accounts.length})</a></li>
             <li>
@@ -52,6 +77,7 @@ app.get('/', (req, res) => {
             <li><a href="/assets">assets (${assets.length} minted)</a></li>
             <li><a href="/auths">auths (${auth.length})</a></li>
         </small></ul>
+        -->
 
         ${session.username && session.username == username ? `
             <form action="/collect?return=/?user=${username}" method="post">
@@ -63,7 +89,7 @@ app.get('/', (req, res) => {
     `
 
     if (!req.session.username && !req.query.user) {
-        const balanceLeaders = accounts.sort((a, b) => {return a.balance > b.balance ? 1 : -1})
+        const balanceLeaders = accounts.sort((a, b) => {return a.credits.balance > b.credits.balance ? -1 : 1})
         let balanceLeaderHtml = "<p>Empty<p>"
         if (balanceLeaders.length > 0) {
             balanceLeaderHtml = "<ul>"
@@ -79,15 +105,11 @@ app.get('/', (req, res) => {
 
         res.send(`<html><body>
             ${headerHtml}
-            <h2>Simplified Web3 Economy in active development.</h2>
+            <h2>Simplified Web3 Economy <small>(in active development)</small></h2>
             <h3>Collect resources from the new world. Craft and trade items! Receive Web3 credits before token launch!</h3>
-            <div style="text-align:right"><small>
-                Looking for an open project to participate?
-                <a href="https://github.com" target="_blank">Learn more</a>
-            </small></div>
             
             <form action="/auth" method="post">
-                <h3 style="margin-bottom:1px">Current resident</h3>
+                <h3 style="margin-bottom:1px">Login</h3>
                 <div><small>
                     <input name="save" type="checkbox" />
                     <label for="save">Keep the access for next 7 days</label>
@@ -100,7 +122,7 @@ app.get('/', (req, res) => {
             </form>
 
             <form action="/mint?return=/" method="post">
-                <h3 style="margin-bottom:1px">New resident</h3>
+                <h3 style="margin-bottom:1px">Register</h3>
                 <small>Invitation code is required at this time. Please check out <a href="https://github.com" target="_blank">project site</a> for more details.</small>
                 <div>
                     <input name="invitecode" placeholder="invitation code" required />
@@ -113,11 +135,19 @@ app.get('/', (req, res) => {
                 </div>
             </form>
 
+            <h2>Market Statistics</h2>
+            ${marketStatsHtml}
+
             <h2>Leaderboard</h2>
             <div>
                 <h4>Balance</h4>
                 ${balanceLeaderHtml}
             </div>
+
+            <div><small>
+                Interested in joining this open project?
+                <a href="https://github.com" target="_blank">learn more</a>
+            </small></div>
         </body></html>`)
         return
     }
@@ -137,9 +167,39 @@ app.get('/', (req, res) => {
     const userBankstones = items.filter((a) => a.type=="bankstone")
     const activeEffectsTotal = current.effects.length
 
-    let inventoryHtml = "<p>Empty<p>"
+    const sendCreditHtml = `
+        <form action="/transaction?return=/?user=${username}" method="post" style="text-align:right">
+            <div style="margin-top:1em">
+                <input type="hidden" name="from" value="${username}" />
+                <input name="to" placeholder="receiver's username" required />
+                <input name="amount" type="number" min=".01" max="1000.00" value=".01" step=".01" required />
+                <button name="of" value="credit">Send</button>
+            </div>
+        </form>
+    `
+
+    let inventoryHtml = `<h3>Inventory (<a href="/assets?user=${username}">${items.filter(i => i.owner == username).length}</a>)</h3>`
     if (items.length > 0) {
-        inventoryHtml = "<ul>"
+        inventoryHtml += `
+            <form action="/mint?return=/?user=${username}" method="post">
+                <div>
+                    <input type="hidden" name="owner" value="${username}" />
+                    
+                    <button name="type" value="bankstone"
+                        ${userMinerals < 1 ||
+                        userWaters < Math.ceil(current.resources.water.supplied/current.resources.mineral.supplied) ||
+                        account.credits.balance < 100 ? "disabled": ""}>
+                        Mint Bankstone
+                    </button>
+                    <small for="type">
+                        consumes
+                        ${Math.ceil(current.resources.water.supplied*Math.log(accounts.length*accounts.length)/current.resources.mineral.supplied)}
+                        water +
+                        ${10} mineral +
+                        ${100.00.toFixed(2)} credit</small>
+                </div>
+            </form>
+        <ul>`
         items.slice(0, 20).forEach(i => {
             inventoryHtml += `<li>
                 <form action="/list?return=/?user=${username}" method="post">
@@ -149,35 +209,31 @@ app.get('/', (req, res) => {
                         <input name="id" type="hidden" value="${i.id}" />
                     </div>
                     <div>
-                        <button name="owner" value="${username}"
+                        <button name="owner" value="${username}" 
                             ${(i.type == "water" || i.type == "mineral") && i.amount < 100 ? "disabled" : ""}>
-                            Sell
+                            ${(i.type == "water" || i.type == "mineral") && i.amount < 100 ? "Sell (min.100)" : `Sell ${i.amount}`}
                         </button>
                         <input name="amount" type="hidden" value="${i.amount}" />
                         for <input name="price" type="number" value="${i.type == "bankstone" ?
                             (i.properties.staked * i.properties.yield * .33).toFixed(2) :
-                            (i.amount * .033).toFixed(2)}" max="1000.00" step=".01" />
+                            (i.amount * (i.type == 'water' ? .03 : .09)).toFixed(2)}" max="1000.00" step=".01" />
                         credit
                     </div>
                 </form>
             </li>`
         })
         inventoryHtml += "</ul>"
-    }
+    } else inventoryHtml += "<p>Empty. Collect resources or buy items from Marketplace<p>"
 
-    const marketSoldStats = util.getStats(market.filter(l => l.times.sold).map(l => l.price))
 
-    const listings = market.filter(l => !l.times.sold && !l.times.expired)
-        .sort((a, b) => { return a.price < b.price ? 1 : -1})
-        .sort((a, b) => { return a.amount < b.amount ? 1 : -1})
-    const activeListingStats = util.getStats(listings.map(l => l.price))
-
-    let listingsHtml = "<p>Empty<p>"
+    if (session.username != username) listings = listings.filter(l => l.owner == username)
+    let marketplaceHtml = `<h3 style="margin-bottom:0">Marketplace (<a href="/market?expired=false&sold=false">${listings.length}</a>)</h3>`
     if (listings.length > 0) {
-        listingsHtml = "<ul>"
+        marketplaceHtml += `${marketStatsHtml}
+        <ul>`
         listings.slice(0, 20).forEach(l => {
             const i = assets.find(a => a.id == l.item)
-            listingsHtml += `<li>
+            marketplaceHtml += `<li>
                 <form action="/trade?return=/?user=${username}" method="post">
                     <div>
                         ${l.amount}
@@ -186,75 +242,38 @@ app.get('/', (req, res) => {
                         <input name="id" type="hidden" value="${l.id}" />
                     </div>
                     <div>
-                        <button name="buyer" value="${username}">Buy</button>
+                        <button name="buyer" value="${username}" ${!session.username? `disabled` :``}>
+                            ${session.user && l.owner == username ? 'Delist' : 'Buy'}</button>
                         for <input name="price" type="number" value="${Number(l.price).toFixed(2)}" readonly /> credit
                     </div>
                 </form>
             </li>`
         })
-        listingsHtml += "</ul>"
-    }
+        marketplaceHtml += "</ul>"
+    } else marketplaceHtml += `<p style="text-align:center">Nothing listed for sale at this time<p>`
 
     res.send(`<html><body>
         ${headerHtml}
-        <div style="text-align:right"><small>
-            <a href="/exit">exit</a>
-        </small></div>
-        <h5 style="color:gray;text-align:right;margin-bottom:0">balance</h5>
+        <h5 style="color:gray;text-align:right;margin-bottom:0">${username}'s balance</h5>
         <div style="text-align:right">
             <small style="color:${"#00A0FF"}"><strong>water</strong></small> ${userWaterTotal}<small style="color:${"#BBB"}">/${current.resources.water.supplied.toFixed(0)}(${(userWaterTotal/current.resources.water.supplied*100).toFixed(2)}%)</small>
 
             <small style="color:${"#FF03EA"}"><strong>mineral</strong></small> ${userMineralTotal}<small style="color:${"#BBB"}">/${current.resources.mineral.supplied.toFixed(0)}(${(userMineralTotal/current.resources.mineral.supplied*100).toFixed(2)}%)</small>
             <small style="color:${"gray"}"><strong>bankstones</strong></small> ${userBankstones.length}<small style="color:${"#BBB"}">/${activeEffectsTotal}(${(userBankstones.length/activeEffectsTotal*100).toFixed(2)}%)</small>
         </div>
-        <form action="/transaction?return=/?user=${username}" method="post" style="text-align:right">
-            <h1 style="margin-top:.5em;margin-bottom:1px">${account.credits.balance.toFixed(2)} <small>credit</small></h1>
+        <div style="text-align:right">
+            <h1 style="margin-top:.3em;margin-bottom:1px">
+                ${account.credits.balance.toFixed(2)} <small style="color:gray"><small>credit</small></small>
+            </h1>
             <small>
                 holding ${(account.credits.balance/current.resources.credits.balance*100).toFixed(2)}% of
                 ${current.resources.credits.balance.toFixed(2)} credits circulating..
             </small>
-            <div style="margin-top:1em">
-                <input type="hidden" name="from" value="${username}" />
-                <input name="to" placeholder="receiver's username" required />
-                <input name="amount" type="number" min=".01" max="1000.00" value=".01" step=".01" required />
-                <button name="of" value="credit">Send</button>
-            </div>
-        </form>
-
-        <h3>Inventory (<a href="/assets?user=${username}">${items.filter(i => i.owner == username).length}</a>)</h3>
-        <form action="/mint?return=/?user=${username}" method="post">
-            <div>
-                <input type="hidden" name="owner" value="${username}" />
-                
-                <button name="type" value="bankstone"
-                    ${userMinerals < 1 ||
-                    userWaters < Math.ceil(current.resources.water.supplied/current.resources.mineral.supplied) ||
-                    account.credits.balance < 100 ? "disabled": ""}>
-                    Mint Bankstone
-                </button>
-                <small for="type">
-                    consumes
-                    ${Math.ceil(current.resources.water.supplied*Math.log(accounts.length*accounts.length)/current.resources.mineral.supplied)}
-                    water +
-                    ${10} mineral +
-                    ${100.00.toFixed(2)} credit</small>
-            </div>
-        </form>
-        ${inventoryHtml}
-
-        <h3 style="margin-bottom:0">Marketplace (<a href="/market?expired=false&sold=false">${market.filter(l => !l.times.expired && !l.times.sold).length}</a>)</h3>
-        <div>
-            <small>total ${activeListingStats.count} (${activeListingStats.sum.toFixed(0)} credit) selling at
-            avg. ${activeListingStats.mean.toFixed(2)}
-            mdn. ${activeListingStats.median.toFixed(2)}
-            </small>
         </div>
-        <div>
-            <small>total ${marketSoldStats.count} (${marketSoldStats.sum.toFixed(2)} credit) sold at
-            avg. ${marketSoldStats.mean.toFixed(2)}
-            mdn. ${marketSoldStats.median.toFixed(2)}
-            </small>
-        </div>
-        ${listingsHtml}
+
+        ${session && session.username == username ? sendCreditHtml : ``}
+        ${session && session.username == username ? inventoryHtml : ``}
+
+        ${marketplaceHtml}
         </body></html>`)
 })

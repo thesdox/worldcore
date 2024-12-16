@@ -11,7 +11,7 @@ export async function onMinuteAsync() {
     }
 
     processResources()
-    await processCurrentActivitiesAsync()
+    processCurrentActivities()
 
     if (current.activities.completed.length >= world.system.batch) {
         console.log(`processing batch store of ${current.activities.completed.length}/${world.system.batch} activities..`)
@@ -31,6 +31,118 @@ export async function onMinuteAsync() {
     console.log(`T${current.time}: sync completed in ${elapsed}ms`)
 
     current.time += 1;
+}
+
+function queueWorldbankActivities() {
+    console.log(`TX${activities.length}: processing worldbank activities...`);
+    
+    buyFloorListing('water')
+    buyFloorListing('mineral')
+
+    // mint a bankstone
+    const mintId = `MNT${activities.length}`
+    const account = accounts.find(a => a.id == 'worldbank')
+    const userWaters = assets.filter(a => a.owner == account.id && a.type == "water")
+    const userMinerals = assets.filter(a => a.owner == account.id && a.type == "mineral")
+
+    if (userWaters.reduce((sum, c) => sum + c.amount, 0) < 6  ||
+        userMinerals.reduce((sum, c) => sum + c.amount, 0) < 1) {
+        console.warn(`not enough balance to consume`)
+        return
+    }
+
+    const creditConsumption = {
+        "type": "consume",
+        "id": `CNS${activities.length}`,
+        "of": "credits",
+        "from": account.id,
+        "to": "world",
+        "amount": 100,
+        "note": `Consuming minting ${mintId} cost of ${100.00} credit`,
+        "times": {
+            "created": current.time
+        }
+    }
+
+    activities.push(creditConsumption)
+    const waterCost = Math.ceil(current.resources.water.supplied*Math.log(accounts.length*accounts.length)/current.resources.mineral.supplied)
+    const waterConsumption = {
+        "type": "consume",
+        "id": `CNS${activities.length}`,
+        "of": 'water',
+        "from": account.id,
+        "to": "world",
+        "amount": waterCost,
+        "note": `Consuming minting ${mintId} cost of ${waterCost} water`,
+        "times": {
+            "created": current.time
+        }
+    }
+    
+    activities.push(waterConsumption)
+
+    const mineralConsumption = {
+        "type": "consume",
+        "id": `CNS${activities.length}`,
+        "of": "mineral",
+        "from": account.id,
+        "to": "world",
+        "amount": 10,
+        "note": `Consuming minting ${mintId} cost of ${1} resource`,
+        "times": {
+            "created": current.time
+        }
+    }
+
+    activities.push(mineralConsumption)
+    current.activities.pending.push(... [creditConsumption.id, mineralConsumption.id, waterConsumption.id])
+}
+
+function buyFloorListing(type) {
+    const txPrefix = type == 'water'? 'WTR': type == 'mineral'? 'MNR': 'BNK'
+
+    const floorListings = market.filter(l => !l.times.sold && !l.times.expired && l.item.startsWith(txPrefix))
+    .sort((a, b) => { return a.price < b.price ? -1 : 1})
+
+    if (!floorListings || floorListings.length == 0) {
+        console.log(`TX${activities.length}: listing not found, skipping`)
+        return
+    }
+
+    const floorListing = floorListings[0]
+    const creditTx = {
+        type: "transaction",
+        id: `TX${activities.length}`,
+        of: "credit",
+        from: 'worldbank',
+        to: floorListing.owner,
+        amount: floorListing.price,
+        note: `Purchase of ${floorListing.item} at ${floorListing.price} credit`,
+        times: {
+            created: current.time
+        }
+    }
+
+    activities.push(creditTx)
+
+    const itemTx = {
+        type: "transaction",
+        id: `TX${activities.length}`,
+        of: floorListing.item,
+        from: floorListing.owner,
+        to: 'worldbank',
+        amount: floorListing.amount,
+        note: `Sale of ${floorListing.item} at ${floorListing.price} credit`,
+        times: {
+            created: current.time
+        }
+    }
+
+    activities.push(itemTx)
+
+    current.activities.pending.push(creditTx.id)
+    current.activities.pending.push(itemTx.id)
+    floorListing.times.sold = current.time
 }
 
 function processResources() {
@@ -92,9 +204,11 @@ async function onHourAsync() {
         const idx = current.effects.findIndex(b => b == i)
         current.effects.splice(current.effects[idx], 1)
     })
+
+    queueWorldbankActivities()
 }
 
-async function processCurrentActivitiesAsync() {
+function processCurrentActivities() {
     current.activities.pending.forEach((id) => {
         const activity = activities.find(a => a.id == id)
         if (!activity) {
