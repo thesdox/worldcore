@@ -18,15 +18,27 @@ app.post('/auth', function(req, res) {
 	let username = req.body.username;
 	let password = req.body.password;
 
-	if (username && password &&
-        auth.findIndex(a => a.username == username && a.password == password) > 0) {
-        req.session.username = username;
-        res.redirect('/');
+	if (username && password) {
+        const user = auth.find(a => a.username == username)
+        if (!user) res.sendStatus(401)
+
+        bcrypt.compare(password, user.password, (err, result) => {
+            if (result && auth.findIndex(a => a.username == username && a.password == password > 0)) {
+                req.session.username = username;
+                res.redirect('/');
+            } else {
+                console.warn(err)
+                res.sendStatus(401)
+            }
+        })
 	} else {
-        console.warn(`unauthroized entry attempt: ${username}:${password}`)
-        res.send(401)
+        res.sendStatus(400)
     }
 });
+
+app.get('/auths', function(req, res) {
+    res.json(auth)
+})
 
 app.get('/exit', function(req, res) {
     req.session.destroy((err) => {

@@ -1,6 +1,7 @@
 import { onMinuteAsync } from './src/service.js'
-import { accounts, activities, assets, world, market, current } from './src/model.js'
+import { accounts, activities, assets, world, market, current, auth } from './src/model.js'
 import { app } from './src/api.js'
+import session from 'express-session'
 import * as util from './src/utility.js'
 
 console.log(`starting worldcore service..`)
@@ -12,6 +13,55 @@ app.listen(port, () => {
 setInterval(onMinuteAsync, world.interval.minute)
 
 app.get('/', (req, res) => {
+    const session = req.session
+    
+    const username = req.query.user? req.query.user : req.session.username
+    const account = accounts.find(a => a.id == username)
+
+    const headerHtml = `
+        <div style="background:#EFEFEF;margin:0;padding:.5em">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="1em"><circle fill="#00A0FF" stroke="#00A0FF" stroke-width="30" r="15" cx="40" cy="65"><animate attributeName="cy" calcMode="spline" dur="1" values="65;135;65;" keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="-.4"></animate></circle><circle fill="#00C0FF" stroke="#00C0FF" stroke-width="30" r="15" cx="100" cy="65"><animate attributeName="cy" calcMode="spline" dur="1" values="65;135;65;" keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="-.2"></animate></circle><circle fill="#00C0FF" stroke="#00C0FF" stroke-width="30" r="15" cx="160" cy="65"><animate attributeName="cy" calcMode="spline" dur="1" values="65;135;65;" keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="0"></animate></circle></svg>
+            <small style="color:${"#00A0FF"}"><strong>water</strong></small>
+            <span style="color:${"#000"}">${current.resources.water.balance.toFixed(0)}</span>
+
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="1em"><path fill="#FF03EA" stroke="#FF03EA" stroke-width="30" transform-origin="center" d="m148 84.7 13.8-8-10-17.3-13.8 8a50 50 0 0 0-27.4-15.9v-16h-20v16A50 50 0 0 0 63 67.4l-13.8-8-10 17.3 13.8 8a50 50 0 0 0 0 31.7l-13.8 8 10 17.3 13.8-8a50 50 0 0 0 27.5 15.9v16h20v-16a50 50 0 0 0 27.4-15.9l13.8 8 10-17.3-13.8-8a50 50 0 0 0 0-31.7Zm-47.5 50.8a35 35 0 1 1 0-70 35 35 0 0 1 0 70Z"><animateTransform type="rotate" attributeName="transform" calcMode="spline" dur="3.5" values="0;120" keyTimes="0;1" keySplines="0 0 1 1" repeatCount="indefinite"></animateTransform></path></svg>
+            <small style="color:${"#FF03EA"}"><strong>mineral</strong></small>
+            <span style="color:${"#000"}">${current.resources.mineral.balance.toFixed(0)}</span></span>
+
+            <small style="margin-left:1em">
+                <svg width="1em" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="FF0000" stroke="FF0000" d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,20a9,9,0,1,1,9-9A9,9,0,0,1,12,21Z"/><rect x="11" y="6" rx="1" width="2" height="7"><animateTransform attributeName="transform" type="rotate" dur="15s" values="0 12 12;360 12 12" repeatCount="indefinite"/></rect><rect x="11" y="11" rx="1" width="2" height="9"><animateTransform attributeName="transform" type="rotate" dur="1s" values="0 12 12;360 12 12" repeatCount="indefinite"/></rect></svg><small style="color:gray">x${60000/world.interval.minute}</small>
+                Year ${Math.floor(current.time/(world.interval.hour * world.interval.day * world.interval.year))}
+                Day ${Math.floor(current.time/(world.interval.hour * world.interval.day))}
+                <a href="/current">${Math.floor(current.time%(world.interval.hour * world.interval.day)/(world.interval.hour))}:${current.time % (world.interval.hour) < 10 ? '0':''}${current.time % (world.interval.hour)}</a>
+                <small>(${(current.time % (world.interval.hour)/world.interval.hour*100).toFixed(0)}% to yield)</small>
+            </small>
+
+            <small>${session.username? session.username : ``}</small>
+        </div>
+
+        <h1 style="margin-bottom:1px">Bankstone</h1>
+        <small>Web3 Currency & Digital Asset Trading</small>
+        <ul style="padding:0;text-align:right"><small>
+            <li><a href="/accounts">all accounts (${accounts.length})</a></li>
+            <li>
+                <a href="/activities?type=transaction">transactions (${activities.filter(a => a.type == "transaction").length})</a>
+                <a href="/activities?type=mint">minted (${activities.filter(a => a.type == "mint").length})</a>
+                <a href="/activities?type=collect">collects (${activities.filter(a => a.type == "collect").length})</a>
+                <a href="/activities">all activities (${activities.length})</a>
+            </li>
+            <li><a href="/assets">assets (${assets.length} minted)</a></li>
+            <li><a href="/auths">auths (${auth.length})</a></li>
+        </small></ul>
+
+        ${session.username && session.username == username ? `
+            <form action="/collect?return=/?user=${username}" method="post">
+                <input type="hidden" name="owner" value="${username}" />
+                <button name="resource" value="water" ${current.resources.water.balance <= 0 ? "disabled": ""}>Collect water (5-10)</button>
+                <button name="resource" value="mineral" ${current.resources.mineral.balance <= 0 ? "disabled": ""}>Collect mineral (1-3)</button>
+            </form>`: ``
+        }
+    `
+
     if (!req.session.username && !req.query.user) {
         const balanceLeaders = accounts.sort((a, b) => {return a.balance > b.balance ? 1 : -1})
         let balanceLeaderHtml = "<p>Empty<p>"
@@ -28,9 +78,7 @@ app.get('/', (req, res) => {
         }
 
         res.send(`<html><body>
-            <h1 style="margin-bottom:1px">Bankstone</h1>
-            <small>Web3 Currency & Digital Asset Trading</small>
-
+            ${headerHtml}
             <h2>Simplified Web3 Economy in active development.</h2>
             <h3>Collect resources from the new world. Craft and trade items! Receive Web3 credits before token launch!</h3>
             <div style="text-align:right"><small>
@@ -73,9 +121,6 @@ app.get('/', (req, res) => {
         </body></html>`)
         return
     }
-
-    const username = req.query.user? req.query.user : req.session.username
-    const account = accounts.find(a => a.id == username)
 
     const items = assets.filter(a => a.owner == account.id && a.amount > 0)
         .sort((a, b) => { return a.properties && b.properties &&
@@ -150,50 +195,20 @@ app.get('/', (req, res) => {
         listingsHtml += "</ul>"
     }
 
-    res.send(`
-        <div style="background:#EFEFEF;margin:0;padding:.5em">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="1em"><circle fill="#00A0FF" stroke="#00A0FF" stroke-width="30" r="15" cx="40" cy="65"><animate attributeName="cy" calcMode="spline" dur="1" values="65;135;65;" keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="-.4"></animate></circle><circle fill="#00C0FF" stroke="#00C0FF" stroke-width="30" r="15" cx="100" cy="65"><animate attributeName="cy" calcMode="spline" dur="1" values="65;135;65;" keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="-.2"></animate></circle><circle fill="#00C0FF" stroke="#00C0FF" stroke-width="30" r="15" cx="160" cy="65"><animate attributeName="cy" calcMode="spline" dur="1" values="65;135;65;" keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="0"></animate></circle></svg>
-            <small style="color:${"#00A0FF"}"><strong>water</strong></small>
-            <span style="color:${"#000"}">${current.resources.water.balance.toFixed(0)}</span>
-
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="1em"><path fill="#FF03EA" stroke="#FF03EA" stroke-width="30" transform-origin="center" d="m148 84.7 13.8-8-10-17.3-13.8 8a50 50 0 0 0-27.4-15.9v-16h-20v16A50 50 0 0 0 63 67.4l-13.8-8-10 17.3 13.8 8a50 50 0 0 0 0 31.7l-13.8 8 10 17.3 13.8-8a50 50 0 0 0 27.5 15.9v16h20v-16a50 50 0 0 0 27.4-15.9l13.8 8 10-17.3-13.8-8a50 50 0 0 0 0-31.7Zm-47.5 50.8a35 35 0 1 1 0-70 35 35 0 0 1 0 70Z"><animateTransform type="rotate" attributeName="transform" calcMode="spline" dur="3.5" values="0;120" keyTimes="0;1" keySplines="0 0 1 1" repeatCount="indefinite"></animateTransform></path></svg>
-            <small style="color:${"#FF03EA"}"><strong>mineral</strong></small>
-            <span style="color:${"#000"}">${current.resources.mineral.balance.toFixed(0)}</span></span>
-
-            <small style="margin-left:1em">
-                <svg width="1em" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="FF0000" stroke="FF0000" d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,20a9,9,0,1,1,9-9A9,9,0,0,1,12,21Z"/><rect x="11" y="6" rx="1" width="2" height="7"><animateTransform attributeName="transform" type="rotate" dur="15s" values="0 12 12;360 12 12" repeatCount="indefinite"/></rect><rect x="11" y="11" rx="1" width="2" height="9"><animateTransform attributeName="transform" type="rotate" dur="1s" values="0 12 12;360 12 12" repeatCount="indefinite"/></rect></svg><small style="color:gray">x${60000/world.interval.minute}</small>
-                Year ${Math.floor(current.time/(world.interval.hour * world.interval.day * world.interval.year))}
-                Day ${Math.floor(current.time/(world.interval.hour * world.interval.day))}
-                <a href="/current">${Math.floor(current.time%(world.interval.hour * world.interval.day)/(world.interval.hour))}:${current.time % (world.interval.hour) < 10 ? '0':''}${current.time % (world.interval.hour)}</a>
-                <small>(${(current.time % (world.interval.hour)/world.interval.hour*100).toFixed(0)}% to yield)</small>
-            </small>
-        </div>
-        <ul>
-            <li><a href="/accounts">all accounts (${accounts.length})</a></li>
-            <li>
-                <a href="/activities?type=transaction">transactions (${activities.filter(a => a.type == "transaction").length})</a>
-                <a href="/activities?type=mint">minted (${activities.filter(a => a.type == "mint").length})</a>
-                <a href="/activities?type=collect">collects (${activities.filter(a => a.type == "collect").length})</a>
-                <a href="/activities">all activities (${activities.length})</a>
-            </li>
-            <li><a href="/assets">assets (${assets.length} minted)</a></li>
-            <li><a href="/exit">exit</a></li>
-        </ul>
-
-        <form action="/collect?return=/?user=${username}" method="post">
-            <input type="hidden" name="owner" value="${username}" />
-            <button name="resource" value="water" ${current.resources.water.balance <= 0 ? "disabled": ""}>Collect water (5-10)</button>
-            <button name="resource" value="mineral" ${current.resources.mineral.balance <= 0 ? "disabled": ""}>Collect mineral (1-3)</button>
-        </form>
-        <div>
+    res.send(`<html><body>
+        ${headerHtml}
+        <div style="text-align:right"><small>
+            <a href="/exit">exit</a>
+        </small></div>
+        <h5 style="color:gray;text-align:right;margin-bottom:0">balance</h5>
+        <div style="text-align:right">
             <small style="color:${"#00A0FF"}"><strong>water</strong></small> ${userWaterTotal}<small style="color:${"#BBB"}">/${current.resources.water.supplied.toFixed(0)}(${(userWaterTotal/current.resources.water.supplied*100).toFixed(2)}%)</small>
 
             <small style="color:${"#FF03EA"}"><strong>mineral</strong></small> ${userMineralTotal}<small style="color:${"#BBB"}">/${current.resources.mineral.supplied.toFixed(0)}(${(userMineralTotal/current.resources.mineral.supplied*100).toFixed(2)}%)</small>
             <small style="color:${"gray"}"><strong>bankstones</strong></small> ${userBankstones.length}<small style="color:${"#BBB"}">/${activeEffectsTotal}(${(userBankstones.length/activeEffectsTotal*100).toFixed(2)}%)</small>
         </div>
         <form action="/transaction?return=/?user=${username}" method="post" style="text-align:right">
-            <small style="color:gray"><strong>${username}</strong>'s balance</small>
-            <h1 style="margin-top:0;margin-bottom:0">${account.credits.balance.toFixed(2)} <small>credit</small></h1>
+            <h1 style="margin-top:.5em;margin-bottom:1px">${account.credits.balance.toFixed(2)} <small>credit</small></h1>
             <small>
                 holding ${(account.credits.balance/current.resources.credits.balance*100).toFixed(2)}% of
                 ${current.resources.credits.balance.toFixed(2)} credits circulating..
@@ -241,5 +256,5 @@ app.get('/', (req, res) => {
             </small>
         </div>
         ${listingsHtml}
-        `)
+        </body></html>`)
 })
