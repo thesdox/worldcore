@@ -1,7 +1,7 @@
 import * as util from './utility.js'
 import express from 'express'
 import session from 'express-session'
-import { accounts, activities, assets, market, current, world, auth } from './model.js'
+import { accounts, activities, assets, market, current, world, auth, blog } from './model.js'
 import * as bcrypt from 'bcrypt'
 
 export const app = express()
@@ -289,7 +289,7 @@ app.post('/edit', (req, res) => {
 
     const account = accounts.find(a => a.id == req.session.username)
     if (account.credits.balance < 100) {
-        console.warn(`not enough balance to consume`)
+        console.warn(`not enough balance to edit`)
         res.sendStatus(403)
     }
 
@@ -300,7 +300,7 @@ app.post('/edit', (req, res) => {
         "from": req.session.username,
         "to": "world",
         "amount": 100,
-        "note": `Consuming -5 credit for edit bio`,
+        "note": `Consuming -100 credit for edit bio`,
         "times": {
             "created": current.time
         }
@@ -315,6 +315,61 @@ app.post('/edit', (req, res) => {
 
     setTimeout(() => req.query.return ?
         res.redirect(req.query.return) : res.json(account),
+        world.interval.minute)
+})
+
+app.post('/post', (req, res) => {
+    if (!req.session.username) {
+        res.sendStatus(401)
+        return
+    }
+    if (!req.body.title && !req.body.content) {
+        res.sendStatus(400)
+        return
+    }
+
+    const account = accounts.find(a => a.id == req.session.username)
+    if (account.credits.balance < 10) {
+        console.warn(`not enough balance to post`)
+        res.sendStatus(403)
+        return
+    }
+
+    const creditConsumption = {
+        "type": "consume",
+        "id": `CNS${activities.length}`,
+        "of": "credits",
+        "from": req.session.username,
+        "to": "world",
+        "amount": 10,
+        "note": `Consuming -10 credit to post`,
+        "times": {
+            "created": current.time
+        }
+    }
+
+    activities.push(creditConsumption)
+    current.activities.pending.push(creditConsumption.id)
+
+    console.log(`${req.session.username}: creating a post...`)
+    const post = {
+        id: `PST${blog.length}`,
+        author: req.session.username,
+        title: req.body.title,
+        content: req.body.content,
+        tags: req.body.tags.trim().split(','),
+        like: 0,
+        dislike: 0,
+        times: {
+            created: current.time
+        },
+        comments: []
+    }
+
+    blog.push(post)
+
+    setTimeout(() => req.query.return ?
+        res.redirect(req.query.return) : res.json(post),
         world.interval.minute)
 })
 

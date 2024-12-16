@@ -1,0 +1,33 @@
+[
+  {
+    "id": "PST1",
+    "author": "sauron",
+    "title": "My second post is title only",
+    "content": "",
+    "tags": [
+      "test",
+      "general"
+    ],
+    "like": 0,
+    "dislike": 0,
+    "times": {
+      "created": 6520
+    },
+    "comments": []
+  },
+  {
+    "id": "PST0",
+    "author": "sauron",
+    "title": "First post",
+    "content": "First ever post to the system. It shall work this time!",
+    "tags": [
+      "test"
+    ],
+    "like": 0,
+    "dislike": 0,
+    "times": {
+      "created": 6500
+    },
+    "comments": []
+  }
+]

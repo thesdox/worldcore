@@ -21,3 +21,6 @@ export const market = marketDb.data
 
 export const authDb = await JSONFilePreset('./data/auth.json', [])
 export const auth = authDb.data
+
+export const blogDb = await JSONFilePreset('./data/blog.json', [])
+export const blog = blogDb.data

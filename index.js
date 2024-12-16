@@ -1,5 +1,5 @@
 import { onMinuteAsync } from './src/service.js'
-import { accounts, activities, assets, world, market, current, auth } from './src/model.js'
+import { accounts, activities, assets, world, market, current, auth, blog } from './src/model.js'
 import { app } from './src/api.js'
 import session from 'express-session'
 import * as util from './src/utility.js'
@@ -103,9 +103,26 @@ app.get('/', (req, res) => {
             balanceLeaderHtml += "</ul>"
         }
 
+        let blogHtml = blog.sort((a, b) => {return a.times.created > b.times.created ? -1 : 1})
+
+        if (blog.length > 0) {
+            blogHtml = "<ul>"
+            blog.slice(0, 100).forEach((p, idx) => {
+                blogHtml += `<oi><div>
+                    <h3 style="margin-bottom:.1em">${p.title}</h3>
+                    <small>${p.tags? `Tags: <span style="color:gray">${p.tags.join(", ")}</span> ` : ''}posted on ${`
+                        Year ${Math.floor(p.times.created/(world.interval.hour * world.interval.day * world.interval.year))}
+                        Day ${Math.floor(p.times.created/(world.interval.hour * world.interval.day))}
+                        ${Math.floor(p.times.created%(world.interval.hour * world.interval.day)/(world.interval.hour))}:${current.time % (world.interval.hour) < 10 ? '0':''}${current.time % (world.interval.hour)}</a>`} by ${p.author}</small>
+                    <p>${p.content}</p>
+                </div></oi>`
+            })
+            balanceLeaderHtml += "</ul>"
+        } else { `<p>Empty</p>` }
+
         res.send(`<html><body>
             ${headerHtml}
-            <h2>Simplified Web3 Economy <small>(in active development)</small></h2>
+            <h2>Worldbank of Web3 Economy <small>(in active development)</small></h2>
             <h3>Collect resources from the new world. Craft and trade items! Receive Web3 credits before token launch!</h3>
             
             <form action="/auth" method="post">
@@ -144,6 +161,11 @@ app.get('/', (req, res) => {
                 ${balanceLeaderHtml}
             </div>
 
+            <h2>Blog</h2>
+            <div>
+                ${blogHtml}
+            </div>
+
             <div><small>
                 Interested in joining this open project?
                 <a href="https://github.com" target="_blank">learn more</a>
@@ -175,6 +197,16 @@ app.get('/', (req, res) => {
                 <input name="amount" type="number" min=".01" max="1000.00" value=".01" step=".01" required />
                 <button name="of" value="credit">Send</button>
             </div>
+        </form>
+        <form action="/post" method="post" style="text-align:right">
+            <div>
+                <label for="title">Title</label>
+                <input name="title" placeholder="Title is required to post" required />
+                <label for="tags">Tags</label>
+                <input name="tags" placeholder="general, question, issue, ..." />
+            </div>
+            <textarea style="margin-bottom:.3em" name="content" rows="4" cols="60" placeholder="Each credit consumption on the post will be fully rewarded to content creator."></textarea>
+            <div><button>Post (-10.00 credit)</button></div>
         </form>
     `
 
@@ -259,7 +291,7 @@ app.get('/', (req, res) => {
         <div style="text-align:center">${session.username && session.username == username ? `
             <form action="/edit?return=/" method="post">
                 <textarea name="bio" rows="3" cols="50" placeholder="Write description of this account.">${account.bio? account.bio:''}</textarea>
-                <div style="margin-top:.3em"><button>Update Bio (-5.00 credit)</button></div>
+                <div style="margin-top:.3em"><button>Update Bio (-100.00 credit)</button></div>
             </form>
         `: `<p style="text-align:center">${account.bio? account.bio : `No description`}</p>`}
         </div>

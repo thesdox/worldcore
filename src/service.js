@@ -21,6 +21,7 @@ export async function onMinuteAsync() {
         await model.worldDb.write()
         await model.marketDb.write()
         await model.authDb.write()
+        await model.blogDb.write()
 
         current.activities.completed.length = 0
     }
@@ -36,7 +37,7 @@ export async function onMinuteAsync() {
 function queueWorldbankActivities() {
     console.log(`TX${activities.length}: processing worldbank activities...`);
     const account = accounts.find(a => a.id == 'worldbank')
-    if (account.credits.balance <= world.worldbank.maxDeficit) {
+    if (-1*account.credits.balance <= world.worldbank.maxDeficit) {
         console.warn(`TX${activities.length}: worldbank's max deficit reached`);
         return
     }

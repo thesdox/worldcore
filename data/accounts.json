@@ -24,15 +24,15 @@
   {
     "id": "gandalf",
     "credits": {
-      "balance": 1701.127276268796
+      "balance": 1905.9487296815744
     },
     "times": {
       "created": 243,
       "updated": 243,
       "lastActive": 243,
-      "edited": 4496
+      "edited": 5397
     },
-    "bio": "."
+    "bio": "I am good and I will save"
   },
   {
     "id": "aragorn",
@@ -279,7 +279,7 @@
   {
     "id": "sauron",
     "credits": {
-      "balance": -5989.277232993936
+      "balance": -5529.681245016642
     },
     "times": {
       "created": 21,
@@ -292,7 +292,7 @@
   {
     "id": "worldbank",
     "credits": {
-      "balance": -30846.93215109361
+      "balance": -30708.503172669698
     },
     "times": {
       "created": 0,
