@@ -164,7 +164,7 @@ app.get('/', (req, res) => {
     const userMinerals = items.filter((a) => a.type=="mineral")
     const userMineralTotal = userMinerals.reduce((sum, c) => {return sum + c.amount}, 0)
 
-    const userBankstones = items.filter((a) => a.type=="bankstone")
+    const userActiveBankstones = items.filter((a) => a.type=="bankstone" && current.effects.indexOf(a.id) >= 0)
     const activeEffectsTotal = current.effects.length
 
     const sendCreditHtml = `
@@ -242,9 +242,9 @@ app.get('/', (req, res) => {
                         <input name="id" type="hidden" value="${l.id}" />
                     </div>
                     <div>
-                        <button name="buyer" value="${username}" ${!session.username? `disabled` :``}>
-                            ${session.user && l.owner == username ? 'Delist' : 'Buy'}</button>
-                        for <input name="price" type="number" value="${Number(l.price).toFixed(2)}" readonly /> credit
+                        <button name="buyer" value="${username}" ${!session.username && account.credits.balance < l.price ? `disabled` :``}>
+                            ${session.username && l.owner == username ? 'Delist' : 'Buy'}</button>
+                        for <input name="price" type="number" value="${l.price.toFixed(2)}" readonly /> credit
                     </div>
                 </form>
             </li>`
@@ -254,12 +254,22 @@ app.get('/', (req, res) => {
 
     res.send(`<html><body>
         ${headerHtml}
-        <h5 style="color:gray;text-align:right;margin-bottom:0">${username}'s balance</h5>
+        <h2 style="text-align:center;margin-bottom:.3em">${username}</h2>
+
+        <div style="text-align:center">${session.username && session.username == username ? `
+            <form action="/edit?return=/" method="post">
+                <textarea name="bio" rows="3" cols="50" placeholder="Write description of this account.">${account.bio? account.bio:''}</textarea>
+                <div style="margin-top:.3em"><button>Update Bio (-5.00 credit)</button></div>
+            </form>
+        `: `<p style="text-align:center">${account.bio? account.bio : `No description`}</p>`}
+        </div>
+
+        <div style="text-align:right"><small style="color:gray;margin-bottom:0">balance</small></div>
         <div style="text-align:right">
             <small style="color:${"#00A0FF"}"><strong>water</strong></small> ${userWaterTotal}<small style="color:${"#BBB"}">/${current.resources.water.supplied.toFixed(0)}(${(userWaterTotal/current.resources.water.supplied*100).toFixed(2)}%)</small>
 
             <small style="color:${"#FF03EA"}"><strong>mineral</strong></small> ${userMineralTotal}<small style="color:${"#BBB"}">/${current.resources.mineral.supplied.toFixed(0)}(${(userMineralTotal/current.resources.mineral.supplied*100).toFixed(2)}%)</small>
-            <small style="color:${"gray"}"><strong>bankstones</strong></small> ${userBankstones.length}<small style="color:${"#BBB"}">/${activeEffectsTotal}(${(userBankstones.length/activeEffectsTotal*100).toFixed(2)}%)</small>
+            <small style="color:${"gray"}"><strong>bankstones</strong></small> ${userActiveBankstones.length}<small style="color:${"#BBB"}">/${activeEffectsTotal}(${(userActiveBankstones.length/activeEffectsTotal*100).toFixed(2)}%)</small>
         </div>
         <div style="text-align:right">
             <h1 style="margin-top:.3em;margin-bottom:1px">

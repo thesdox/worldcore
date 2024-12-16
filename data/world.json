@@ -8,6 +8,9 @@
     "day": 24,
     "year": 365
   },
+  "worldbank": {
+    "maxDeficit": 1000000000
+  },
   "resources": {
     "water": {
       "total": 1000000000,

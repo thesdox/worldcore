@@ -35,14 +35,17 @@ export async function onMinuteAsync() {
 
 function queueWorldbankActivities() {
     console.log(`TX${activities.length}: processing worldbank activities...`);
+    const account = accounts.find(a => a.id == 'worldbank')
+    if (account.credits.balance <= world.worldbank.maxDeficit) {
+        console.warn(`TX${activities.length}: worldbank's max deficit reached`);
+        return
+    }
     
     buyFloorListing('water')
     buyFloorListing('mineral')
 
     // mint a bankstone
     const mintId = `MNT${activities.length}`
-    const account = accounts.find(a => a.id == 'worldbank')
-
     const mintActivity = {
         "type": "mint",
         "id": mintId,
@@ -339,7 +342,6 @@ function processPendingMint(mint) {
                 },
                 "times": {
                   "created": current.time,
-                  "updated": current.time,
                   "lastActive": current.time
                 }
             })

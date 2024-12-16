@@ -27,7 +27,6 @@ app.post('/auth', function(req, res) {
                 req.session.username = username;
                 res.redirect('/');
             } else {
-                console.warn(err)
                 res.sendStatus(401)
             }
         })
@@ -276,6 +275,47 @@ app.post('/list', (req, res) => {
     market.push(listing)
 
     req.query.return ? res.redirect(req.query.return) : res.json(listing)
+})
+
+app.post('/edit', (req, res) => {
+    if (!req.session.username) {
+        res.sendStatus(401)
+        return
+    }
+    if (!req.body.bio) {
+        res.sendStatus(400)
+        return
+    }
+
+    const account = accounts.find(a => a.id == req.session.username)
+    if (account.credits.balance < 100) {
+        console.warn(`not enough balance to consume`)
+        res.sendStatus(403)
+    }
+
+    const creditConsumption = {
+        "type": "consume",
+        "id": `CNS${activities.length}`,
+        "of": "credits",
+        "from": req.session.username,
+        "to": "world",
+        "amount": 100,
+        "note": `Consuming -5 credit for edit bio`,
+        "times": {
+            "created": current.time
+        }
+    }
+
+    activities.push(creditConsumption)
+    current.activities.pending.push(creditConsumption.id)
+
+    console.log(`${req.session.username}: editing bio...`)
+    account.bio = req.body.bio
+    account.times.edited = current.time
+
+    setTimeout(() => req.query.return ?
+        res.redirect(req.query.return) : res.json(account),
+        world.interval.minute)
 })
 
 app.post('/trade', (req, res) => {
