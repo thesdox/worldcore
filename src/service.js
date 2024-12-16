@@ -41,14 +41,16 @@ function queueWorldbankActivities() {
 
     // mint a bankstone
     const mintId = `MNT${activities.length}`
+    const account = accounts.find(a => a.id == 'worldbank')
+
     const mintActivity = {
         "type": "mint",
-        "id": id,
-        "of": req.body.type,
+        "id": mintId,
+        "of": 'bankstone',
         "from": "world",
-        "to": to,
+        "to": account.id,
         "amount": 1,
-        "note": `Minting of ${req.body.type} for ${to}`,
+        "note": `Minting of a bankstone for ${account.id}`,
         "times": {
             "created": current.time
         }
@@ -56,7 +58,6 @@ function queueWorldbankActivities() {
 
     activities.push(mintActivity)
 
-    const account = accounts.find(a => a.id == 'worldbank')
     const userWaters = assets.filter(a => a.owner == account.id && a.type == "water")
     const userMinerals = assets.filter(a => a.owner == account.id && a.type == "mineral")
 
