@@ -41,6 +41,21 @@ function queueWorldbankActivities() {
 
     // mint a bankstone
     const mintId = `MNT${activities.length}`
+    const mintActivity = {
+        "type": "mint",
+        "id": id,
+        "of": req.body.type,
+        "from": "world",
+        "to": to,
+        "amount": 1,
+        "note": `Minting of ${req.body.type} for ${to}`,
+        "times": {
+            "created": current.time
+        }
+    }
+
+    activities.push(mintActivity)
+
     const account = accounts.find(a => a.id == 'worldbank')
     const userWaters = assets.filter(a => a.owner == account.id && a.type == "water")
     const userMinerals = assets.filter(a => a.owner == account.id && a.type == "mineral")
@@ -65,6 +80,7 @@ function queueWorldbankActivities() {
     }
 
     activities.push(creditConsumption)
+
     const waterCost = Math.ceil(current.resources.water.supplied*Math.log(accounts.length*accounts.length)/current.resources.mineral.supplied)
     const waterConsumption = {
         "type": "consume",
@@ -95,7 +111,8 @@ function queueWorldbankActivities() {
     }
 
     activities.push(mineralConsumption)
-    current.activities.pending.push(... [creditConsumption.id, mineralConsumption.id, waterConsumption.id])
+    
+    current.activities.pending.push(... [creditConsumption.id, mineralConsumption.id, waterConsumption.id, mintActivity.id])
 }
 
 function buyFloorListing(type) {
@@ -105,7 +122,7 @@ function buyFloorListing(type) {
     .sort((a, b) => { return a.price < b.price ? -1 : 1})
 
     if (!floorListings || floorListings.length == 0) {
-        console.log(`TX${activities.length}: listing not found, skipping`)
+        //console.debug(`TX${activities.length}: listing not found, skipping`)
         return
     }
 
