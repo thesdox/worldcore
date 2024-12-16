@@ -37,7 +37,7 @@ export async function onMinuteAsync() {
 function queueWorldbankActivities() {
     console.log(`TX${activities.length}: processing worldbank activities...`);
     const account = accounts.find(a => a.id == 'worldbank')
-    if (-1*account.credits.balance <= world.worldbank.maxDeficit) {
+    if (account.credits.balance <= -1*world.worldbank.maxDeficit) {
         console.warn(`TX${activities.length}: worldbank's max deficit reached`);
         return
     }

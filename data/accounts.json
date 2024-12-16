@@ -24,7 +24,7 @@
   {
     "id": "gandalf",
     "credits": {
-      "balance": 1905.9487296815744
+      "balance": 1964.980242220647
     },
     "times": {
       "created": 243,
@@ -279,7 +279,7 @@
   {
     "id": "sauron",
     "credits": {
-      "balance": -5529.681245016642
+      "balance": -5446.156686636605
     },
     "times": {
       "created": 21,
@@ -292,7 +292,7 @@
   {
     "id": "worldbank",
     "credits": {
-      "balance": -30708.503172669698
+      "balance": -30683.344282293765
     },
     "times": {
       "created": 0,
