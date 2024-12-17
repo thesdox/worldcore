@@ -155,7 +155,7 @@ app.get('/', (req, res) => {
     const marketStatsHtml = getMarketStatsHtml(listings)
     const headerHtml = getHeaderHtml(session, username)
 
-    if (!req.session.username && !req.query.user) {
+    if (!req.session.username || !req.query.user) {
         const leaderboardHtml = getLeaderboardHtml()
         const blogHtml = getBlogHtml()
 
@@ -163,8 +163,8 @@ app.get('/', (req, res) => {
             ${headerHtml}
             <h2>Worldbank of Web3 Economy <small>(in active development)</small></h2>
             <h3>Collect resources from the new world. Craft and trade items! Receive Web3 credits before token launch!</h3>
-            
-            <form action="/auth" method="post">
+
+            ${!session.username? `<form action="/auth" method="post">
                 <h3 style="margin-bottom:1px">Login</h3>
                 <div><small>
                     <input name="save" type="checkbox" />
@@ -189,7 +189,7 @@ app.get('/', (req, res) => {
                     <input name="confirm" type="password" placeholder="confirm" required />
                     <button name="type" value="account">Mint Account</button>
                 </div>
-            </form>
+            </form>`:``}
 
             <h2>Market Statistics</h2>
             ${marketStatsHtml}
@@ -488,36 +488,41 @@ function getHeaderHtml(session, username) {
         </small></div>
         
         <div style="display:flex;justify-content:space-between">
-            <div style="">
+            <div>
                 <h1 style="font-size:1.5em;margin-top:.3em;margin-bottom:0px;"><small><a href="/">Bankstone</a></small></h1>
                 <small>Web3 Currency & Digital Asset Platform</small>
             </div>
             <div style="padding:.3em;text-align:right;margin-top:auto"><small>
-                <a href="/blog">Blog(${blog.length})</a>
                 <a href="/leaderboard">Leaderboard(${accounts.length})</a>
+                <a href="/blog">Blog(${blog.length})</a>
                 <a href="/marketplace">Marketplace(${market.length})</a>
                 <a href="/mints">Items(${assets.length})</a>
                 <a href="/transactions">Transactions(${activities.length})</a>
             </small></div>
         </div>
-        <div style="background:#EFEFEF;margin:0;padding:.5em">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="1em"><circle fill="#00A0FF" stroke="#00A0FF" stroke-width="30" r="15" cx="40" cy="65"><animate attributeName="cy" calcMode="spline" dur="1" values="65;135;65;" keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="-.4"></animate></circle><circle fill="#00C0FF" stroke="#00C0FF" stroke-width="30" r="15" cx="100" cy="65"><animate attributeName="cy" calcMode="spline" dur="1" values="65;135;65;" keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="-.2"></animate></circle><circle fill="#00C0FF" stroke="#00C0FF" stroke-width="30" r="15" cx="160" cy="65"><animate attributeName="cy" calcMode="spline" dur="1" values="65;135;65;" keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="0"></animate></circle></svg>
-            <small style="color:${"#00A0FF"}"><strong>water</strong></small>
-            <span style="color:${"#000"}">${current.resources.water.balance.toFixed(0)}</span>
+        <div style="display:flex;justify-content:space-between;background:#EFEFEF;margin:0;padding:.5em">
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="1em"><circle fill="#00A0FF" stroke="#00A0FF" stroke-width="30" r="15" cx="40" cy="65"><animate attributeName="cy" calcMode="spline" dur="1" values="65;135;65;" keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="-.4"></animate></circle><circle fill="#00C0FF" stroke="#00C0FF" stroke-width="30" r="15" cx="100" cy="65"><animate attributeName="cy" calcMode="spline" dur="1" values="65;135;65;" keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="-.2"></animate></circle><circle fill="#00C0FF" stroke="#00C0FF" stroke-width="30" r="15" cx="160" cy="65"><animate attributeName="cy" calcMode="spline" dur="1" values="65;135;65;" keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="0"></animate></circle></svg>
+                <small style="color:${"#00A0FF"}"><strong>water</strong></small>
+                <span style="color:${"#000"}">${current.resources.water.balance.toFixed(0)}</span>
 
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="1em"><path fill="#FF03EA" stroke="#FF03EA" stroke-width="30" transform-origin="center" d="m148 84.7 13.8-8-10-17.3-13.8 8a50 50 0 0 0-27.4-15.9v-16h-20v16A50 50 0 0 0 63 67.4l-13.8-8-10 17.3 13.8 8a50 50 0 0 0 0 31.7l-13.8 8 10 17.3 13.8-8a50 50 0 0 0 27.5 15.9v16h20v-16a50 50 0 0 0 27.4-15.9l13.8 8 10-17.3-13.8-8a50 50 0 0 0 0-31.7Zm-47.5 50.8a35 35 0 1 1 0-70 35 35 0 0 1 0 70Z"><animateTransform type="rotate" attributeName="transform" calcMode="spline" dur="3.5" values="0;120" keyTimes="0;1" keySplines="0 0 1 1" repeatCount="indefinite"></animateTransform></path></svg>
-            <small style="color:${"#FF03EA"}"><strong>mineral</strong></small>
-            <span style="color:${"#000"}">${current.resources.mineral.balance.toFixed(0)}</span></span>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="1em"><path fill="#FF03EA" stroke="#FF03EA" stroke-width="30" transform-origin="center" d="m148 84.7 13.8-8-10-17.3-13.8 8a50 50 0 0 0-27.4-15.9v-16h-20v16A50 50 0 0 0 63 67.4l-13.8-8-10 17.3 13.8 8a50 50 0 0 0 0 31.7l-13.8 8 10 17.3 13.8-8a50 50 0 0 0 27.5 15.9v16h20v-16a50 50 0 0 0 27.4-15.9l13.8 8 10-17.3-13.8-8a50 50 0 0 0 0-31.7Zm-47.5 50.8a35 35 0 1 1 0-70 35 35 0 0 1 0 70Z"><animateTransform type="rotate" attributeName="transform" calcMode="spline" dur="3.5" values="0;120" keyTimes="0;1" keySplines="0 0 1 1" repeatCount="indefinite"></animateTransform></path></svg>
+                <small style="color:${"#FF03EA"}"><strong>mineral</strong></small>
+                <span style="color:${"#000"}">${current.resources.mineral.balance.toFixed(0)}</span></span>
 
-            <small style="margin-left:1em">
-                <svg width="1em" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="FF0000" stroke="FF0000" d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,20a9,9,0,1,1,9-9A9,9,0,0,1,12,21Z"/><rect x="11" y="6" rx="1" width="2" height="7"><animateTransform attributeName="transform" type="rotate" dur="15s" values="0 12 12;360 12 12" repeatCount="indefinite"/></rect><rect x="11" y="11" rx="1" width="2" height="9"><animateTransform attributeName="transform" type="rotate" dur="1s" values="0 12 12;360 12 12" repeatCount="indefinite"/></rect></svg><small style="color:gray">x${60000 / world.interval.minute}</small>
-                Year ${Math.floor(current.time / (world.interval.hour * world.interval.day * world.interval.year))}
-                Day ${Math.floor(current.time / (world.interval.hour * world.interval.day))}
-                <a href="/current">${Math.floor(current.time % (world.interval.hour * world.interval.day) / (world.interval.hour))}:${current.time % (world.interval.hour) < 10 ? '0' : ''}${current.time % (world.interval.hour)}</a>
-                <small>(${(current.time % (world.interval.hour) / world.interval.hour * 100).toFixed(0)}% to yield)</small>
-            </small>
-
-            <small><strong>${session.username ? `${session.username} (${accounts.find(a=>a.id==session.username).credits.balance.toFixed(2)} credit)</strong> <a href="/exit">exit</a>` : ``}</small>
+                <small style="margin-left:1em">
+                    <svg width="1em" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="FF0000" stroke="FF0000" d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,20a9,9,0,1,1,9-9A9,9,0,0,1,12,21Z"/><rect x="11" y="6" rx="1" width="2" height="7"><animateTransform attributeName="transform" type="rotate" dur="15s" values="0 12 12;360 12 12" repeatCount="indefinite"/></rect><rect x="11" y="11" rx="1" width="2" height="9"><animateTransform attributeName="transform" type="rotate" dur="1s" values="0 12 12;360 12 12" repeatCount="indefinite"/></rect></svg><small style="color:gray">x${60000 / world.interval.minute}</small>
+                    Year ${Math.floor(current.time / (world.interval.hour * world.interval.day * world.interval.year))}
+                    Day ${Math.floor(current.time / (world.interval.hour * world.interval.day))}
+                    <a href="/current">${Math.floor(current.time % (world.interval.hour * world.interval.day) / (world.interval.hour))}:${current.time % (world.interval.hour) < 10 ? '0' : ''}${current.time % (world.interval.hour)}</a>
+                    <small>(${(current.time % (world.interval.hour) / world.interval.hour * 100).toFixed(0)}% to yield)</small>
+                </small>
+            </div>
+            <div style="margin-left:auto">
+                <div>
+                    ${session.username ? `<a href="/?user=${session.username}">${session.username}</strong><small>(${accounts.find(a=>a.id==session.username).credits.balance.toFixed(2)} credit)<small> <a href="/exit">exit</a>` : ``}
+                </div>
+            </div>
         </div>
 
         <!--

@@ -25,7 +25,7 @@ app.post('/auth', function(req, res) {
         bcrypt.compare(password, user.password, (err, result) => {
             if (result && auth.findIndex(a => a.username == username && a.password == password > 0)) {
                 req.session.username = username;
-                res.redirect('/');
+                res.redirect(`/?user=${req.session.username}`);
             } else {
                 res.sendStatus(401)
             }

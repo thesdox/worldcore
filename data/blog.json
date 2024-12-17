@@ -109,5 +109,24 @@
       "created": 6500
     },
     "comments": []
+  },
+  {
+    "id": "PST5",
+    "author": "gandalf",
+    "title": "We are recruiting developers, program manager, community manager, content creators",
+    "content": "We are recruiting developers, program manager, community manager, content creators. If you like this project and would like to participate, please comment on this post.\r\n\r\nAt list LIKE this post to bump it up!",
+    "tags": [
+      "hiring",
+      "job",
+      "developer",
+      "projectmanager",
+      "communitymanager"
+    ],
+    "likes": 48,
+    "dislikes": 0,
+    "times": {
+      "created": 4668
+    },
+    "comments": []
   }
 ]
