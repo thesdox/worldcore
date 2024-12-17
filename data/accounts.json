@@ -1,18 +1,5 @@
 [
   {
-    "id": "gandalf",
-    "credits": {
-      "balance": 5813.5634741281465
-    },
-    "times": {
-      "created": 243,
-      "updated": 243,
-      "lastActive": 243,
-      "edited": 5397
-    },
-    "bio": "I am good and I will save"
-  },
-  {
     "id": "legolas",
     "credits": {
       "balance": 3103.39
@@ -28,42 +15,20 @@
   {
     "id": "bilbo",
     "credits": {
-      "balance": 2000
+      "balance": 1390
     },
     "times": {
       "created": 1560,
       "updated": 1560,
-      "lastActive": 1560
-    }
-  },
-  {
-    "id": "saruman",
-    "credits": {
-      "balance": 907.1100000000001
+      "lastActive": 1560,
+      "edited": 19128
     },
-    "times": {
-      "created": 92,
-      "updated": 92,
-      "lastActive": 92,
-      "edited": 15705
-    },
-    "bio": "I born good but turn evil. I work for Sauron."
-  },
-  {
-    "id": "gollum",
-    "credits": {
-      "balance": 500
-    },
-    "times": {
-      "created": 1800,
-      "updated": 1800,
-      "lastActive": 1800
-    }
+    "bio": "I enjoyed all my past journeys. I always wish I can go on an adventure again."
   },
   {
     "id": "aragorn",
     "credits": {
-      "balance": 0
+      "balance": 500
     },
     "times": {
       "created": 1547,
@@ -281,9 +246,22 @@
     }
   },
   {
+    "id": "gandalf",
+    "credits": {
+      "balance": -7201.053386019597
+    },
+    "times": {
+      "created": 243,
+      "updated": 243,
+      "lastActive": 243,
+      "edited": 5397
+    },
+    "bio": "I am good and I will save"
+  },
+  {
     "id": "sauron",
     "credits": {
-      "balance": -10236.052927693425
+      "balance": -7436.844165706307
     },
     "times": {
       "created": 21,
@@ -294,9 +272,33 @@
     "bio": "I am Sauron. I'm the beginning and the ending of the world. I may hurt, I may help."
   },
   {
+    "id": "gollum",
+    "credits": {
+      "balance": -21534.956262693402
+    },
+    "times": {
+      "created": 1800,
+      "updated": 1800,
+      "lastActive": 1800
+    }
+  },
+  {
+    "id": "saruman",
+    "credits": {
+      "balance": -29282.74978044985
+    },
+    "times": {
+      "created": 92,
+      "updated": 92,
+      "lastActive": 92,
+      "edited": 15705
+    },
+    "bio": "I born good but turn evil. I work for Sauron."
+  },
+  {
     "id": "worldbank",
     "credits": {
-      "balance": -53636.96050190572
+      "balance": -57396.9210370282
     },
     "times": {
       "created": 0,

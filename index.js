@@ -10,7 +10,7 @@ app.listen(port, () => {
     console.log(`app listening on port ${port}`)
 })
 
-setInterval(onMinuteAsync, world.interval.minute)
+setInterval(await onMinuteAsync, world.interval.minute)
 
 app.get('/leaderboard', (req, res) => {
     const session = req.session
@@ -182,8 +182,8 @@ app.get('/', (req, res) => {
     const userMinerals = items.filter((a) => a.type=="mineral")
     const userMineralTotal = userMinerals.reduce((sum, c) => {return sum + c.amount}, 0)
 
-    const userActiveBankstones = items.filter((a) => a.type=="bankstone" && current.effects.indexOf(a.id) >= 0)
-    const activeEffectsTotal = current.effects.length
+    const userActiveBankstones = items.filter((a) => a.type=="bankstone" && a.amount > 0)
+    const activeEffectsTotal = current.effects.pending.length+current.effects.completed.length+current.effects.rejected.length
 
     const sendCreditHtml = `
         <form action="/transaction?return=/?user=${username}" method="post" style="text-align:right">
@@ -194,7 +194,7 @@ app.get('/', (req, res) => {
                 <button name="of" value="credit" ${(session.username && account.credits.balance < .01) ? `disabled` :``}>Send</button>
             </div>
         </form>
-        <form action="/post" method="post" style="text-align:right">
+        <form action="/post?return=/" method="post" style="text-align:right">
             <div>
                 <label for="title">Title</label>
                 <input name="title" placeholder="Title is required to post" required />

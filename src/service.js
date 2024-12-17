@@ -9,37 +9,83 @@ export async function onMinuteAsync() {
         return
     }
 
-    // console.debug(`T${current.time}, active accounts: ${current.accounts.length}/${accounts.length} transactions: ${activities.length}/${activities.length}`)
+    // console.debug(`T${current.time}: active accounts: ${current.accounts.length}/${accounts.length} transactions: ${activities.length}/${activities.length}`)
     inProgress = true
     const startTime = new Date().getTime()
 
     if (current.time % world.interval.hour == 0) {
         onHourAsync()
+
+        if (current.time % (world.interval.hour * world.interval.day) == 0) {
+            onDayAsync()
+        }
     }
+
+    const totalEffectCount = current.effects.pending.length+current.effects.completed.length+current.effects.rejected.length
+    const effectBatchSize = Math.ceil((totalEffectCount)/world.interval.hour)
+    console.debug(`T${current.time}: processing ${effectBatchSize}/${current.effects.pending.length}/${current.effects.completed.length} effects...`)
+    current.effects.pending.slice(0, effectBatchSize).forEach(id => {
+        const b = assets.find(a => a.id == id && a.amount > 0)
+        if (!b) {
+            console.warn(`invalid bankstone id ${id}`);
+            return;
+        }
+
+        const hrYield = b.properties.yield/world.interval.year/world.interval.day
+        const tx = {
+            type: "transaction",
+            id: `TX${activities.length}`,
+            of: "credit",
+            from: b.id,
+            to: b.owner,
+            amount: hrYield * b.properties.staked,
+            note: `${id}: yield for day ${Math.floor(current.time % (world.interval.year / world.interval.day))}`,
+            times: {
+                created: current.time
+            }
+        }
+
+        //console.debug(`${tx.id}: ${(hrYield * 100).toFixed(4)}/${(b.properties.yield * 100).toFixed(0)}% of staked ${b.properties.staked.toFixed(0)}/${b.properties.cap} credit.. yields ${tx.amount.toFixed(2)} hourly credit..`);
+        activities.push(tx)
+        current.activities.pending.push(tx.id)
+        
+        current.effects.completed.push(id)
+        current.effects.pending = current.effects.pending.filter(e => e != id)
+    });
 
     processResources()
     processCurrentActivities()
 
+    const writeStart = new Date().getTime()
     if (current.activities.completed.length >= world.system.batch) {
         console.log(`processing batch store of ${current.activities.completed.length}/${world.system.batch} activities..`)
-        await model.activityDb.write()
-        await model.assetDb.write()
-        await model.accountDb.write()
-        await model.worldDb.write()
-        await model.marketDb.write()
-        await model.authDb.write()
-        await model.blogDb.write()
+        
+        const writePromises = [
+            model.assetDb.write(),
+            model.accountDb.write(),
+            model.worldDb.write(),
+            model.marketDb.write(),
+            model.authDb.write(),
+            model.blogDb.write(),
+            model.activityDb.write()]
 
+        await Promise.all(writePromises)
         current.activities.completed.length = 0
     }
 
     await model.currentDb.write()
-
+    const writeEnd = new Date().getTime()
     const elapsed = new Date().getTime() - startTime
-    console.log(`T${current.time}: sync completed in ${elapsed}ms`)
+
+    console.log(`T${current.time}: sync completed in ${elapsed}ms data write ${writeEnd-writeStart}ms`)
 
     current.time += 1
     inProgress = false
+}
+
+async function onDayAsync() {
+    //console.log(`processing daily store of ${activities.length} activities..`)
+    //await model.backupAsync(activities, `T${current.time}.activities.bak`)
 }
 
 function queueWorldbankActivities() {
@@ -195,45 +241,11 @@ function processResources() {
 async function onHourAsync() {
     const effectItems = assets.filter(a => a.type == "bankstone" && a.amount > 0)
     effectItems.forEach(i => {
-        if (current.effects.findIndex(e => e == i.id) < 0) current.effects.push(i.id)
+        if (current.effects.pending.findIndex(e => e == i.id) < 0) current.effects.pending.push(i.id)
     })
 
-    console.debug(`T${current.time}: processing ${current.effects.length} active effects...`)
-
-    const invalid = []
-    current.effects.forEach(id => {
-        const b = assets.find(a => a.id == id && a.amount > 0)
-        if (!b) {
-            console.warn(`invalid bankstone id ${id}`);
-            invalid.push(id)
-            return;
-        }
-
-        const hrYield = b.properties.yield/world.interval.year/world.interval.day
-
-        const tx = {
-            type: "transaction",
-            id: `TX${activities.length}`,
-            of: "credit",
-            from: b.id,
-            to: b.owner,
-            amount: hrYield * b.properties.staked,
-            note: `dividend yield for day ${Math.floor(current.time % (world.interval.year / world.interval.day))}`,
-            times: {
-                created: current.time
-            }
-        }
-
-        //console.debug(`${tx.id}: ${(hrYield * 100).toFixed(4)}/${(b.properties.yield * 100).toFixed(0)}% of staked ${b.properties.staked.toFixed(0)}/${b.properties.cap} credit.. yields ${tx.amount.toFixed(2)} hourly credit..`);
-        activities.push(tx)
-        current.activities.pending.push(tx.id);
-    });
-
-    // console.debug(`removing ${inactives.length} inactive bankstones...`)
-    invalid.forEach((i) => {
-        const idx = current.effects.findIndex(b => b == i)
-        current.effects.splice(current.effects[idx], 1)
-    })
+    current.effects.completed = []
+    current.effects.rejected = []
 
     queueWorldbankActivities()
 }
@@ -267,7 +279,7 @@ function processCurrentActivities() {
 
             activity.times.completed = current.time
             current.activities.completed.push(activity.id)
-            current.activities.pending = current.activities.pending.filter(id => id !== activity.id)
+            current.activities.pending = current.activities.pending.filter(id => id != activity.id)
         }
     })
 }

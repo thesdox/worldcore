@@ -24,3 +24,8 @@ export const auth = authDb.data
 
 export const blogDb = await JSONFilePreset('./data/blog.json', [])
 export const blog = blogDb.data
+
+export async function backupAsync(data, filename) {
+    const backupDb = await JSONFilePreset(`./data/backup/${filename}`, data)
+    backupDb.write()
+}
