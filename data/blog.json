@@ -1,5 +1,21 @@
 [
   {
+    "id": "PST2",
+    "author": "saruman",
+    "title": "Let's build monsters and forces",
+    "content": "I'm building a strongest army of all time for Sauron. Comment on this post if you're interested in joining me.",
+    "tags": [
+      "sauron",
+      "recruit"
+    ],
+    "likes": 0,
+    "dislikes": 0,
+    "times": {
+      "created": 15738
+    },
+    "comments": []
+  },
+  {
     "id": "PST1",
     "author": "sauron",
     "title": "My second post is title only",
@@ -8,8 +24,8 @@
       "test",
       "general"
     ],
-    "like": 0,
-    "dislike": 0,
+    "likes": 0,
+    "dislikes": 0,
     "times": {
       "created": 6520
     },
@@ -23,8 +39,8 @@
     "tags": [
       "test"
     ],
-    "like": 0,
-    "dislike": 0,
+    "likes": 0,
+    "dislikes": 0,
     "times": {
       "created": 6500
     },

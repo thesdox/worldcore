@@ -2,7 +2,7 @@
   {
     "id": "gandalf",
     "credits": {
-      "balance": 3996.503384914406
+      "balance": 5813.5634741281465
     },
     "times": {
       "created": 243,
@@ -26,17 +26,6 @@
     "bio": "I sell cheap to help others"
   },
   {
-    "id": "saruman",
-    "credits": {
-      "balance": 2017.1100000000001
-    },
-    "times": {
-      "created": 92,
-      "updated": 92,
-      "lastActive": 92
-    }
-  },
-  {
     "id": "bilbo",
     "credits": {
       "balance": 2000
@@ -46,6 +35,19 @@
       "updated": 1560,
       "lastActive": 1560
     }
+  },
+  {
+    "id": "saruman",
+    "credits": {
+      "balance": 907.1100000000001
+    },
+    "times": {
+      "created": 92,
+      "updated": 92,
+      "lastActive": 92,
+      "edited": 15705
+    },
+    "bio": "I born good but turn evil. I work for Sauron."
   },
   {
     "id": "gollum",
@@ -281,7 +283,7 @@
   {
     "id": "sauron",
     "credits": {
-      "balance": -25041.28954503693
+      "balance": -10236.052927693425
     },
     "times": {
       "created": 21,
@@ -294,7 +296,7 @@
   {
     "id": "worldbank",
     "credits": {
-      "balance": -51017.145736506674
+      "balance": -53636.96050190572
     },
     "times": {
       "created": 0,

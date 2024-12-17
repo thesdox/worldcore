@@ -74,6 +74,37 @@ app.get('/blog', (req, res) => {
     `)
 })
 
+app.get('/blog/post', (req, res) => {
+    const session = req.session
+    const username = req.query.user? req.query.user : req.session.username
+    // const account = accounts.find(a => a.id == username)
+    const post = blog.find(p => p.id == req.query.id)
+
+    const headerHtml = getHeaderHtml(session, username)
+    const postHtml = `
+        ${post? `
+        <h1>${post.title}</h1>
+        <small>
+            ${post.tags ? `Tags: <span style="color:gray">${post.tags.map(t => {
+                return `<a href="/blog?tag=${t}">#${t}</a>`}).join(", ")}</span>` : ''}
+                posted on ${getTimeHtml(post.times.created)} by ${post.author}
+        </small>
+        <p>${post.content}</p>
+        <div>
+            <small>${post.likes} likes</small>
+            <small>${post.dislikes} dislikes</small>
+            <small>${post.comments.length} comments</small>
+        </div>
+
+        ` : `<h3>Post id ${id} not found</h3>`}`
+    
+    res.send(`
+        ${headerHtml}
+        <h1>Blog</h1>
+        ${postHtml}
+    `)
+})
+
 app.get('/', (req, res) => {
     const session = req.session
     const username = req.query.user? req.query.user : req.session.username
@@ -367,9 +398,21 @@ function getBlogHtml() {
         blogHtml = "<ul>"
         blog.slice(0, 100).forEach((p, idx) => {
             blogHtml += `<oi><div>
-                    <h3 style="margin-bottom:.1em">${p.title}</h3>
-                    <small>${p.tags ? `Tags: <span style="color:gray">${p.tags.join(", ")}</span> ` : ''}posted on ${getTimeHtml(p.times.created)} by ${p.author}</small>
+                    <h3 style="margin-bottom:.1em">
+                        <a href="/blog/post?id=${p.id}">${p.title}</a>
+                    </h3>
+                    <small>${p.tags ? `Tags: <span style="color:gray">${p.tags.map(t => {
+                            return `<a href="/blog?tag=${t}">#${t}</a>`
+                        }).join(", ")}</span> ` : ''}posted on ${getTimeHtml(p.times.created)} by ${p.author}</small>
                     <p>${p.content}</p>
+                    <small>${p.likes} likes</small>
+                    <small>${p.dislikes} dislikes</small>
+                    <small>${p.comments.length} comments</small>
+                    ${ p.comments.length > 0 ? `
+                        <ul>${p.comments.forEach(c => {
+                        `<li>${c.comment} by ${c.author} on ${c.time}</li>`
+                    })}
+                    </ul>`: ``}
                 </div></oi>`
         })
         blogHtml += "</ul>"

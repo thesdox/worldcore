@@ -1,9 +1,9 @@
 {
   "system": {
-    "batch": 10
+    "batch": 100
   },
   "interval": {
-    "minute": 2000,
+    "minute": 3000,
     "hour": 60,
     "day": 24,
     "year": 365

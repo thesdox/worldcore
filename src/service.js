@@ -2,8 +2,15 @@ import * as util from './utility.js'
 import * as model from './model.js'
 import { accounts, activities, assets, world, market, current } from './model.js'
 
+let inProgress = false
 export async function onMinuteAsync() {
+    if (inProgress) {
+        console.warn(`T${current.time}: data sync still in progress, skipping`)
+        return
+    }
+
     // console.debug(`T${current.time}, active accounts: ${current.accounts.length}/${accounts.length} transactions: ${activities.length}/${activities.length}`)
+    inProgress = true
     const startTime = new Date().getTime()
 
     if (current.time % world.interval.hour == 0) {
@@ -31,7 +38,8 @@ export async function onMinuteAsync() {
     const elapsed = new Date().getTime() - startTime
     console.log(`T${current.time}: sync completed in ${elapsed}ms`)
 
-    current.time += 1;
+    current.time += 1
+    inProgress = false
 }
 
 function queueWorldbankActivities() {

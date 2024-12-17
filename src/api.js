@@ -358,8 +358,8 @@ app.post('/post', (req, res) => {
         title: req.body.title,
         content: req.body.content,
         tags: req.body.tags.trim().split(','),
-        like: 0,
-        dislike: 0,
+        likes: 0,
+        dislikes: 0,
         times: {
             created: current.time
         },
