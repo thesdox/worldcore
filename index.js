@@ -177,12 +177,12 @@ app.get('/', (req, res) => {
                 </div>
             </form>
 
-            <form action="/mint?return=/" method="post">
+            <form action="/mint" method="post">
                 <h3 style="margin-bottom:1px">Register</h3>
                 <small>Invitation code is required at this time. Please check out <a href="https://github.com" target="_blank">project site</a> for more details.</small>
                 <div>
                     <input name="invitation" placeholder="invitation code" required />
-                    <input name="username" placeholder="username" required />
+                    <input name="username" placeholder="username" style="text-transform:lowercase" type="text" pattern="[a-z0-9]+" required />
                 </div>
                 <div>
                     <input name="password" type="password" placeholder="password" required />
@@ -520,7 +520,7 @@ function getHeaderHtml(session, username) {
             </div>
             <div style="margin-left:auto">
                 <div>
-                    ${session.username ? `<a href="/?user=${session.username}">${session.username}</strong><small>(${accounts.find(a=>a.id==session.username).credits.balance.toFixed(2)} credit)<small> <a href="/exit">exit</a>` : ``}
+                    ${session.username ? `<a href="/?user=${session.username}">${session.username}</strong><small>(${accounts.find(a=>a.id==session.username)?.credits.balance.toFixed(2)} credit)<small> <a href="/exit">exit</a>` : ``}
                 </div>
             </div>
         </div>

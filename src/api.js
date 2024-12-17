@@ -114,7 +114,7 @@ app.post('/mint', (req, res) => {
     const id = `MNT${activities.length}`
     console.log(`${id}: minting ${req.body.type}...`);
 
-    const to = req.body.type == "account" ? req.body.username : req.body.owner
+    const to = req.body.type == "account" ? req.body.username.toLowerCase() : req.body.owner
     const account = accounts.find(a => a.id == to)
     const userWaters = assets.filter(a => a.owner == to && a.type == "water")
     const userMinerals = assets.filter(a => a.owner == to && a.type == "mineral")
@@ -135,6 +135,12 @@ app.post('/mint', (req, res) => {
     const consumptions = []
     switch (req.body.type) {
         case "account":
+            if (account) {
+                console.warn(`account ${account.id} already exists`)
+                res.sendStatus(403)
+                return
+            }
+
             if (!req.body.invitation || req.body.invitation != '1234') {
                 console.warn(`invalid invitation code ${req.body.invitation}`)
                 res.sendStatus(403)
@@ -221,7 +227,7 @@ app.post('/mint', (req, res) => {
     current.activities.pending.push(activity.id)
 
     setTimeout(() => req.query.return ?
-        res.redirect(req.query.return) : res.json([activity,... consumptions]),
+        res.redirect(`/?user=${req.session.username}`) : res.json([activity,... consumptions]),
         world.interval.minute)
 })
 
