@@ -15,7 +15,13 @@
     "times": {
       "created": 19555
     },
-    "comments": []
+    "comments": [
+      {
+        "comment": "Leaving first comment. This with go through.",
+        "author": "gandalf",
+        "time": 1592
+      }
+    ]
   },
   {
     "id": "PST3",

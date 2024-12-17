@@ -32,10 +32,10 @@ app.get('/transactions', (req, res) => {
     const account = accounts.find(a => a.id == username)
     
     const headerHtml = getHeaderHtml(session, username)
-    const transactionsHtml = getTransactionsHtml()
+    const transactionsHtml = getActivitiesHtml()
     res.send(`
         ${headerHtml}
-        <h1>Transactions</h1>
+        <h1>All Activities</h1>
         ${transactionsHtml}
     `)
 })
@@ -77,8 +77,20 @@ app.get('/blog', (req, res) => {
 app.get('/blog/post', (req, res) => {
     const session = req.session
     const username = req.query.user? req.query.user : req.session.username
-    // const account = accounts.find(a => a.id == username)
+    const account = accounts.find(a => a.id == username)
     const post = blog.find(p => p.id == req.query.id)
+
+    let commentsHtml = `<p style="text-align:center">No comments left yet</p>`
+    if (post.comments.length > 0) {
+        commentsHtml = `<ul>`
+        post.comments.forEach(c => {
+            commentsHtml += `<li>
+            <p>${c.comment}</p>
+            <small>left by ${c.author} on ${getTimeHtml(c.time)}</small></li>
+            `
+        })
+        commentsHtml += "</ul>"
+    }
 
     const headerHtml = getHeaderHtml(session, username)
     const postHtml = `
@@ -93,7 +105,16 @@ app.get('/blog/post', (req, res) => {
         <div>
             <small>${post.likes} likes</small>
             <small>${post.dislikes} dislikes</small>
-            <small>${post.comments.length} comments</small>
+        </div>
+        <div>
+            <form action="/comment" method="post" style="text-align:right">
+                <textarea style="margin-bottom:.3em" name="comment" rows="4" cols="60" placeholder="Leave your comment"></textarea>
+                <div>
+                    <button name="postId" value="${post.id}"
+                        ${!session.username || (session.username && account.credits.balance < 10) ? `disabled` :``}>Comment (-5.00 credit)</button></div>
+            </form>
+            <h3 style="text-align:right"><small>${post.comments.length}</small> comments</h3>
+            ${commentsHtml}
         </div>
 
         ` : `<h3>Post id ${id} not found</h3>`}`
@@ -364,32 +385,28 @@ function getLeaderboardHtml() {
     return balanceLeaderHtml
 }
 
-function getTransactionsHtml() {
-    const transactions = activities
-        .filter(a => a.type == "transaction")
+function getActivitiesHtml() {
+    const filtered = activities
+        //.filter(a => a.type == "transaction")
         .sort((a, b) => { return a.times.completed > b.times.completed ? -1 : 1 })
     
-    let transactionsHtml = `<p style="text-align:center">Empty<p>`
-    if (transactions.length > 0) {
-        transactionsHtml = `<ul style="font-weight:normal">`
-        transactions.slice(0, 1000).forEach((t, idx) => {
-            transactionsHtml += `<oi><div>
-                    <small>${t.id}: Transaction of</small>
+    let activitieisHtml = `<p style="text-align:center">Empty<p>`
+    if (filtered.length > 0) {
+        activitieisHtml = `<ul style="font-weight:normal;padding:.3em">`
+        filtered.slice(0, 1000).forEach((t, idx) => {
+            activitieisHtml += `<oi><div><small>
+                    ${t.id}: Transaction of
                     <strong>${t.amount.toFixed(2)}</strong>
                     <strong>${t.of}</strong>
-                    <small>from</small>
-                    <strong>${t.from}</strong>
-                    <small>to</small>
-                    <strong>${t.to}</strong>
-                    <small>on</small>
-                    <small>${getTimeHtml(t.times.completed)}</small>
-                    <small>note:</small>
-                    <small>${t.note}</small>
-                </div></oi>`
+                    from <strong>${t.from}</strong>
+                    to <strong>${t.to}</strong>
+                    on ${getTimeHtml(t.times.completed)}
+                    <strong>note:</strong> ${t.note}
+                </small></div></oi>`
         })
-        transactionsHtml += "</ul>"
+        activitieisHtml += "</ul>"
     }
-    return transactionsHtml
+    return activitieisHtml
 }
 
 function getBlogHtml() {
