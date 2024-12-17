@@ -81,8 +81,21 @@ app.get('/blog', (req, res) => {
     const blogHtml = getBlogHtml(req.query.tag)
     res.send(`
         ${headerHtml}
-        <h1>Blog</h1>
+        <h1>All Posts</h1>
         ${blogHtml}
+    `)
+})
+
+app.get('/tags', (req, res) => {
+    const session = req.session
+    const username = req.query.user? req.query.user : req.session.username
+
+    const headerHtml = getHeaderHtml(session, username)
+    const tagsHtml = getTagsHtml()
+    res.send(`
+        ${headerHtml}
+        <h1>All Tags</h1>
+        ${tagsHtml}
     `)
 })
 
@@ -472,6 +485,25 @@ function getBlogHtml(tag) {
     return blogHtml
 }
 
+function getTagsHtml(tag) {
+    const allTags = []
+    blog.forEach(p => {
+        p.tags.forEach(t => {
+            if (allTags.indexOf(t) < 0) allTags.push(t)
+        })
+    })
+
+    let tagsHtml = ``
+    if (allTags.length > 0) {
+        tagsHtml = `<div>`
+        allTags.slice(0, 1000).forEach((tag, idx) => {
+            tagsHtml += `<span style="padding:.1em;background-color:#EEE"><a href="/blog?tag=${tag}">#${tag}</a></span>`
+        })
+        tagsHtml += "</div>"
+    } else { `<p>Empty</p>`} 
+    return tagsHtml
+}
+
 function getTimeHtml(time) {
     return `
         Year ${Math.floor(time / (world.interval.hour * world.interval.day * world.interval.year))}
@@ -481,6 +513,13 @@ function getTimeHtml(time) {
 }
 
 function getHeaderHtml(session, username) {
+    const allTags = []
+    blog.forEach(p => {
+        p.tags.forEach(t => {
+            if (allTags.indexOf(t) < 0) allTags.push(t)
+        })
+    })
+
     return `
         <div style="background-color:black;color:white;padding:.5em;"><small>
             📢 Interested in joining this open project?
@@ -493,6 +532,8 @@ function getHeaderHtml(session, username) {
                 <small>Web3 Currency & Digital Asset Platform</small>
             </div>
             <div style="padding:.3em;text-align:right;margin-top:auto"><small>
+                <a href="/blog">Blog(${blog.length})</a>
+                <a href="/tags">Tags(${allTags.length})</a>
                 <a href="/leaderboard">Leaderboard(${accounts.length})</a>
                 <a href="/blog">Blog(${blog.length})</a>
                 <a href="/marketplace">Marketplace(${market.length})</a>
