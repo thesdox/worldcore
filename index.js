@@ -1,8 +1,7 @@
-import { onMinuteAsync } from './src/service.js'
-import { accounts, activities, assets, world, market, current, auth, blog } from './src/model.js'
-import { app } from './src/api.js'
-import session from 'express-session'
-import * as util from './src/utility.js'
+import { onMinuteAsync } from './service/service.js'
+import { accounts, activities, assets, world, market, current, auth, blog } from './service/model.js'
+import { app } from './service/api.js'
+import * as util from './service/utility.js'
 
 console.log(`starting worldcore service..`)
 const port = 3000

@@ -13,6 +13,19 @@
     "bio": "I am good and I will save"
   },
   {
+    "id": "sauron",
+    "credits": {
+      "balance": 324.1638366793718
+    },
+    "times": {
+      "created": 21,
+      "updated": 21,
+      "lastActive": 21,
+      "edited": 3940
+    },
+    "bio": "I am Sauron. I'm the beginning and the ending of the world. I may hurt, I may help."
+  },
+  {
     "id": "legolas",
     "credits": {
       "balance": 0
@@ -290,22 +303,9 @@
     }
   },
   {
-    "id": "sauron",
-    "credits": {
-      "balance": 16.206242541209345
-    },
-    "times": {
-      "created": 21,
-      "updated": 21,
-      "lastActive": 21,
-      "edited": 3940
-    },
-    "bio": "I am Sauron. I'm the beginning and the ending of the world. I may hurt, I may help."
-  },
-  {
     "id": "saruman",
     "credits": {
-      "balance": -582.885689192279
+      "balance": -406.55661653760103
     },
     "times": {
       "created": 92,

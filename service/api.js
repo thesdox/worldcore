@@ -3,8 +3,12 @@ import express from 'express'
 import session from 'express-session'
 import { accounts, activities, assets, market, current, world, auth, blog } from './model.js'
 import * as bcrypt from 'bcrypt'
+import path from 'path'
+import { fileURLToPath } from 'url';
 
 export const app = express()
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 app.use(session({
     secret: 'secret',
@@ -12,7 +16,33 @@ app.use(session({
     saveUninitialized: true
 }))
 
+app.set('view engine', 'ejs')
+app.use(express.static(path.join(__dirname, '../public')))
 app.use(express.urlencoded({ extended: true }))
+
+app.get('/accounts/:id', (req, res) => {
+    const data = {
+        title: 'Profile'
+    }
+
+    res.render('account', data)
+})
+
+app.get('/login', (req, res) => {
+    const data = {
+        title: 'Profile'
+    }
+
+    res.render('login', data)
+})
+
+app.get('/overview', (req, res) => {
+    const data = {
+        title: 'Profile'
+    }
+
+    res.render('index', data)
+})
 
 app.post('/auth', function(req, res) {
 	let username = req.body.username;
