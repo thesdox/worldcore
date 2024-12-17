@@ -334,7 +334,7 @@ function getMarketplaceHtml(listings, marketStatsHtml, username, session, accoun
                         <input name="id" type="hidden" value="${l.id}" />
                     </div>
                     <div>
-                        <button name="buyer" value="${username}" ${!session.username || (session.username && account.credits.balance < l.price) ? `disabled` : ``}>
+                        <button name="buyer" value="${username}" ${!session.username || (session.username != username && account.credits.balance < l.price) ? `disabled` : ``}>
                             ${session.username && l.owner == username ? 'Delist' : 'Buy'}</button>
                         for <input name="price" type="number" value="${l.price.toFixed(2)}" readonly />
                         <small>credit (${(l.price / l.amount).toFixed(2)}/unit)</small>

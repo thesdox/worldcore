@@ -99,7 +99,8 @@
     "amount": 113,
     "times": {
       "created": 761,
-      "lastUpdated": 761
+      "lastUpdated": 761,
+      "expired": 1006
     }
   },
   {
@@ -134,6 +135,18 @@
     "times": {
       "created": 837,
       "lastUpdated": 837
+    }
+  },
+  {
+    "id": "LST12",
+    "item": "WTR778",
+    "price": 1000,
+    "owner": "gandalf",
+    "amount": 376,
+    "times": {
+      "created": 953,
+      "lastUpdated": 953,
+      "sold": 960
     }
   }
 ]

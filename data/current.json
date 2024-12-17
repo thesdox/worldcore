@@ -1,35 +1,21 @@
 {
-  "time": 938,
+  "time": 1074,
   "resources": {
     "water": {
-      "balance": 106.94670374406726,
-      "supplied": 12537.946703744077
+      "balance": -9.924259655787258,
+      "supplied": 13253.075740344219
     },
     "mineral": {
-      "balance": 566.8448831264603,
-      "supplied": 9016.844883126458
+      "balance": 499.5299323736333,
+      "supplied": 9379.529932373622
     },
     "credits": {
-      "balance": -75313.56296863344,
-      "supplied": 76086.43703136654
+      "balance": -76073.15833318967,
+      "supplied": 76926.84166681032
     }
   },
   "effects": {
     "pending": [
-      "BNK162",
-      "BNK163",
-      "BNK164",
-      "BNK3",
-      "BNK4",
-      "BNK5",
-      "BNK6",
-      "BNK7",
-      "BNK165",
-      "BNK166",
-      "BNK8",
-      "BNK9",
-      "BNK10",
-      "BNK11",
       "BNK12",
       "BNK13",
       "BNK14",
@@ -175,7 +161,21 @@
       "BNK158",
       "BNK159",
       "BNK160",
-      "BNK161"
+      "BNK161",
+      "BNK162",
+      "BNK163",
+      "BNK164",
+      "BNK3",
+      "BNK4",
+      "BNK5",
+      "BNK6",
+      "BNK7",
+      "BNK165",
+      "BNK166",
+      "BNK8",
+      "BNK9",
+      "BNK10",
+      "BNK11"
     ]
   },
   "accounts": [
@@ -184,19 +184,15 @@
   "activities": {
     "pending": [],
     "completed": [
-      "CLT4068",
-      "CLT4069",
-      "TX4070",
-      "TX4071",
-      "TX4072",
-      "TX4073",
-      "TX4074",
-      "TX4075",
-      "TX4076",
-      "TX4077",
-      "TX4078",
-      "TX4079",
-      "TX4080"
+      "TX4244",
+      "TX4245",
+      "TX4246",
+      "TX4247",
+      "TX4248",
+      "TX4249",
+      "TX4250",
+      "TX4251",
+      "TX4252"
     ],
     "rejected": []
   }

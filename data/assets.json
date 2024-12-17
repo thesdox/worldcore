@@ -24,7 +24,7 @@
     "properties": {
       "yield": 0.26,
       "cap": 7427,
-      "staked": 7421.268982684332
+      "staked": 7415.982599299406
     },
     "owner": "sauron"
   },
@@ -35,7 +35,7 @@
     "properties": {
       "yield": 0.28,
       "cap": 5434,
-      "staked": 5429.484345089338
+      "staked": 5425.319261208173
     },
     "owner": "sauron"
   },
@@ -46,7 +46,7 @@
     "properties": {
       "yield": 0.28,
       "cap": 4496,
-      "staked": 4492.263823246533
+      "staked": 4488.817703053358
     },
     "owner": "sauron"
   },
@@ -57,7 +57,7 @@
     "properties": {
       "yield": 0.12,
       "cap": 8300,
-      "staked": 8297.043911934185
+      "staked": 8294.316116675467
     },
     "owner": "sauron"
   },
@@ -1773,7 +1773,7 @@
     "properties": {
       "yield": 0.01,
       "cap": 1250,
-      "staked": 1249.9643265231125
+      "staked": 1249.9300809251256
     },
     "owner": "sauron"
   },
@@ -1784,7 +1784,7 @@
     "properties": {
       "yield": 0.23,
       "cap": 6709,
-      "staked": 6704.596372413867
+      "staked": 6700.371558261388
     },
     "owner": "sauron"
   },
@@ -1795,7 +1795,7 @@
     "properties": {
       "yield": 0.09,
       "cap": 6704,
-      "staked": 6702.278099175081
+      "staked": 6700.625482657476
     },
     "owner": "sauron"
   },
@@ -8314,7 +8314,7 @@
   {
     "id": "WTR762",
     "type": "water",
-    "amount": 0,
+    "amount": 33,
     "owner": "gandalf"
   },
   {
@@ -8449,7 +8449,101 @@
   {
     "id": "MNR777",
     "type": "mineral",
-    "amount": 180,
+    "amount": 272,
+    "owner": "gandalf"
+  },
+  {
+    "id": "WTR778",
+    "type": "water",
+    "amount": 376,
+    "owner": "worldbank"
+  },
+  {
+    "id": "BNK779",
+    "type": "bankstone",
+    "amount": 1,
+    "properties": {
+      "yield": 0.03,
+      "cap": 6808,
+      "staked": 6808
+    },
+    "owner": "gandalf"
+  },
+  {
+    "id": "BNK780",
+    "type": "bankstone",
+    "amount": 1,
+    "properties": {
+      "yield": 0.11,
+      "cap": 1415,
+      "staked": 1415
+    },
+    "owner": "gandalf"
+  },
+  {
+    "id": "BNK781",
+    "type": "bankstone",
+    "amount": 1,
+    "properties": {
+      "yield": 0.1,
+      "cap": 1558,
+      "staked": 1558
+    },
+    "owner": "gandalf"
+  },
+  {
+    "id": "BNK782",
+    "type": "bankstone",
+    "amount": 1,
+    "properties": {
+      "yield": 0.29,
+      "cap": 4345,
+      "staked": 4345
+    },
+    "owner": "gandalf"
+  },
+  {
+    "id": "BNK783",
+    "type": "bankstone",
+    "amount": 1,
+    "properties": {
+      "yield": 0.13,
+      "cap": 8881,
+      "staked": 8881
+    },
+    "owner": "gandalf"
+  },
+  {
+    "id": "BNK784",
+    "type": "bankstone",
+    "amount": 1,
+    "properties": {
+      "yield": 0.08,
+      "cap": 3357,
+      "staked": 3357
+    },
+    "owner": "gandalf"
+  },
+  {
+    "id": "BNK785",
+    "type": "bankstone",
+    "amount": 1,
+    "properties": {
+      "yield": 0.11,
+      "cap": 9053,
+      "staked": 9053
+    },
+    "owner": "gandalf"
+  },
+  {
+    "id": "BNK786",
+    "type": "bankstone",
+    "amount": 1,
+    "properties": {
+      "yield": 0.27,
+      "cap": 4804,
+      "staked": 4804
+    },
     "owner": "gandalf"
   }
 ]
