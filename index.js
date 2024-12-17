@@ -424,7 +424,7 @@ function getTimeHtml(time) {
     return `
         Year ${Math.floor(time / (world.interval.hour * world.interval.day * world.interval.year))}
         Day ${Math.floor(time / (world.interval.hour * world.interval.day))}
-        ${Math.floor(time % (world.interval.hour * world.interval.day) / (world.interval.hour))}:${current.time % (world.interval.hour) < 10 ? '0' : ''}${current.time % (world.interval.hour)}</a>
+        ${Math.floor(time % (world.interval.hour * world.interval.day) / (world.interval.hour))}:${time % (world.interval.hour) < 10 ? '0' : ''}${time % (world.interval.hour)}</a>
     `
 }
 

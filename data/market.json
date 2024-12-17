@@ -1,1 +1,26 @@
-[]
+[
+  {
+    "id": "LST0",
+    "item": "WTR0",
+    "price": 1000,
+    "owner": "sauron",
+    "amount": 109,
+    "times": {
+      "created": 53,
+      "lastUpdated": 53,
+      "sold": 60
+    }
+  },
+  {
+    "id": "LST1",
+    "item": "WTR167",
+    "price": 1000,
+    "owner": "sauron",
+    "amount": 124,
+    "times": {
+      "created": 509,
+      "lastUpdated": 509,
+      "sold": 540
+    }
+  }
+]

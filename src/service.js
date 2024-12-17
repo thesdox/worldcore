@@ -12,46 +12,16 @@ export async function onMinuteAsync() {
     // console.debug(`T${current.time}: active accounts: ${current.accounts.length}/${accounts.length} transactions: ${activities.length}/${activities.length}`)
     inProgress = true
     const startTime = new Date().getTime()
+    const totalEffectCount = current.effects.pending.length+current.effects.completed.length+current.effects.rejected.length
+    const effectBatchSize = Math.ceil((totalEffectCount)/world.interval.day)
 
     if (current.time % world.interval.hour == 0) {
-        onHourAsync()
+        onHourAsync(effectBatchSize)
 
         if (current.time % (world.interval.hour * world.interval.day) == 0) {
             onDayAsync()
         }
     }
-
-    const totalEffectCount = current.effects.pending.length+current.effects.completed.length+current.effects.rejected.length
-    const effectBatchSize = Math.ceil((totalEffectCount)/world.interval.hour)
-    console.debug(`T${current.time}: processing ${effectBatchSize}/${current.effects.pending.length}/${current.effects.completed.length} effects...`)
-    current.effects.pending.slice(0, effectBatchSize).forEach(id => {
-        const b = assets.find(a => a.id == id && a.amount > 0)
-        if (!b) {
-            console.warn(`invalid bankstone id ${id}`);
-            return;
-        }
-
-        const hrYield = b.properties.yield/world.interval.year/world.interval.day
-        const tx = {
-            type: "transaction",
-            id: `TX${activities.length}`,
-            of: "credit",
-            from: b.id,
-            to: b.owner,
-            amount: hrYield * b.properties.staked,
-            note: `${id}: yield for day ${Math.floor(current.time % (world.interval.year / world.interval.day))}`,
-            times: {
-                created: current.time
-            }
-        }
-
-        //console.debug(`${tx.id}: ${(hrYield * 100).toFixed(4)}/${(b.properties.yield * 100).toFixed(0)}% of staked ${b.properties.staked.toFixed(0)}/${b.properties.cap} credit.. yields ${tx.amount.toFixed(2)} hourly credit..`);
-        activities.push(tx)
-        current.activities.pending.push(tx.id)
-        
-        current.effects.completed.push(id)
-        current.effects.pending = current.effects.pending.filter(e => e != id)
-    });
 
     processResources()
     processCurrentActivities()
@@ -84,8 +54,13 @@ export async function onMinuteAsync() {
 }
 
 async function onDayAsync() {
-    //console.log(`processing daily store of ${activities.length} activities..`)
-    //await model.backupAsync(activities, `T${current.time}.activities.bak`)
+    const effectItems = assets.filter(a => a.type == "bankstone" && a.amount > 0)
+    effectItems.forEach(i => {
+        if (current.effects.pending.findIndex(e => e == i.id) < 0) current.effects.pending.push(i.id)
+    })
+
+    current.effects.completed = []
+    current.effects.rejected = []
 }
 
 function queueWorldbankActivities() {
@@ -238,14 +213,36 @@ function processResources() {
     current.resources.mineral.supplied += mineral
 }
 
-async function onHourAsync() {
-    const effectItems = assets.filter(a => a.type == "bankstone" && a.amount > 0)
-    effectItems.forEach(i => {
-        if (current.effects.pending.findIndex(e => e == i.id) < 0) current.effects.pending.push(i.id)
-    })
+async function onHourAsync(effectBatchSize) {
+    console.debug(`T${current.time}: processing ${effectBatchSize}/${current.effects.pending.length}/${current.effects.completed.length} effects...`)
+    current.effects.pending.slice(0, effectBatchSize).forEach(id => {
+        const b = assets.find(a => a.id == id && a.amount > 0)
+        if (!b) {
+            console.warn(`invalid bankstone id ${id}`);
+            return;
+        }
 
-    current.effects.completed = []
-    current.effects.rejected = []
+        const dailyYield = b.properties.yield/world.interval.year
+        const tx = {
+            type: "transaction",
+            id: `TX${activities.length}`,
+            of: "credit",
+            from: b.id,
+            to: b.owner,
+            amount: dailyYield * b.properties.staked,
+            note: `${id}: yield for day ${Math.floor(current.time % (world.interval.year / world.interval.day))}`,
+            times: {
+                created: current.time
+            }
+        }
+
+        //console.debug(`${tx.id}: ${(hrYield * 100).toFixed(4)}/${(b.properties.yield * 100).toFixed(0)}% of staked ${b.properties.staked.toFixed(0)}/${b.properties.cap} credit.. yields ${tx.amount.toFixed(2)} hourly credit..`);
+        activities.push(tx)
+        current.activities.pending.push(tx.id)
+        
+        current.effects.completed.push(id)
+        current.effects.pending = current.effects.pending.filter(e => e != id)
+    });
 
     queueWorldbankActivities()
 }

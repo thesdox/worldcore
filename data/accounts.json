@@ -246,19 +246,6 @@
     }
   },
   {
-    "id": "sauron",
-    "credits": {
-      "balance": 0
-    },
-    "times": {
-      "created": 21,
-      "updated": 21,
-      "lastActive": 21,
-      "edited": 3940
-    },
-    "bio": "I am Sauron. I'm the beginning and the ending of the world. I may hurt, I may help."
-  },
-  {
     "id": "gandalf",
     "credits": {
       "balance": 0
@@ -298,12 +285,25 @@
   {
     "id": "worldbank",
     "credits": {
-      "balance": -0
+      "balance": -2000
     },
     "times": {
       "created": 0,
       "updated": 0,
       "lastActive": 0
     }
+  },
+  {
+    "id": "sauron",
+    "credits": {
+      "balance": -14099.5391822429
+    },
+    "times": {
+      "created": 21,
+      "updated": 21,
+      "lastActive": 21,
+      "edited": 3940
+    },
+    "bio": "I am Sauron. I'm the beginning and the ending of the world. I may hurt, I may help."
   }
 ]
