@@ -357,7 +357,7 @@ app.post('/post', (req, res) => {
         author: req.session.username,
         title: req.body.title,
         content: req.body.content,
-        tags: req.body.tags.trim().split(','),
+        tags: req.body.tags.replace(/\s+/g, '').split(','),
         likes: 0,
         dislikes: 0,
         times: {

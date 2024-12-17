@@ -1,7 +1,4 @@
 {
-  "system": {
-    "batch": 100
-  },
   "interval": {
     "minute": 3000,
     "hour": 60,

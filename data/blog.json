@@ -1,13 +1,31 @@
 [
   {
+    "id": "PST4",
+    "author": "legolas",
+    "title": "Ok, I'll start writing something bcs I have many credits from my sales!",
+    "content": "Sauron is not good, it hurts people. What is it any way? she? he? freaking psycho maniac holding over all the bankstones! IT being the first born of all doesn't give authority to do whatever IT wants!",
+    "tags": [
+      "general",
+      "credits",
+      "suaron",
+      "hatespeach"
+    ],
+    "likes": 0,
+    "dislikes": 0,
+    "times": {
+      "created": 19555
+    },
+    "comments": []
+  },
+  {
     "id": "PST3",
     "author": "bilbo",
     "title": "Calling out for friends to go on a adventure!",
     "content": "I'm looking for friends to go on a aventure together all over the Middle Earth. I'm Hobbit but I got some $$$, I'm strong and smart.",
     "tags": [
       "recruit",
-      " adventure",
-      " ad"
+      "adventure",
+      "ad"
     ],
     "likes": 0,
     "dislikes": 0,

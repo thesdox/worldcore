@@ -57,8 +57,8 @@ export async function onMinuteAsync() {
     processCurrentActivities()
 
     const writeStart = new Date().getTime()
-    if (current.activities.completed.length >= world.system.batch) {
-        console.log(`processing batch store of ${current.activities.completed.length}/${world.system.batch} activities..`)
+    if (current.activities.completed.length >= effectBatchSize * 2) {
+        console.log(`processing batch store of ${current.activities.completed.length}/${effectBatchSize * 2} activities..`)
         
         const writePromises = [
             model.assetDb.write(),
