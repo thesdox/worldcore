@@ -132,11 +132,10 @@ app.post('/mint', (req, res) => {
         }
     }
 
-    activities.push(activity)
-
     const consumptions = []
     switch (req.body.type) {
         case "account":
+            activities.push(activity)
             bcrypt.hash(req.body.password, 2, (err, hash) => {
                 if (err) {
                     throw err
@@ -156,8 +155,10 @@ app.post('/mint', (req, res) => {
                 userWaters.reduce((sum, c) => sum + c.amount, 0) < 6  ||
                 userMinerals.reduce((sum, c) => sum + c.amount, 0) < 1) {
                 console.error(`not enough balance to consume`)
+                return
             }
 
+            activities.push(activity)
             const creditConsumption = {
                 "type": "consume",
                 "id": `CNS${activities.length}`,
@@ -274,7 +275,9 @@ app.post('/list', (req, res) => {
     item.amount -= listing.amount
     market.push(listing)
 
-    req.query.return ? res.redirect(req.query.return) : res.json(listing)
+    setTimeout(() => req.query.return ?
+        res.redirect(req.query.return) : res.json(listing),
+        world.interval.minute)
 })
 
 app.post('/edit', (req, res) => {

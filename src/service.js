@@ -74,6 +74,15 @@ function queueWorldbankActivities() {
     buyFloorListing('water')
     buyFloorListing('mineral')
 
+    const userWaters = assets.filter(a => a.owner == account.id && a.type == "water")
+    const userMinerals = assets.filter(a => a.owner == account.id && a.type == "mineral")
+
+    if (userWaters.reduce((sum, c) => sum + c.amount, 0) < 6  ||
+        userMinerals.reduce((sum, c) => sum + c.amount, 0) < 1) {
+        console.warn(`not enough balance to consume`)
+        return
+    }
+
     // mint a bankstone
     const mintId = `MNT${activities.length}`
     const mintActivity = {
@@ -90,15 +99,6 @@ function queueWorldbankActivities() {
     }
 
     activities.push(mintActivity)
-
-    const userWaters = assets.filter(a => a.owner == account.id && a.type == "water")
-    const userMinerals = assets.filter(a => a.owner == account.id && a.type == "mineral")
-
-    if (userWaters.reduce((sum, c) => sum + c.amount, 0) < 6  ||
-        userMinerals.reduce((sum, c) => sum + c.amount, 0) < 1) {
-        console.warn(`not enough balance to consume`)
-        return
-    }
 
     const creditConsumption = {
         "type": "consume",

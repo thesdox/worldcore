@@ -246,19 +246,6 @@
     }
   },
   {
-    "id": "gandalf",
-    "credits": {
-      "balance": 0
-    },
-    "times": {
-      "created": 243,
-      "updated": 243,
-      "lastActive": 243,
-      "edited": 5397
-    },
-    "bio": "I am good and I will save"
-  },
-  {
     "id": "gollum",
     "credits": {
       "balance": 0
@@ -270,22 +257,22 @@
     }
   },
   {
-    "id": "saruman",
+    "id": "gandalf",
     "credits": {
-      "balance": 0
+      "balance": -400
     },
     "times": {
-      "created": 92,
-      "updated": 92,
-      "lastActive": 92,
-      "edited": 15705
+      "created": 243,
+      "updated": 243,
+      "lastActive": 243,
+      "edited": 5397
     },
-    "bio": "I born good but turn evil. I work for Sauron."
+    "bio": "I am good and I will save"
   },
   {
     "id": "worldbank",
     "credits": {
-      "balance": -2000
+      "balance": -4500
     },
     "times": {
       "created": 0,
@@ -296,7 +283,7 @@
   {
     "id": "sauron",
     "credits": {
-      "balance": -14099.5391822429
+      "balance": -14053.203666156993
     },
     "times": {
       "created": 21,
@@ -305,5 +292,18 @@
       "edited": 3940
     },
     "bio": "I am Sauron. I'm the beginning and the ending of the world. I may hurt, I may help."
+  },
+  {
+    "id": "saruman",
+    "credits": {
+      "balance": -56400
+    },
+    "times": {
+      "created": 92,
+      "updated": 92,
+      "lastActive": 92,
+      "edited": 15705
+    },
+    "bio": "I born good but turn evil. I work for Sauron."
   }
 ]
