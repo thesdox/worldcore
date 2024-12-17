@@ -40,6 +40,19 @@ app.get('/transactions', (req, res) => {
     `)
 })
 
+app.get('/mints', (req, res) => {
+    const session = req.session
+    const username = req.query.user? req.query.user : req.session.username
+    
+    const headerHtml = getHeaderHtml(session, username)
+    const assetsHtml = getAssetsHtml()
+    res.send(`
+        ${headerHtml}
+        <h1>All Assets</h1>
+        ${assetsHtml}
+    `)
+})
+
 app.get('/marketplace', (req, res) => {
     const session = req.session
     const username = req.query.user? req.query.user : req.session.username
@@ -63,10 +76,9 @@ app.get('/marketplace', (req, res) => {
 app.get('/blog', (req, res) => {
     const session = req.session
     const username = req.query.user? req.query.user : req.session.username
-    const account = accounts.find(a => a.id == username)
 
     const headerHtml = getHeaderHtml(session, username)
-    const blogHtml = getBlogHtml()
+    const blogHtml = getBlogHtml(req.query.tag)
     res.send(`
         ${headerHtml}
         <h1>Blog</h1>
@@ -102,16 +114,21 @@ app.get('/blog/post', (req, res) => {
                 posted on ${getTimeHtml(post.times.created)} by ${post.author}
         </small>
         <p>${post.content}</p>
+        <div><small>
+            <form action="/like?return=/blog/post?id=${post.id}" method="post">
+                <input type="hidden" name="postId" value="${post.id}" />
+                <button ${!session.username || (session.username && account.credits.balance < 1) ? `disabled` :``}>
+                    ${post.likes} Like (-1.00 credit)</button>
+                <button name="dislike" value="true" ${!session.username || (session.username && account.credits.balance < 1) ? `disabled` :``}>
+                    ${post.dislikes} Dislike (-1.00 credit)</button>
+            </form>
+        </small></div>
         <div>
-            <small>${post.likes} likes</small>
-            <small>${post.dislikes} dislikes</small>
-        </div>
-        <div>
-            <form action="/comment" method="post" style="text-align:right">
+            <form action="/comment?return=/blog/post?id=${post.id}" method="post" style="text-align:right">
                 <textarea style="margin-bottom:.3em" name="comment" rows="4" cols="60" placeholder="Leave your comment"></textarea>
                 <div>
                     <button name="postId" value="${post.id}"
-                        ${!session.username || (session.username && account.credits.balance < 10) ? `disabled` :``}>Comment (-5.00 credit)</button></div>
+                        ${!session.username || (session.username && account.credits.balance < 5) ? `disabled` :``}>Comment (-5.00 credit)</button></div>
             </form>
             <h3 style="text-align:right"><small>${post.comments.length}</small> comments</h3>
             ${commentsHtml}
@@ -164,7 +181,7 @@ app.get('/', (req, res) => {
                 <h3 style="margin-bottom:1px">Register</h3>
                 <small>Invitation code is required at this time. Please check out <a href="https://github.com" target="_blank">project site</a> for more details.</small>
                 <div>
-                    <input name="invitecode" placeholder="invitation code" required />
+                    <input name="invitation" placeholder="invitation code" required />
                     <input name="username" placeholder="username" required />
                 </div>
                 <div>
@@ -409,11 +426,34 @@ function getActivitiesHtml() {
     return activitieisHtml
 }
 
-function getBlogHtml() {
-    let blogHtml = blog.sort((a, b) => { return a.times.created > b.times.created ? -1 : 1 })
+function getAssetsHtml() {
+    const filtered = assets
+        .sort((a, b) => { return a.properties && b.properties &&
+            (a.properties.staked * a.properties.yield) > (b.properties.staked * b.properties.yield) ?
+            1 : -1})
+        .sort((a, b) => { return a.amount < b.amount ? 1 : -1})
+    
+    let assetsHtml = `<p style="text-align:center">Empty<p>`
+    if (filtered.length > 0) {
+        assetsHtml = `<ul style="font-weight:normal;padding:.3em">`
+        filtered.slice(0, 1000).forEach((a, idx) => {
+            assetsHtml += `<oi><div><small>
+                    ${a.id}: <strong>${a.amount}</strong> units of
+                    <strong>${a.type}</strong>
+                    owned by <strong>${a.owner}</strong>
+                </small></div></oi>`
+        })
+        assetsHtml += "</ul>"
+    }
+    return assetsHtml
+}
+
+function getBlogHtml(tag) {
+    const posts = blog.filter(p => !tag ? true : p.tags.indexOf(tag) >= 0).sort((a, b) => { return a.times.created > b.times.created ? -1 : 1 })
+    let blogHtml = ``
     if (blog.length > 0) {
-        blogHtml = "<ul>"
-        blog.slice(0, 100).forEach((p, idx) => {
+        blogHtml = `<ul style="padding:.3em">`
+        posts.slice(0, 100).forEach((p, idx) => {
             blogHtml += `<oi><div>
                     <h3 style="margin-bottom:.1em">
                         <a href="/blog/post?id=${p.id}">${p.title}</a>
@@ -425,11 +465,6 @@ function getBlogHtml() {
                     <small>${p.likes} likes</small>
                     <small>${p.dislikes} dislikes</small>
                     <small>${p.comments.length} comments</small>
-                    ${ p.comments.length > 0 ? `
-                        <ul>${p.comments.forEach(c => {
-                        `<li>${c.comment} by ${c.author} on ${c.time}</li>`
-                    })}
-                    </ul>`: ``}
                 </div></oi>`
         })
         blogHtml += "</ul>"
@@ -458,10 +493,11 @@ function getHeaderHtml(session, username) {
                 <small>Web3 Currency & Digital Asset Platform</small>
             </div>
             <div style="padding:.3em;text-align:right;margin-top:auto"><small>
-                <a href="/blog">Blog</a>
-                <a href="/leaderboard">Leaderboard</a>
-                <a href="/transactions">Transactions</a>
-                <a href="/marketplace">Marketplace</a>
+                <a href="/blog">Blog(${blog.length})</a>
+                <a href="/leaderboard">Leaderboard(${accounts.length})</a>
+                <a href="/marketplace">Marketplace(${market.length})</a>
+                <a href="/mints">Items(${assets.length})</a>
+                <a href="/transactions">Transactions(${activities.length})</a>
             </small></div>
         </div>
         <div style="background:#EFEFEF;margin:0;padding:.5em">
@@ -481,7 +517,7 @@ function getHeaderHtml(session, username) {
                 <small>(${(current.time % (world.interval.hour) / world.interval.hour * 100).toFixed(0)}% to yield)</small>
             </small>
 
-            <small><strong>${session.username ? `${session.username}</strong> (<a href="/exit">exit</a>)` : ``}</small>
+            <small><strong>${session.username ? `${session.username} (${accounts.find(a=>a.id==session.username).credits.balance.toFixed(2)} credit)</strong> <a href="/exit">exit</a>` : ``}</small>
         </div>
 
         <!--

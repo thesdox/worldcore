@@ -135,6 +135,12 @@ app.post('/mint', (req, res) => {
     const consumptions = []
     switch (req.body.type) {
         case "account":
+            if (!req.body.invitation || req.body.invitation != '1234') {
+                console.warn(`invalid invitation code ${req.body.invitation}`)
+                res.sendStatus(403)
+                return
+            }
+
             activities.push(activity)
             bcrypt.hash(req.body.password, 2, (err, hash) => {
                 if (err) {
@@ -155,6 +161,7 @@ app.post('/mint', (req, res) => {
                 userWaters.reduce((sum, c) => sum + c.amount, 0) < 6  ||
                 userMinerals.reduce((sum, c) => sum + c.amount, 0) < 1) {
                 console.error(`not enough balance to consume`)
+                res.sendStatus(403)
                 return
             }
 
@@ -226,9 +233,19 @@ app.post('/collect', (req, res) => {
     switch (req.body.resource) {
         case "water":
             amount = util.getRandomNumber(5, 10)
+            if (world.resources.water.balance - amount < 0) {
+                console.log(`not enough water to collect`)
+                res.sendStatus(403)
+                return
+            }
             break
         case "mineral":
             amount = util.getRandomNumber(1, 3)
+            if (world.resources.water.balance - amount < 0) {
+                console.log(`not enough mineral to collect`)
+                res.sendStatus(403)
+                return
+            }
             break
         default:
             break
@@ -370,6 +387,58 @@ app.post('/comment', (req, res) => {
         likes: 0,
         dislikes: 0
     })
+
+    setTimeout(() => req.query.return ?
+        res.redirect(req.query.return) : res.json(post),
+        world.interval.minute)
+})
+
+app.post('/like', (req, res) => {
+    if (!req.session.username) {
+        res.sendStatus(401)
+        return
+    }
+    if (!req.body.postId) {
+        console.warn(`post ID ${req.body.postId} or comment ${req.body.comment} not found`)
+        res.sendStatus(400)
+        return
+    }
+
+    const account = accounts.find(a => a.id == req.session.username)
+    if (account.credits.balance < 1) {
+        console.warn(`not enough balance to comment`)
+        res.sendStatus(403)
+        return
+    }
+
+    const post = blog.find(p => p.id == req.body.postId)
+    if (!post) {
+        console.warn(`post ID ${req.body.postId} not found`)
+        res.sendStatus(400)
+        return
+    }
+
+    const dislike = req.body.dislike? true: false
+
+    const creditConsumption = {
+        "type": "consume",
+        "id": `CNS${activities.length}`,
+        "of": "credits",
+        "from": req.session.username,
+        "to": "world",
+        "amount": 1,
+        "note": `Consuming -1.00 credit to ${dislike ? 'dislike': 'like'}`,
+        "times": {
+            "created": current.time
+        }
+    }
+
+    activities.push(creditConsumption)
+    current.activities.pending.push(creditConsumption.id)
+
+    console.log(`${req.session.username}: creating a ${dislike ? 'dislike' : 'like'}`)
+    if (dislike) post.dislikes += 1
+    else post.likes += 1
 
     setTimeout(() => req.query.return ?
         res.redirect(req.query.return) : res.json(post),

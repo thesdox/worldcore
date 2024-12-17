@@ -10,8 +10,8 @@
       "suaron",
       "hatespeach"
     ],
-    "likes": 0,
-    "dislikes": 0,
+    "likes": 5,
+    "dislikes": 16,
     "times": {
       "created": 19555
     },
@@ -20,6 +20,13 @@
         "comment": "Leaving first comment. This with go through.",
         "author": "gandalf",
         "time": 1592
+      },
+      {
+        "comment": "F you",
+        "author": "sauron",
+        "time": 2738,
+        "likes": 0,
+        "dislikes": 0
       }
     ]
   },
@@ -33,12 +40,20 @@
       "adventure",
       "ad"
     ],
-    "likes": 0,
+    "likes": 13,
     "dislikes": 0,
     "times": {
       "created": 19184
     },
-    "comments": []
+    "comments": [
+      {
+        "comment": "I like adventure too",
+        "author": "sauron",
+        "time": 2801,
+        "likes": 0,
+        "dislikes": 0
+      }
+    ]
   },
   {
     "id": "PST2",
@@ -49,12 +64,20 @@
       "sauron",
       "recruit"
     ],
-    "likes": 0,
+    "likes": 17,
     "dislikes": 0,
     "times": {
       "created": 15738
     },
-    "comments": []
+    "comments": [
+      {
+        "comment": "Sounds like fun.",
+        "author": "sauron",
+        "time": 2826,
+        "likes": 0,
+        "dislikes": 0
+      }
+    ]
   },
   {
     "id": "PST1",
@@ -65,7 +88,7 @@
       "test",
       "general"
     ],
-    "likes": 0,
+    "likes": 15,
     "dislikes": 0,
     "times": {
       "created": 6520
@@ -80,7 +103,7 @@
     "tags": [
       "test"
     ],
-    "likes": 0,
+    "likes": 38,
     "dislikes": 0,
     "times": {
       "created": 6500

@@ -2,7 +2,7 @@
   {
     "id": "gandalf",
     "credits": {
-      "balance": 0
+      "balance": 5000
     },
     "times": {
       "created": 243,
@@ -270,20 +270,19 @@
     }
   },
   {
-    "id": "worldbank",
+    "id": "gorbag",
     "credits": {
       "balance": 0
     },
     "times": {
-      "created": 0,
-      "updated": 0,
-      "lastActive": 0
+      "created": 1151,
+      "lastActive": 1151
     }
   },
   {
     "id": "sauron",
     "credits": {
-      "balance": 0
+      "balance": -249.651486756239
     },
     "times": {
       "created": 21,
@@ -296,7 +295,7 @@
   {
     "id": "saruman",
     "credits": {
-      "balance": 0
+      "balance": -745.4835289249517
     },
     "times": {
       "created": 92,
@@ -305,5 +304,16 @@
       "edited": 15705
     },
     "bio": "I born good but turn evil. I work for Sauron."
+  },
+  {
+    "id": "worldbank",
+    "credits": {
+      "balance": -17000
+    },
+    "times": {
+      "created": 0,
+      "updated": 0,
+      "lastActive": 0
+    }
   }
 ]
