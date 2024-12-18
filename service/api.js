@@ -193,7 +193,7 @@ app.post('/mint', (req, res) => {
             })
             break
         case "bankstone":
-            if (account.credits.balance < 100 ||
+            if (account.credits.balance < 200 ||
                 userWaters.reduce((sum, c) => sum + c.amount, 0) < 6  ||
                 userMinerals.reduce((sum, c) => sum + c.amount, 0) < 1) {
                 console.error(`not enough balance to consume`)
@@ -208,8 +208,8 @@ app.post('/mint', (req, res) => {
                 "of": "credits",
                 "from": to,
                 "to": "world",
-                "amount": 100,
-                "note": `Consuming minting ${id} cost of ${100.00} credit`,
+                "amount": 200,
+                "note": `Consuming minting ${id} cost of ${200.00} credit`,
                 "times": {
                     "created": current.time
                 }

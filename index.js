@@ -264,17 +264,16 @@ app.get('/', (req, res) => {
                     <input type="hidden" name="owner" value="${username}" />
                     
                     <button name="type" value="bankstone"
-                        ${userMinerals < 1 ||
-                        userWaters < Math.ceil(current.resources.water.supplied/current.resources.mineral.supplied) ||
-                        account.credits.balance < 100 ? "disabled": ""}>
-                        Mint Bankstone
+                        ${userMineralTotal < 10 ||
+                        userWaterTotal < Math.ceil(current.resources.water.supplied/current.resources.mineral.supplied) ||
+                        account.credits.balance < 200 ? "disabled": ""}>
+                        Mint Bankstone (-200.00 credit)
                     </button>
                     <small for="type">
                         consumes
                         ${Math.ceil(current.resources.water.supplied*Math.log(accounts.length*accounts.length)/current.resources.mineral.supplied)}
                         water +
-                        ${10} mineral +
-                        ${100.00.toFixed(2)} credit</small>
+                        ${10} mineral
                 </div>
             </form>
         <ul>`

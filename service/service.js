@@ -248,10 +248,13 @@ async function onHourAsync(effectBatchSize) {
 }
 
 function processCurrentActivities() {
+    const notFoundActivities = []
     current.activities.pending.forEach((id) => {
         const activity = activities.find(a => a.id == id)
         if (!activity) {
             console.error(`pending activity ${id} not found`)
+            notFoundActivities.push(id)
+            return
         } else {
             // console.debug(`processing activity ${activity.id}..`)
             switch (activity.type) {
@@ -279,6 +282,8 @@ function processCurrentActivities() {
             current.activities.pending = current.activities.pending.filter(id => id != activity.id)
         }
     })
+
+    //console.debug(`cleaning ${notFoundActivities.length} invalid activities...`)
 }
 
 function processPendingConsume(consume) {
